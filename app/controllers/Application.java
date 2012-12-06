@@ -21,7 +21,7 @@ public class Application extends Controller {
     	
     	em.getTransaction().begin();
     	
-    	//Query employees
+    	/*//Query employees
     	Query query=JPA.em().createQuery("select empName, empType from Employee");
     	List<Object> listObjEmployee =query.getResultList();
     	List<Employee> listEmployee=new ArrayList<Employee>();
@@ -42,9 +42,11 @@ public class Application extends Controller {
     			tempEmp.setEmpType(strEmpType);
     			listEmployee.add(tempEmp);
     		}
-    	}
+    	}*/
     	
-    	render("Application/index.html", listEmployee);
+    	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
+    	objEmployeeListAPI.MakeAPIObject();
+    	render("Application/index.html");
     }
     
     public static void addEmployee(String ename){
