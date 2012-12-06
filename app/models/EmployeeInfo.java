@@ -5,7 +5,7 @@ import java.util.List;
 public class EmployeeInfo {
 
 		public String strEmpName;
-		public String EmpType;
+		public String strEmpType;
 		public List<ProjectOccupied> listProjectWorking= new ArrayList<ProjectOccupied>();
 		
 }

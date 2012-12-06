@@ -13,7 +13,14 @@ public class EmployeeListAPI {
 	public void MakeAPIObject(){
 		
 		List<Employee> listEmployee=getAllEmployees();
-		
+		List<EmployeeInfo> listEmployeeInfo=new ArrayList<EmployeeInfo>();
+		for(Employee emp: listEmployee){
+			
+			EmployeeInfo tempEmployeeInfo=new EmployeeInfo();
+			tempEmployeeInfo.strEmpName=emp.getEmpName();
+			tempEmployeeInfo.strEmpType=emp.getEmpType();
+			tempEmployeeInfo.listProjectWorking= getProjectsForEmployee(emp.getEmpId());
+		}
 	}
 	
 	private List<Employee> getAllEmployees(){
@@ -50,5 +57,35 @@ public class EmployeeListAPI {
 		
     	return listtempEmployee;
 	}
-
+    
+	private List<ProjectOccupied> getProjectsForEmployee(int nEmpId){
+	
+		Query query=JPA.em().createQuery("select projectId, projectName, week, occupied from Resourceplan where empId=:id ");
+		query.setParameter("id",nEmpId);
+		
+		List<Object> listResult=query.getResultList();
+		List<ProjectOccupied> listProjectOccupied=new ArrayList<ProjectOccupied>();
+		
+		if(listResult.size()>0){
+			for(Object tempObj: listResult){
+				Object[] objResult=(Object[])tempObj;
+				ProjectOccupied tmpProjectOccupied=new ProjectOccupied();
+				tmpProjectOccupied.nProjectId=(int)objResult[0];
+				tmpProjectOccupied.strProjectName=(String)objResult[1];
+				tmpProjectOccupied.nWeekNumber=(int)objResult[2];
+				tmpProjectOccupied.nOccupied=(int)objResult[3];
+				
+				//Logging employee-project info
+				Logger.info("emp Id:"+nEmpId);
+				Logger.info("Project Name:"+tmpProjectOccupied.strProjectName);
+				Logger.info("Week number:"+tmpProjectOccupied.nWeekNumber);
+				Logger.info("Occupied:"+tmpProjectOccupied.nOccupied);
+				
+				listProjectOccupied.add(tmpProjectOccupied);
+			}
+		}
+		
+		return listProjectOccupied;
+		
+	}
 }
