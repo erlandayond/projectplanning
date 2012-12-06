@@ -1,4 +1,146 @@
-#{extends 'main.html' /}
-#{set title:'Home' /}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-type">
+	<!--meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/ -->
+	<meta content="en-US" http-equiv="Content-Language">
+	<link href="@{'/public/stylesheets/reset.css'}" media="screen" rel="stylesheet" />
+	<link href="@{'/public/stylesheets/style.css'}" media="screen" rel="stylesheet" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
-#{welcome /}
+	<title>Project Planning</title>
+</head>
+<body>
+	<header>
+		<div class="wrapper">
+			<div class="content">
+				<div class="logo-holder">
+					<img src="@{'/public/images/logo.png'}" />
+				</div>
+				<span class="title">Project Planning & Staffing</span>
+			</div>
+		</div>
+	</header>
+	<div class="content">
+		<div class="wrapper">
+			<div class="table">
+				<div class="employees-regular">
+					<div class="table-header">
+						<div class="first-column">
+							<span class="title">Employees</span>
+						</div>
+						<div class="column second-column month month-1">
+							<span class="title">August</span>
+							<span class="week">v31</span>
+							<span class="week">v32</span>
+							<span class="week">v33</span>
+							<span class="week">v34</span>
+						</div>
+						<div class="column third-column month month-2">
+							<span class="title">September</span>
+							<span class="week">v35</span>
+							<span class="week">v36</span>
+							<span class="week">v37</span>
+							<span class="week">v38</span>				
+						</div>
+						<div class="column fourth-column month month-3">
+							<span class="title">October</span>
+							<span class="week">v39</span>
+							<span class="week">v40</span>
+							<span class="week">v41</span>
+							<span class="week">v42</span>				
+						</div>
+					</div>
+				</div>
+
+				<div class="table-row">
+					<div class="column first-column">
+						<a href="#" class="add-employee regular">Add person</a>
+					</div>
+					<div class="column second-column">
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+					</div>
+				</div>
+				<div class="employees-subcontractor">
+					<div class="table-header">
+						<div class="first-column">
+							<span class="title">Subcontractors</span>
+						</div>
+						<div class="column second-column month month-1">
+							<span class="title">August</span>
+							<span class="week">v31</span>
+							<span class="week">v32</span>
+							<span class="week">v33</span>
+							<span class="week">v34</span>
+						</div>
+						<div class="column third-column month month-2">
+							<span class="title">September</span>
+							<span class="week">v35</span>
+							<span class="week">v36</span>
+							<span class="week">v37</span>
+							<span class="week">v38</span>				
+						</div>
+						<div class="column fourth-column month month-3">
+							<span class="title">October</span>
+							<span class="week">v39</span>
+							<span class="week">v40</span>
+							<span class="week">v41</span>
+							<span class="week">v42</span>				
+						</div>
+					</div>
+				</div>
+				<div class="table-row">
+					<div class="column first-column">
+						<a href="#" class="add-employee subcontractor">Add person</a>
+					</div>
+					<div class="column second-column">
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+						<div class="week"></div>
+					</div>
+				</div>
+			</div>
+			<div class="navigation">
+				<ul>
+					<li class="prev"><div></div></li>
+					<li class="month-button button-1 active"><span>Aug - Oct</span></li>
+					<li class="month-button button-2"><span>Nov - Jan</span></li>
+					<li class="month-button button-3"><span>Feb - Apr</span></li>
+					<li class="next"><div></div></li>
+				</ul>	
+			</div>
+		</div>
+	</div>
+
+	<!--HTML ELEMENTS FOR HIDDEN PARTS...-->	
+	<div id="hidden-change-status">
+		<div class="tool-tip">
+			<div class="content">
+				<div class="arrow"></div>
+				<a href="#" class="mark-as-unsure">Markera som osäker</a>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="@{'/public/javascripts/application.js'}"></script>
+</html>
