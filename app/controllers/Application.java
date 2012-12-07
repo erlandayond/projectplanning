@@ -10,6 +10,7 @@ import java.util.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import flexjson.JSONSerializer;
 
 import models.*;
 
@@ -65,6 +66,16 @@ public class Application extends Controller {
         
     	String message="Employee record has been inserted";
     	render("Application/index.html");
+    }
+    
+    public static void getJSONEmployeeInfo(){
+    	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
+        List<EmployeeInfo> listObjEmployeeInfo= objEmployeeListAPI.MakeAPIObject();
+       
+        
+        JSONSerializer modelSerializer = new JSONSerializer().exclude("class").include("listProjectWorking").rootName("employees").exclude("listProjectWorking.class", "listProjectWorking.NProjectId", "listProjectWorking.NWeekNumber", "listProjectWorking.NOccupied");
+        renderJSON(modelSerializer.serialize(listObjEmployeeInfo));
+        
     }
     
 

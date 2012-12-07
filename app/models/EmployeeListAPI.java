@@ -10,7 +10,7 @@ import play.db.jpa.JPA;
 
 public class EmployeeListAPI {
 	
-	public void MakeAPIObject(){
+	public List<EmployeeInfo> MakeAPIObject(){
 		
 		List<Employee> listEmployee=getAllEmployees();
 		List<EmployeeInfo> listEmployeeInfo=new ArrayList<EmployeeInfo>();
@@ -20,7 +20,11 @@ public class EmployeeListAPI {
 			tempEmployeeInfo.strEmpName=emp.getEmpName();
 			tempEmployeeInfo.strEmpType=emp.getEmpType();
 			tempEmployeeInfo.listProjectWorking= getProjectsForEmployee(emp.getEmpId());
+			
+			listEmployeeInfo.add(tempEmployeeInfo);
 		}
+		
+		return listEmployeeInfo;
 	}
 	
 	private List<Employee> getAllEmployees(){

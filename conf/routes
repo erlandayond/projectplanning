@@ -6,7 +6,7 @@
 GET     /                                       Application.index
 
 GET     /addEmployee/{ename}				    Application.addEmployee
-
+GET     /getJSONEmployeeInfo					Application.getJSONEmployeeInfo
 
 
 # Ignore favicon requests
