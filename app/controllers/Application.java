@@ -53,7 +53,7 @@ public class Application extends Controller {
     public static void addEmployee(String ename){
     	EntityManager em= JPA.newEntityManager();
     	
-    	Logger.info("employee name"+ename);
+    	
     	em.getTransaction().begin();
     	
     	// Insert Employee record
@@ -63,8 +63,9 @@ public class Application extends Controller {
     	
     	em.persist(emp);
     	em.getTransaction().commit();
-        
-    	String message="Employee record has been inserted";
+    	
+    	Logger.info("employee added to database:"+ename+"Type:"+emp.getEmpType());
+    	
     	render("Application/index.html");
     }
     

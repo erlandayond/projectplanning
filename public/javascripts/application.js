@@ -20,13 +20,8 @@ $(document).ready(function () {
     	if(empId=="new"){
     		var newEmpName=prompt("FirstName LastName");
     		var empUrl="http://localhost:9000/addEmployee";
-			alert(newEmpName);
-			 $.ajax({
-			  	url: empUrl,
-			 	data: 'ename='+newEmpName,
-			 	success: function(data){
-			 		alert(data);
-			 	}
+			 $.post(empUrl, {ename:newEmpName},function(data){
+			 	alert("Data Loaded:"+data);
 			 });
     	}
     });
