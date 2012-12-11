@@ -20,11 +20,31 @@ $(document).ready(function () {
     	if(empId=="new"){
     		var newEmpName=prompt("FirstName LastName");
     		var empUrl="http://localhost:9000/addEmployee";
-			 $.post(empUrl, {ename:newEmpName},function(data){
-			 	alert("Data Loaded:"+data);
-			 });
+    		if(newEmpName.length>0)
+    		{
+			 	$.post(empUrl, {ename:newEmpName, eType:"Regular"},function(data){
+
+			 	});
+			}
     	}
     });
+
+    $("#addEmployee").change(function(){
+    	var empId=$("#addEmployee option:selected").val();
+    	var empName=$('#addEmployee option:selected').text();
+    	
+    	if(empId=="new"){
+    		var newEmpName=prompt("FirstName LastName");
+    		var empUrl="http://localhost:9000/addEmployee";
+    		if(newEmpName.length>0)
+    		{
+			 	$.post(empUrl, {ename:newEmpName, eType:"Contractor"},function(data){
+
+			 	});
+			}
+    	}
+    });
+
 	//add project link click function
 	$("a.add-project").live('click', function () {
 		var employeeId = $(this).parent().parent().parent().prev().attr('id');

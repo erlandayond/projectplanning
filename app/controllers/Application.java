@@ -53,20 +53,22 @@ public class Application extends Controller {
     public static void addEmployee(String ename){
     	EntityManager em= JPA.newEntityManager();
     	
+    	if(ename!=null && ! ename.isEmpty())
+    	{
+    		em.getTransaction().begin();
     	
-    	em.getTransaction().begin();
+    		// Insert Employee record
+    		Employee emp=new Employee();
+    		emp.setEmpName(ename);
+    		emp.setEmpType("Contractor");
     	
-    	// Insert Employee record
-    	Employee emp=new Employee();
-    	emp.setEmpName(ename);
-    	emp.setEmpType("Contractor");
+    		em.persist(emp);
+    		em.getTransaction().commit();
     	
-    	em.persist(emp);
-    	em.getTransaction().commit();
+    		Logger.info("employee added to database:"+ename+"Type:"+emp.getEmpType());
     	
-    	Logger.info("employee added to database:"+ename+"Type:"+emp.getEmpType());
-    	
-    	render("Application/index.html");
+    		redirect("/getEmployees");
+    	}
     }
     
     public static void getJSONEmployeeInfo(){
