@@ -17,7 +17,7 @@ $(document).ready(function () {
     	var empId=$("#addEmployee option:selected").val();
     	var empName=$('#addEmployee option:selected').text();
     	
-    	if(empId=="new"){
+    	if(empId==="new"){
     		var newEmpName=prompt("FirstName LastName");
     		var empUrl="http://localhost:9000/addEmployee";
     		if(newEmpName.length>0)
@@ -33,7 +33,7 @@ $(document).ready(function () {
     	var empId=$("#addContractor option:selected").val();
     	var empName=$('#addContractor option:selected').text();
     	
-    	if(empId=="new"){
+    	if(empId==="new"){
     		var newEmpName=prompt("FirstName LastName");
     		var empUrl="http://localhost:9000/addEmployee";
     		if(newEmpName.length>0)
