@@ -82,10 +82,10 @@ public class Application extends Controller {
     }
     
     // Add project for employee
-    public static void addProject(String ename, String project ){
+    public static void addProject(String eId, String project ){
     	EntityManager em=JPA.newEntityManager();
-    	Logger.info("employee name to be added:"+ename);
-    	Logger.info("Project to be added"+project);
+    	
+    	Logger.info("Project to be added"+project+" for employee:"+eId);
     	
     	em.getTransaction().begin();
     	
@@ -93,9 +93,12 @@ public class Application extends Controller {
     	
     }
     
-    public static void getProjects(int nEmpId){
+    public static void getProjects(){
     	
     	// Get projects for Employee with Id : nEmpId
+    	
+    	List<Project> listProjectsForEmployee=new EmployeeListAPI().getAllProjects();
+    	
     }
     
     public static void getEmployees(){

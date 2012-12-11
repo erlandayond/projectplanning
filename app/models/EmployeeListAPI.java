@@ -63,6 +63,28 @@ public class EmployeeListAPI {
     	return listtempEmployee;
 	}
     
+	public List<Project> getAllProjects(){
+	
+		Query query=JPA.em().createQuery("select id, projectName from Project");
+		List<Object> listResult=query.getResultList();
+		List<Project> listProjects=new ArrayList<Project>();
+		if(listResult.size()>0){
+			for(Object tempObj: listResult){
+				Object[] objResult=(Object[])tempObj;
+				Project tmpProject=new Project();
+				tmpProject.setProjectId((int)objResult[0]);
+				tmpProject.setProjectName((String)objResult[1]);
+				
+				//Logging
+				Logger.info("Project Id:"+tmpProject.getProjectId());
+				Logger.info("Project Name:"+tmpProject.getProjectName());
+				listProjects.add(tmpProject);
+			}
+		}
+		
+		return listProjects;
+	}
+	
 	private List<ProjectOccupied> getProjectsForEmployee(int nEmpId){
 	
 		Query query=JPA.em().createQuery("select projectId, projectName, week, occupied from Resourceplan where empId=:id ");
@@ -93,4 +115,6 @@ public class EmployeeListAPI {
 		return listProjectOccupied;
 		
 	}
+    
+	
 }
