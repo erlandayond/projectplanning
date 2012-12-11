@@ -73,10 +73,33 @@ public class Application extends Controller {
         List<EmployeeInfo> listObjEmployeeInfo= objEmployeeListAPI.MakeAPIObject();
        
         
-        JSONSerializer modelSerializer = new JSONSerializer().exclude("class").include("listProjectWorking").rootName("employees").exclude("listProjectWorking.class", "listProjectWorking.NProjectId", "listProjectWorking.NWeekNumber", "listProjectWorking.NOccupied");
+        JSONSerializer modelSerializer = new JSONSerializer().exclude("class").include("listProjectWorking").rootName("employees").exclude("listProjectWorking.class","nEmpId","listProjectWorking.nProjectId", "listProjectWorking.nWeekNumber", "listProjectWorking.nOccupied");
         renderJSON(modelSerializer.serialize(listObjEmployeeInfo));
         
     }
     
+    // Add project for employee
+    public static void addProject(String ename, String project ){
+    	EntityManager em=JPA.newEntityManager();
+    	Logger.info("employee name to be added:"+ename);
+    	Logger.info("Project to be added"+project);
+    	
+    	em.getTransaction().begin();
+    	
+    	//Insert project for employee
+    	
+    }
+    
+    public static void getProjects(int nEmpId){
+    	
+    	// Get projects for Employee with Id : nEmpId
+    }
+    
+    public static void getEmployees(){
+    	EmployeeListAPI objEmpListAPI=new EmployeeListAPI();
+        List<Employee> listEmployees= objEmpListAPI.getAllEmployees();
+        JSONSerializer modelSerializer=new JSONSerializer().exclude("class","entityId","persistent").rootName("employees");
+        render("Application/index.html", listEmployees);
+    }
 
 }

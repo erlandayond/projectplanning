@@ -4,8 +4,10 @@ import java.util.List;
 
 public class EmployeeInfo {
 
+		public int nEmpId;
 		public String strEmpName;
 		public String strEmpType;
 		public List<ProjectOccupied> listProjectWorking= new ArrayList<ProjectOccupied>();
+		
 		
 }

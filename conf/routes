@@ -7,7 +7,7 @@ GET     /                                       Application.index
 
 GET     /addEmployee/{ename}				    Application.addEmployee
 GET     /getJSONEmployeeInfo					Application.getJSONEmployeeInfo
-
+GET     /getEmployees                           Application.getEmployees
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

@@ -12,7 +12,24 @@ $(document).ready(function () {
 			$(this).toggleClass('opened');
 		}
 	});
-
+    
+    $("#addEmployee").change(function(){
+    	var empId=$("#addEmployee option:selected").val();
+    	var empName=$('#addEmployee option:selected').text();
+    	
+    	if(empId=="new"){
+    		var newEmpName=prompt("FirstName LastName");
+    		var empUrl="http://localhost:9000/addEmployee";
+			alert(newEmpName);
+			 $.ajax({
+			  	url: empUrl,
+			 	data: 'ename='+newEmpName,
+			 	success: function(data){
+			 		alert(data);
+			 	}
+			 });
+    	}
+    });
 	//add project link click function
 	$("a.add-project").live('click', function () {
 		var employeeId = $(this).parent().parent().parent().prev().attr('id');
@@ -269,6 +286,7 @@ $(document).ready(function () {
 	}
 
 	//VALIDATE INPUT IN WEEK FIELD
+
 	jQuery.fn.validateWeek = function () {
 		var o = $(this[0]);
 		if (o.html().indexOf("<br") >= 0) {
@@ -366,7 +384,36 @@ $(document).ready(function () {
 			}
 		}
 	}
+    
+   
+   
+    // var empJSONUrl="http://localhost:9000/getJSONEmployeeInfo";
+			 
+			 // $.ajax({
+			 //  	url: empJSONUrl,
+			 // 	success: function(data){
+			 // 		var testData = data;
+			 // 		for(var i=0;i<testData.employees.length;i++){
 
+    //                     Array tmpProjects=new Array();
+			 // 			var tmpProjectName="";
+			 // 			var tmpEmpType="";
+			 // 			Array tmpOccupiedArray=new Array();
+			 // 			for(var j=0;j<testData.employees[i].listProjectWorking.length;j++){
+
+			 // 				tmpOccupiedArray.push(testData.employees[i].listProjectWorking[j].nOccupied.toString());
+			 // 				tmpProjectName=testData.employees[i].listProjectWorking[j].strProjectName;
+			 // 				tmpEmpType="regular";
+			 // 			}
+			 // 			var tmpProject=new Project(tmpProjectName, tmpOccupiedArray);
+			 // 			var tmpEmp=new employee(tmpEmpType,'tmpEmp', tmpProjectName, tmpProject);
+			 // 			employees=new Array(tmpEmp);
+
+			 // 		}
+
+			 		
+			 // 	}
+			 // });
 	//CREATE SOME OBJECTS FOR TEST PURPOSE... THIS STUFF SHOULD BE FETCHED FROM BACKEND DATABASE LATER ON...
 	total1 = new Array("-", "100", "80", "10", "-", "", "20", "60", "", "-", "10", "-");
 	project1 = new project('testprojekt', new Array("-", "100", "80", "10", "-", "", "20", "60", "", "-", "10", "-"));

@@ -52,10 +52,19 @@
 						</div>
 					</div>
 				</div>
-
+                
+                 
+                
 				<div class="table-row">
 					<div class="column first-column">
-						<a href="#" class="add-employee regular">Add person</a>
+						<!-- <a href="#" class="add-employee regular">Add person</a> -->
+						
+						<select id="addEmployee">
+                  #{list items:listEmployees, as:'emp'}
+								<option value="${emp.empId}">${emp.empName}</option>
+				   #{/list}
+				   <option value="new">New Employee</option>
+				   </select>
 					</div>
 					<div class="column second-column">
 						<div class="week"></div>

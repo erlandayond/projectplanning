@@ -17,6 +17,7 @@ public class EmployeeListAPI {
 		for(Employee emp: listEmployee){
 			
 			EmployeeInfo tempEmployeeInfo=new EmployeeInfo();
+			tempEmployeeInfo.nEmpId=emp.getEmpId();
 			tempEmployeeInfo.strEmpName=emp.getEmpName();
 			tempEmployeeInfo.strEmpType=emp.getEmpType();
 			tempEmployeeInfo.listProjectWorking= getProjectsForEmployee(emp.getEmpId());
@@ -27,7 +28,7 @@ public class EmployeeListAPI {
 		return listEmployeeInfo;
 	}
 	
-	private List<Employee> getAllEmployees(){
+	public List<Employee> getAllEmployees(){
 		
 		//Query employees
     	Query query=JPA.em().createQuery("select id, empName, empType from Employee");
