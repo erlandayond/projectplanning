@@ -107,5 +107,25 @@ public class Application extends Controller {
         JSONSerializer modelSerializer=new JSONSerializer().exclude("class","entityId","persistent").rootName("employees");
         render("Application/index.html", listEmployees);
     }
+    
+    /**
+     * 
+     * @param sEmpId 
+     * @param sProjId
+     * @param sQuarter
+     * @param sWeekNumber
+     */
+   public static void updateEmpProjOccupied(String sEmpId, String sProjId, String sProjName, String sQuarter, String sWeekNumber, String sOccupied){
+	
+	   // Testing 
+	   sEmpId="1";
+	   sProjId="1";
+	   sProjName="BUS";
+	   sQuarter="4";
+	   sOccupied="89";
+	   
+	   int nWeekNum= ProjectOccupied.getWeekNumber(sQuarter, sWeekNumber);
+	   new ProjectOccupied().updateResourcePlan(sEmpId, sProjId, sProjName, nWeekNum, sOccupied);
+   }
 
 }

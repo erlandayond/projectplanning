@@ -9,6 +9,7 @@ POST     /addEmployee				            Application.addEmployee
 GET     /getJSONEmployeeInfo					Application.getJSONEmployeeInfo
 GET     /getEmployees                           Application.getEmployees
 GET     /getProjects                            Application.getProjects
+GET     /updateEmpProjOccupied					Application.updateEmpProjOccupied
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
