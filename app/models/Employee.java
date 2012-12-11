@@ -20,7 +20,9 @@ public class Employee extends play.db.jpa.GenericModel implements Serializable {
 	private String empName;
 
 	private String empType;
-
+    
+	private boolean empActive=true;
+	
 	//bi-directional many-to-one association to Resourceplan
 	@OneToMany(mappedBy="employee")
 	private List<Resourceplan> resourceplans;
@@ -51,7 +53,15 @@ public class Employee extends play.db.jpa.GenericModel implements Serializable {
 	public void setEmpType(String empType) {
 		this.empType = empType;
 	}
-
+    
+	public boolean getEmpActive(){
+		return this.empActive;
+	}
+	
+	public void setEmpActive(boolean empActive){
+		this.empActive=empActive;
+	}
+	
 	public List<Resourceplan> getResourceplans() {
 		return this.resourceplans;
 	}

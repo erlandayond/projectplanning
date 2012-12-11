@@ -89,6 +89,34 @@
 						<div class="week"></div>
 					</div>
 				</div>
+				 %{ for(emp in listEmployees) {
+                  
+                      
+                  %}
+				<div class="table-row" id="employee-${emp.empId}">
+					<div class="column person first-column">
+						<div class="toggler"></div>
+						<span class="name">${emp.empName}</span>
+					</div>
+					<div class="column second-column">
+						<div class="week" id="week1"></div>
+						<div class="week" id="week2"></div>
+						<div class="week" id="week3"></div>
+						<div class="week" id="week4"></div>
+						<div class="week" id="week5"></div>
+						<div class="week" id="week6"></div>
+						<div class="week" id="week7"></div>
+						<div class="week" id="week8"></div>
+						<div class="week" id="week9"></div>
+						<div class="week" id="week10"></div>
+						<div class="week" id="week11"></div>
+						<div class="week" id="week12"></div>
+					</div>
+                </div>
+                %{
+				     } 
+				     	
+				  %}
 				<div class="employees-subcontractor">
 					<div class="table-header">
 						<div class="first-column">

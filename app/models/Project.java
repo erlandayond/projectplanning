@@ -17,7 +17,7 @@ public class Project extends play.db.jpa.GenericModel implements Serializable {
 	private int projectId;
 
 	private String projectName;
-
+    
 	public Project() {
 	}
 
