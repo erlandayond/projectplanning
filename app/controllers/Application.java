@@ -47,6 +47,7 @@ public class Application extends Controller {
     	
     	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
     	objEmployeeListAPI.MakeAPIObject();
+    	
     	render("Application/index.html");
     }
     
@@ -67,8 +68,9 @@ public class Application extends Controller {
     	
     		Logger.info("employee added to database:"+ename+"Type:"+emp.getEmpType());
     	
-    		redirect("/getEmployees");
     	}
+    	
+    	redirect("/getEmployees");
     }
     
     public static void getJSONEmployeeInfo(){
@@ -105,6 +107,7 @@ public class Application extends Controller {
     	EmployeeListAPI objEmpListAPI=new EmployeeListAPI();
         List<Employee> listEmployees= objEmpListAPI.getAllEmployees();
         JSONSerializer modelSerializer=new JSONSerializer().exclude("class","entityId","persistent").rootName("employees");
+        Logger.info("number of employees:"+listEmployees.size());
         render("Application/index.html", listEmployees);
     }
     

@@ -4,15 +4,19 @@ $(document).ready(function () {
 	$(".employee-info .project .week").attr('contentEditable', 'true');
 	var hiddenChangeStatus = $('#hidden-change-status').html();
 
-	//Toggle function to show employees projects
-	$('.toggler').live('click', function () {
-		var thisRow = $(this).parent().parent();
-		if (thisRow.next().hasClass('employee-info')) {
-			thisRow.next('.employee-info').toggle();
-			$(this).toggleClass('opened');
-		}
-	});
+	// //Toggle function to show employees projects
+	// $('.toggler').live('click', function () {
+	// 	var thisRow = $(this).parent().parent();
+	// 	if (thisRow.next().hasClass('employee-info')) {
+	// 		thisRow.next('.employee-info').toggle();
+	// 		$(this).toggleClass('opened');
+	// 	}
+	// });
     
+    $('.toggler').live('click',function(){
+
+    	$(this).toggleClass('opened');
+    });
     $("#addEmployee").change(function(){
     	var empId=$("#addEmployee option:selected").val();
     	var empName=$('#addEmployee option:selected').text();

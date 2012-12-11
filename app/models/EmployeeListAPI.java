@@ -30,8 +30,8 @@ public class EmployeeListAPI {
 	
 	public List<Employee> getAllEmployees(){
 		
-		//Query employees
-    	Query query=JPA.em().createQuery("select id, empName, empType from Employee");
+		//Get all active employees from db
+    	Query query=JPA.em().createQuery("select id, empName, empType from Employee where empActive=1");
     	List<Object> listObjEmployee =query.getResultList();
     	List<Employee> listtempEmployee=new ArrayList<Employee>();
     	
