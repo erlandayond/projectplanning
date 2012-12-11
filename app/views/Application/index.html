@@ -60,9 +60,17 @@
 						<!-- <a href="#" class="add-employee regular">Add person</a> -->
 						
 						<select id="addEmployee">
-                  #{list items:listEmployees, as:'emp'}
+                 
+                  %{ for(emp in listEmployees) {
+                  
+                       if(emp.empType=="regular") {
+                  %}
 								<option value="${emp.empId}">${emp.empName}</option>
-				   #{/list}
+				  %{
+				     } 
+				     	}
+				  %}
+				  
 				   <option value="new">New Employee</option>
 				   </select>
 					</div>
@@ -111,7 +119,19 @@
 				</div>
 				<div class="table-row">
 					<div class="column first-column">
-						<a href="#" class="add-employee subcontractor">Add person</a>
+						<!-- <a href="#" class="add-employee subcontractor">Add person</a> -->
+						<select id="addContractor">
+                 %{ for(emp in listEmployees) {
+                  
+                       if(emp.empType=="contractor") {
+                  %}
+								<option value="${emp.empId}">${emp.empName}</option>
+				  %{
+				     } 
+				     	}
+				  %}
+				   <option value="new">New Contractor</option>
+				   </select>
 					</div>
 					<div class="column second-column">
 						<div class="week"></div>

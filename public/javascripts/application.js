@@ -22,23 +22,23 @@ $(document).ready(function () {
     		var empUrl="http://localhost:9000/addEmployee";
     		if(newEmpName.length>0)
     		{
-			 	$.post(empUrl, {ename:newEmpName, eType:"Regular"},function(data){
+			 	$.post(empUrl, {ename:newEmpName, eType:"regular"},function(data){
 
 			 	});
 			}
     	}
     });
 
-    $("#addEmployee").change(function(){
-    	var empId=$("#addEmployee option:selected").val();
-    	var empName=$('#addEmployee option:selected').text();
+    $("#addContractor").change(function(){
+    	var empId=$("#addContractor option:selected").val();
+    	var empName=$('#addContractor option:selected').text();
     	
     	if(empId=="new"){
     		var newEmpName=prompt("FirstName LastName");
     		var empUrl="http://localhost:9000/addEmployee";
     		if(newEmpName.length>0)
     		{
-			 	$.post(empUrl, {ename:newEmpName, eType:"Contractor"},function(data){
+			 	$.post(empUrl, {ename:newEmpName, eType:"contractor"},function(data){
 
 			 	});
 			}

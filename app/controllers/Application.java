@@ -50,7 +50,7 @@ public class Application extends Controller {
     	render("Application/index.html");
     }
     
-    public static void addEmployee(String ename){
+    public static void addEmployee(String ename, String eType){
     	EntityManager em= JPA.newEntityManager();
     	
     	if(ename!=null && ! ename.isEmpty())
@@ -60,7 +60,7 @@ public class Application extends Controller {
     		// Insert Employee record
     		Employee emp=new Employee();
     		emp.setEmpName(ename);
-    		emp.setEmpType("Contractor");
+    		emp.setEmpType(eType);
     	
     		em.persist(emp);
     		em.getTransaction().commit();
