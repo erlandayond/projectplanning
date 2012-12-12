@@ -16,6 +16,7 @@ $(document).ready(function () {
     $('.toggler').live('click',function(){
 
     	$(this).toggleClass('opened');
+
     });
     $("#addEmployee").change(function(){
     	var empId=$("#addEmployee option:selected").val();
@@ -48,7 +49,29 @@ $(document).ready(function () {
 			}
     	}
     });
-
+    $('#quarter-1').click(function(){
+    	 (this).addClass("active");
+    	 $('#quarter-2').removeClass("active");
+    	 $('#quarter-3').removeClass("active");
+    	 $('#quarter-4').removeClass("active");
+    });
+    $('#quarter-2').click(function(){
+    	 (this).addClass("active");
+    	 $('#quarter-1').removeClass("active");
+    	 $('#quarter-3').removeClass("active");
+    	 $('#quarter-4').removeClass("active");
+    $('#quarter-3').click(function(){
+    	 (this).addClass("active");
+    	 $('#quarter-1').removeClass("active");
+    	 $('#quarter-2').removeClass("active");
+    	 $('#quarter-4').removeClass("active");
+    });
+    $('#quarter-4').click(function(){
+    	 (this).addClass("active");
+    	 $('#quarter-1').removeClass("active");
+    	 $('#quarter-2').removeClass("active");
+    	 $('#quarter-3').removeClass("active");
+    });
 	// //add project link click function
 	// $("a.add-project").live('click', function () {
 	// 	var employeeId = $(this).parent().parent().parent().prev().attr('id');
