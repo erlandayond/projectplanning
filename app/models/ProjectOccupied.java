@@ -55,7 +55,7 @@ public class ProjectOccupied {
 			nWeekNum=Integer.parseInt(sWeekNumber);
 		}
 		
-		return nQuarter*12+nWeekNum;
+		return nQuarter*13+nWeekNum;
 	}
 	
 	private int projectExists(int nEmpId, int nProjId, int nWeekNum){
