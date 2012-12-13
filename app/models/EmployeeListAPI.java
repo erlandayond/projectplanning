@@ -1,6 +1,8 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -21,6 +23,7 @@ public class EmployeeListAPI {
 			tempEmployeeInfo.strEmpName=emp.getEmpName();
 			tempEmployeeInfo.strEmpType=emp.getEmpType();
 			tempEmployeeInfo.listProjectWorking= getProjectsForEmployee(emp.getEmpId());
+			tempEmployeeInfo.dicProjectWorking=numProjectsWorkingByEmployee(emp.getEmpId());
 			
 			listEmployeeInfo.add(tempEmployeeInfo);
 		}
@@ -55,8 +58,6 @@ public class EmployeeListAPI {
     			tempEmp.setEmpName(strEmpName);
     			tempEmp.setEmpType(strEmpType);
     			listtempEmployee.add(tempEmp);
-    			
-    		  
     		}
     	}
 		
@@ -115,6 +116,30 @@ public class EmployeeListAPI {
 		return listProjectOccupied;
 		
 	}
+	
+	// Get number of projects working by an employee
+	public Dictionary numProjectsWorkingByEmployee(int nEmpId){
+		
+		Query query=JPA.em().createQuery("select distinct(projectId), projectName FROM Resourceplan where empId=:nEId");
+		query.setParameter("nEId",nEmpId);
+	    
+		List<Object> listObjResult=query.getResultList();
+		Dictionary dicWorkingProjects=new Hashtable();
+		
+		if(listObjResult.size()>0){
+			
+			for(Object tempObj: listObjResult){
+				Object[] objResult=(Object[])tempObj;
+				
+				Logger.info("values putting in dic"+objResult[0].toString()+"value"+objResult[1].toString() );
+				dicWorkingProjects.put(objResult[0], objResult[1]);
+				
+			}
+		}
+		
+		return dicWorkingProjects;
+	}
     
+	
 	
 }
