@@ -22,29 +22,6 @@ public class Application extends Controller {
     	
     	em.getTransaction().begin();
     	
-    	/*//Query employees
-    	Query query=JPA.em().createQuery("select empName, empType from Employee");
-    	List<Object> listObjEmployee =query.getResultList();
-    	List<Employee> listEmployee=new ArrayList<Employee>();
-    	
-    	Logger.info("number of employees fetched:"+listObjEmployee.size());
-    	
-    	if(listObjEmployee.size()>0){
-    		
-    		for(Object objEmployee : listObjEmployee){
-    			Object[] objResult=(Object[])objEmployee;
-    		
-    			String strEmpName=(String)objResult[0];
-    			String strEmpType=(String)objResult[1];
-    			
-    			Employee tempEmp=new Employee();
-    			tempEmp.setEmpId(99);
-    			tempEmp.setEmpName(strEmpName);
-    			tempEmp.setEmpType(strEmpType);
-    			listEmployee.add(tempEmp);
-    		}
-    	}*/
-    	
     	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
     	objEmployeeListAPI.MakeAPIObject();
     	
@@ -62,7 +39,6 @@ public class Application extends Controller {
     		Employee emp=new Employee();
     		emp.setEmpName(ename);
     		emp.setEmpType(eType);
-    	
     		em.persist(emp);
     		em.getTransaction().commit();
     	
@@ -104,11 +80,18 @@ public class Application extends Controller {
     }
     
     public static void getEmployees(){
+    	
+    	
+    	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
+        List<EmployeeInfo> listObjEmployeeInfo= objEmployeeListAPI.MakeAPIObject();
+       
+        
     	EmployeeListAPI objEmpListAPI=new EmployeeListAPI();
         List<Employee> listEmployees= objEmpListAPI.getAllEmployees();
+       
         JSONSerializer modelSerializer=new JSONSerializer().exclude("class","entityId","persistent").rootName("employees");
         Logger.info("number of employees:"+listEmployees.size());
-        render("Application/index.html", listEmployees);
+        render("Application/index.html", listEmployees, listObjEmployeeInfo);
     }
     
     /**
