@@ -64,25 +64,26 @@ public class Application extends Controller {
     
     // Add project for employee
     public static void addProject(String projectName, String employeeId ){
-    	EntityManager em=JPA.newEntityManager();
-    	
-    	Logger.info("Project to be added"+projectName+" for employee:"+employeeId);
     	
     	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
-    	//objEmployeeListAPI.addProject(projectName, employeeId);
     	
+        if(projectName.length()>0 && employeeId.length()>0){
+        	//objEmployeeListAPI.addProject(projectName, employeeId);
+        	Logger.info("Project to be added"+projectName+" for employee:"+employeeId);
+        }
     }
     
     public static void addNewProject(String projectName){
     	
     	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
-    	objEmployeeListAPI.addNewProject(projectName);
-    	Logger.info("New project added :"+projectName);
+    	if(projectName.length()>0){
+    		objEmployeeListAPI.addNewProject(projectName);
+        	Logger.info("New project added :"+projectName);
+    	}
     }
     public static void getProjects(){
     	
     	// Get projects for Employee with Id : nEmpId
-    	
     	List<Project> listProjectsForEmployee=new EmployeeListAPI().getAllProjects();
     	
     }
@@ -96,18 +97,9 @@ public class Application extends Controller {
         									.exclude("listProjectInfo.NProjectId","listProjectInfo.class")
         									.exclude("listProjectInfo.listWeekInfo.NOccupied", "listProjectInfo.listWeekInfo.NWeekNum","listProjectInfo.listWeekInfo.class");
         
-        for(EmployeeInfo employee: listEmployeeInfo){
-        	
-        	for(ProjectInfo project: employee.listProjectInfo){
-        		
-        		for(WeekInfo week: project.listWeekInfo){
-        			
-        		}
-        	}
-        }
         
         List<Project> listProjects=new EmployeeListAPI().getAllProjects();
-       // renderJSON(modelSerializer.serialize(listEmployeeInfo));
+        // renderJSON(modelSerializer.serialize(listEmployeeInfo));
         
         List<Employee> listEmployees=objEmployeeListAPI.getAllEmployees();
         

@@ -3,6 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import play.Logger;
@@ -89,7 +90,19 @@ public class EmployeeListAPI {
 		return listProjects;
 	}
 	
-	//private List<Project>
+	public void addNewProject(String strProjectName){
+		EntityManager em=JPA.newEntityManager();
+		Project objProject=new Project();
+			
+		
+			em.getTransaction().begin();
+			//Adding a new employee to the database
+			objProject.setProjectName(strProjectName);
+			
+			em.persist(objProject);
+			em.getTransaction().commit();
+			
+	}
 	private List<ProjectOccupied> getProjectsForEmployee(int nEmpId){
 	    
 		Query query=JPA.em().createQuery("select projectId, projectName, week, occupied from Resourceplan where empId=:id ");
