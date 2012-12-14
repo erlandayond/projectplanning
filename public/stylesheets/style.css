@@ -331,7 +331,41 @@ a.add-project {
 #hidden-employee, #hidden-project, #hidden-change-status {
 	display: none;
 }
+.control-button{
+	float:right;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #574d3c;
+	padding: 10px 20px 10px 10px;
+	background: -moz-linear-gradient(
+		top,
+		#ffffff 0%,
+		#ffffff 50%,
+		#d6d6d6);
+	background: -webkit-gradient(
+		linear, left top, left bottom, 
+		from(#ffffff),
+		color-stop(0.50, #ffffff),
+		to(#d6d6d6));
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	border: 0px solid #dadfeb;
+	-moz-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 3px rgba(255,255,255,0.9);
+	-webkit-box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 3px rgba(255,255,255,0.9);
+	box-shadow:
+		0px 1px 3px rgba(000,000,000,0.5),
+		inset 0px 0px 3px rgba(255,255,255,0.9);
+	text-shadow:
+		0px -1px 0px rgba(000,000,000,0.1),
+		0px 1px 0px rgba(255,255,255,1);
+    cursor: pointer;   
 
+}
 .tool-tip {
 	position: absolute;
 	margin-top: 2.6em;
@@ -374,5 +408,10 @@ a.mark-as-unsure {
 a.mark-as-unsure.safe {
 	color: #aaffa1;
 }
-
+.control-panel{
+	float: left;
+	width: 40%;
+	margin-top: 1em;
+	box-sizing: border-box;
+}
 

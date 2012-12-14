@@ -81,6 +81,23 @@ public class Application extends Controller {
         	Logger.info("New project added :"+projectName);
     	}
     }
+    public static void addNewEmployee(String employeeName){
+    	
+    	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
+    	String strEmpType="regular";
+    	if(employeeName.length()>0){
+    		objEmployeeListAPI.addNewEmployee(employeeName, strEmpType);
+    		Logger.info("New employee added :"+employeeName);
+    	}
+    }
+    public static void addNewContractor(String contractorName){
+    	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
+    	String strEmpType="contractor";
+    	if(contractorName.length()>0){
+    		objEmployeeListAPI.addNewEmployee(contractorName, strEmpType);
+    		Logger.info("New contractor added :"+contractorName);
+    	}
+    }
     public static void getProjects(){
     	
     	// Get projects for Employee with Id : nEmpId

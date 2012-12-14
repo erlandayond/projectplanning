@@ -103,6 +103,16 @@ public class EmployeeListAPI {
 			em.getTransaction().commit();
 			
 	}
+	
+   public void addNewEmployee(String strEmployeeName, String strEmpType){
+	   EntityManager em=JPA.newEntityManager();
+	   Employee objEmployee=new Employee();
+	   em.getTransaction().begin();
+	   	objEmployee.setEmpName(strEmployeeName);
+	   	objEmployee.setEmpType(strEmpType);
+	   em.persist(objEmployee);
+	   em.getTransaction().commit();
+   }
 	private List<ProjectOccupied> getProjectsForEmployee(int nEmpId){
 	    
 		Query query=JPA.em().createQuery("select projectId, projectName, week, occupied from Resourceplan where empId=:id ");

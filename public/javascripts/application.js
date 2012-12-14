@@ -50,14 +50,42 @@ $(document).ready(function () {
          var empId=$('#addProject').parent().parent().parent().attr('employeeid');
 
     	if(projId=="new"){
-    		var newProjectName=prompt("Project Name");
+    		var addProjectName=prompt("Project Name");
     		var projUrl="http://localhost:9000/addProject";
-    		if(newProjectName.length>0){
-    			$.post(projUrl, {ProjectName:projName, EmployeeId:empId}, function(data){});
+    		if(addProjectName.length>0){
+    			$.post(projUrl, {projectName:addProjectName, employeeId:empId}, function(data){});
     		}
     	}
     });
+    $("#btnNewProject").click(function(){
+    	var newProjectName=prompt("Project Name");
+    	var newProjUrl="http://localhost:9000/addNewProject";
+    	if(newProjectName.length>0){
+    		$.post(newProjUrl, {projectName:newProjectName}, function(data){});
+    	}
+    });
+    $('#btnNewEmployee').click(function(){
 
+    	var newEmpName=prompt("Employee Name");
+    	var newEmpUrl="http://localhost:9000/addNewEmployee";
+
+    	if(newEmpName.length>0){
+    		$.post(newEmpUrl, {employeeName:newEmpName}, function(data){
+
+    		});
+    	}
+    });
+    $('#btnNewContractor').click(function(){
+
+    	var newContractorName=prompt("Contractor Name");
+    	var newEmpUrl="http://localhost:9000/addNewContractor";
+
+    	if(newEmpName.length>0){
+    		$.post(newEmpUrl, {contractorName:newContractorName}, function(data){
+
+    		});
+    	}
+    });
     $("#addContractor").change(function(){
     	var empId=$("#addContractor option:selected").val();
     	var empName=$('#addContractor option:selected').text();
