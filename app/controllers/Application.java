@@ -63,17 +63,22 @@ public class Application extends Controller {
     }
     
     // Add project for employee
-    public static void addProject(String eId, String project ){
+    public static void addProject(String projectName, String employeeId ){
     	EntityManager em=JPA.newEntityManager();
     	
-    	Logger.info("Project to be added"+project+" for employee:"+eId);
+    	Logger.info("Project to be added"+projectName+" for employee:"+employeeId);
     	
-    	em.getTransaction().begin();
-    	
-    	//Insert project for employee
+    	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
+    	//objEmployeeListAPI.addProject(projectName, employeeId);
     	
     }
     
+    public static void addNewProject(String projectName){
+    	
+    	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
+    	objEmployeeListAPI.addNewProject(projectName);
+    	Logger.info("New project added :"+projectName);
+    }
     public static void getProjects(){
     	
     	// Get projects for Employee with Id : nEmpId
@@ -100,12 +105,14 @@ public class Application extends Controller {
         		}
         	}
         }
+        
+        List<Project> listProjects=new EmployeeListAPI().getAllProjects();
        // renderJSON(modelSerializer.serialize(listEmployeeInfo));
         
         List<Employee> listEmployees=objEmployeeListAPI.getAllEmployees();
         
        
-       render("Application/index.html",listEmployeeInfo);
+       render("Application/index.html",listEmployeeInfo, listProjects);
     }
     
     /**

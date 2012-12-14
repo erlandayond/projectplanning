@@ -16,11 +16,15 @@ $(document).ready(function () {
     $('.toggler').live('click',function(){
 
     	var thisRow=$(this).parent().parent();
-    	$(this).toggleClass('opened');
+
     	if(thisRow.next().hasClass('employee-info')){
 
     		thisRow.next('.employee-info').toggle();
-    		
+    		$(this).toggleClass('opened');
+
+    		//project info
+    		var thisEmployeeInfo=$(thisRow.next());
+    		$(thisEmployeeInfo).find('.week').attr('contenteditable','true');
     }
 
     });
@@ -38,6 +42,19 @@ $(document).ready(function () {
 
 			 	});
 			}
+    	}
+    });
+    $("#addProject").change(function(){
+    	var projId=$("#addProject option:selected").val();
+    	var projName=$('#addProject option:selected').text();
+         var empId=$('#addProject').parent().parent().parent().attr('employeeid');
+
+    	if(projId=="new"){
+    		var newProjectName=prompt("Project Name");
+    		var projUrl="http://localhost:9000/addProject";
+    		if(newProjectName.length>0){
+    			$.post(projUrl, {ProjectName:projName, EmployeeId:empId}, function(data){});
+    		}
     	}
     });
 

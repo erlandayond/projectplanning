@@ -89,6 +89,7 @@ public class EmployeeListAPI {
 		return listProjects;
 	}
 	
+	//private List<Project>
 	private List<ProjectOccupied> getProjectsForEmployee(int nEmpId){
 	    
 		Query query=JPA.em().createQuery("select projectId, projectName, week, occupied from Resourceplan where empId=:id ");

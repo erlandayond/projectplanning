@@ -254,7 +254,11 @@ a.add-project {
 	content: ".";
 	visibility: hidden;
 }
-
+.employee-info .new-project{
+	width: 50%;
+	float: left;
+	font-size: 0.85em;
+}
 .navigation {
 	float: right;
 	width: 38%;

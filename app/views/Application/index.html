@@ -94,7 +94,7 @@
 
                         
                   %}
-				<div class="table-row" id="employee-${emp.nEmpId}">
+				<div class="table-row" id="employee-${emp.nEmpId}" >
 					<div class="column person first-column">
 						<div class="toggler"></div>
 						<span class="name">${emp.strEmpName}</span>
@@ -114,7 +114,7 @@
 						<div class="week" id="week12"></div>
 					</div>
                 </div>
-                <div class="employee-info" style="display: block;"> 
+                <div class="employee-info" style="display: block;" employeeId="${emp.nEmpId}"> 
                		%{ for(proj in emp.listProjectInfo){ %}
                 		<div class="table-row" id="project-${proj.nProjectId}">
 							<div class="column first-column">
@@ -130,6 +130,32 @@
 							</div>
                     	</div>
                 	%{ } %}
+                	<div class="table-row">
+                		<div class="column first-column">
+                			<select id="addProject" class="new-project">
+                				%{ for(project in listProjects) { %}
+                					<option value="${project.projectId}">${project.projectName}</option>
+                		    	%{ 
+                					} 
+                				%}
+                				 <option value="new">New Project</option>
+                			</select>
+                		</div>
+                		<div class="column second-column">
+							<div class="week" id="week1"></div>
+							<div class="week" id="week2"></div>
+							<div class="week" id="week3"></div>
+							<div class="week" id="week4"></div>
+							<div class="week" id="week5"></div>
+							<div class="week" id="week6"></div>
+							<div class="week" id="week7"></div>
+							<div class="week" id="week8"></div>
+							<div class="week" id="week9"></div>
+							<div class="week" id="week10"></div>
+							<div class="week" id="week11"></div>
+							<div class="week" id="week12"></div>
+						</div>
+                	</div>
             	</div>
                 %{
 				     } 
