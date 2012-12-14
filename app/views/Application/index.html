@@ -61,11 +61,11 @@
 						
 						<select id="addEmployee">
                  
-                  %{ for(emp in listEmployees) {
+                  %{ for(emp in listEmployeeInfo) {
                   
-                       if(emp.empType=="regular") {
+                       if(emp.strEmpType=="regular") {
                   %}
-								<option value="${emp.empId}">${emp.empName}</option>
+								<option value="${emp.nEmpId}">${emp.strEmpName}</option>
 				  %{
 				     } 
 				     	}
@@ -89,14 +89,15 @@
 						<div class="week"></div>
 					</div>
 				</div>
-				 %{ for(emp in listEmployees) {
-                   if(emp.empType=="regular") {
+				 %{ for(emp in listEmployeeInfo) {
+                   		if(emp.strEmpType=="regular") {
+
                         
                   %}
-				<div class="table-row" id="employee-${emp.empId}">
+				<div class="table-row" id="employee-${emp.nEmpId}">
 					<div class="column person first-column">
 						<div class="toggler"></div>
-						<span class="name">${emp.empName}</span>
+						<span class="name">${emp.strEmpName}</span>
 					</div>
 					<div class="column second-column">
 						<div class="week" id="week1"></div>
@@ -113,6 +114,23 @@
 						<div class="week" id="week12"></div>
 					</div>
                 </div>
+                <div class="employee-info" style="display: block;"> 
+               		%{ for(proj in emp.listProjectInfo){ %}
+                		<div class="table-row" id="project-${proj.nProjectId}">
+							<div class="column first-column">
+								<span class="project-name">${proj.strProjectName}</span>
+							</div>
+							<div class="column second-column">
+								%{ for(week in proj.listWeekInfo){ %}
+
+									<div class="week" id="${week.nWeekNum}">${week.nOccupied}</div>
+								%{ 
+									}
+								%}
+							</div>
+                    	</div>
+                	%{ } %}
+            	</div>
                 %{
 				     } 
 				    } 	
@@ -149,11 +167,11 @@
 					<div class="column first-column">
 						<!-- <a href="#" class="add-employee subcontractor">Add person</a> -->
 						<select id="addContractor">
-                 %{ for(emp in listEmployees) {
+                 %{ for(emp in listEmployeeInfo) {
                   
-                       if(emp.empType=="contractor") {
+                       if(emp.strEmpType=="contractor") {
                   %}
-								<option value="${emp.empId}">${emp.empName}</option>
+								<option value="${emp.nEmpId}">${emp.strEmpName}</option>
 				  %{
 				     } 
 				     	}
@@ -176,14 +194,14 @@
 						<div class="week"></div>
 					</div>
 				</div>
-					 %{ for(emp in listEmployees) {
+					 %{ for(emp in listEmployeeInfo) {
                   
-                       if(emp.empType=="contractor") {
+                       if(emp.strEmpType=="contractor") {
                   %}
-				<div class="table-row" id="employee-${emp.empId}">
+				<div class="table-row" id="employee-${emp.nEmpId}">
 					<div class="column person first-column">
 						<div class="toggler"></div>
-						<span class="name">${emp.empName}</span>
+						<span class="name">${emp.strEmpName}</span>
 					</div>
 					<div class="column second-column">
 						<div class="week" id="week1"></div>

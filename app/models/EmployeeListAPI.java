@@ -1,8 +1,6 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -16,16 +14,21 @@ public class EmployeeListAPI {
 		
 		List<Employee> listEmployee=getAllEmployees();
 		List<EmployeeInfo> listEmployeeInfo=new ArrayList<EmployeeInfo>();
+		
+		
 		for(Employee emp: listEmployee){
 			
 			EmployeeInfo tempEmployeeInfo=new EmployeeInfo();
+			EmployeeQuarter tempEmployeeQuarter=new EmployeeQuarter();
 			tempEmployeeInfo.nEmpId=emp.getEmpId();
 			tempEmployeeInfo.strEmpName=emp.getEmpName();
 			tempEmployeeInfo.strEmpType=emp.getEmpType();
 			tempEmployeeInfo.listProjectWorking= getProjectsForEmployee(emp.getEmpId());
-			tempEmployeeInfo.dicProjectWorking=numProjectsWorkingByEmployee(emp.getEmpId());
-			
+			tempEmployeeInfo.listProjectInfo=getEmployeeProjectInfo(emp.getEmpId());
+		
+		
 			listEmployeeInfo.add(tempEmployeeInfo);
+			
 		}
 		
 		return listEmployeeInfo;
@@ -87,7 +90,7 @@ public class EmployeeListAPI {
 	}
 	
 	private List<ProjectOccupied> getProjectsForEmployee(int nEmpId){
-	
+	    
 		Query query=JPA.em().createQuery("select projectId, projectName, week, occupied from Resourceplan where empId=:id ");
 		query.setParameter("id",nEmpId);
 		
@@ -117,29 +120,188 @@ public class EmployeeListAPI {
 		
 	}
 	
-	// Get number of projects working by an employee
-	public Dictionary numProjectsWorkingByEmployee(int nEmpId){
+	/*// Get number of projects working by an employee
+	public List<WeekInfo> projectsWorkingByEmployee(int nEmpId){
 		
+		//TODO: change quarter
+		int nQuarter=4; 
+		int nStartWeek=40; 
+		int nLastWeek=52;
+		String strProjectName="";
+		int nProjectId=0;
+		final int NOTCHANGED=-1;
+		final int DEFAULT=0;
+		
+		List<WeekInfo> listDicObjEmployeeQuarter=new ArrayList<WeekInfo>();
 		Query query=JPA.em().createQuery("select distinct(projectId), projectName FROM Resourceplan where empId=:nEId");
 		query.setParameter("nEId",nEmpId);
 	    
 		List<Object> listObjResult=query.getResultList();
-		Dictionary dicWorkingProjects=new Hashtable();
 		
 		if(listObjResult.size()>0){
 			
 			for(Object tempObj: listObjResult){
 				Object[] objResult=(Object[])tempObj;
 				
-				Logger.info("values putting in dic"+objResult[0].toString()+"value"+objResult[1].toString() );
-				dicWorkingProjects.put(objResult[0], objResult[1]);
+				nProjectId=(int)objResult[0];
+				strProjectName=objResult[1].toString();
 				
+				    Logger.info("ProjectId got from the query:"+nProjectId);
+					
+					Query tempQuery=JPA.em().createQuery("SELECT week, occupied FROM Resourceplan where empId=:nEid and projectId=:nProjId and week>=:nWeek");
+					tempQuery.setParameter("nEid", nEmpId);
+					tempQuery.setParameter("nProjId", nProjectId); 
+					tempQuery.setParameter("nWeek",nStartWeek);
+					
+					List<Object> listObjQuarterResult=tempQuery.getResultList();
+					
+					//Initalize quarter values which depends on quarter number
+					List<WeekInfo> listWeekInfo=new ArrayList<WeekInfo>(14);
+					//First key and value are project id and project name repsectively
+					dicTemp.put(nProjectId, strProjectName);
+					
+					WeekInfo tempObjWeekInfo=new WeekInfo();
+					tempObjWeekInfo.nProjectId=nProjectId;
+					tempObjWeekInfo.strProjectName=strProjectName;
+					
+					//Initialize key with week numbers and values are -1
+					for(int i=nStartWeek;i<=nLastWeek;i++){
+						
+						
+					}
+					
+					if(listObjQuarterResult.size()>0){
+						
+						    //Get occupied values for quarter
+							for(Object tempResObj: listObjQuarterResult){
+								Object[] objTempResult=(Object[])tempResObj;
+								
+								int nWeek=(int)objTempResult[0];
+								int nOccupied=(int)objTempResult[1];
+								
+								if((int)dicTemp.get(nWeek)==NOTCHANGED){
+									dicTemp.put(nWeek, nOccupied);
+								}	
+						
+					       }
+							
+						  for(int i=nStartWeek;i<=nLastWeek;i++){
+							  if((int)dicTemp.get(i)==NOTCHANGED){
+									dicTemp.put(i, DEFAULT);
+								}	
+						  }
+					}
+					listDicObjEmployeeQuarter.add(dicTemp);
+			}
+		}
+		Logger.info("number of projects working on"+listDicObjEmployeeQuarter.size()+" by employee id:"+nEmpId);
+        return listDicObjEmployeeQuarter;
+	
+	}*/
+	
+	public List<ProjectInfo> getEmployeeProjectInfo(int nEmpId){
+		
+		//TODO: change quarter
+		int nQuarter=4; 
+		int nStartWeek=40; 
+		int nLastWeek=52;
+		String strProjectName="";
+		int nProjectId=0;
+		final int NOTCHANGED=-1;
+		final int DEFAULT=0;
+		
+		//Get ProjectInfo for the employee
+		Query query=JPA.em().createQuery("select distinct(projectId), projectName FROM Resourceplan where empId=:nEId");
+		query.setParameter("nEId",nEmpId);
+		
+		List<Object> listObjResult=query.getResultList();
+		
+		// Project Count greater than 0 ?
+		// Loop through number of projects times
+		List<ProjectInfo> listProjectInfo=new ArrayList<ProjectInfo>();
+		if(listObjResult.size()>0){
+		
+			for(Object tempObj: listObjResult){
+				Object[] objResult=(Object[])tempObj;
+				
+				// Create a temp projectInfo object
+				ProjectInfo objProjectInfo=new ProjectInfo();
+				
+				// Set to local variables
+				nProjectId=(int)objResult[0];
+				strProjectName=objResult[1].toString();
+				
+				//set values to ProjectInfo object
+				objProjectInfo.nProjectId=nProjectId;
+				objProjectInfo.strProjectName=strProjectName;
+				
+				//Get week info - week number and occupied for each project
+				Query tempQuery=JPA.em().createQuery("SELECT week, occupied FROM Resourceplan where empId=:nEid and projectId=:nProjId and week>=:nWeek");
+				tempQuery.setParameter("nEid", nEmpId);
+				tempQuery.setParameter("nProjId", nProjectId); 
+				tempQuery.setParameter("nWeek",nStartWeek);
+				
+				List<Object> listWeekObjResult=tempQuery.getResultList();
+				
+				// WeekInfo count greater than 0 ?
+				// Loop through number of number of times - here we are looping 13 weeks ( Quarter)
+				List<WeekInfo> listWeekInfo=new ArrayList<WeekInfo>();
+				
+				//Initialize key with week numbers and values are -1
+				//TODO: remove 12 here
+				int nTempWeek=nStartWeek;
+				for(int i=0;i<12;i++){
+					WeekInfo week = new WeekInfo();
+					week.nOccupied=NOTCHANGED;
+					week.nWeekNum=nTempWeek;
+					listWeekInfo.add(week);
+					nTempWeek++;
+				}
+				
+				if(listWeekObjResult.size()>0){
+					
+					for(Object tempWeekObj: listWeekObjResult){
+						Object[] objTempWeekResult=(Object[])tempWeekObj;
+						
+						// Create local week object
+						WeekInfo objWeekInfo=new WeekInfo();
+						
+						// Set to local variables;
+						int nWeek=(int)objTempWeekResult[0];
+						int nOccupied=(int)objTempWeekResult[1];
+						
+						objWeekInfo.nWeekNum=nWeek;
+						
+						
+						for(WeekInfo week: listWeekInfo){
+							
+							if(week.nWeekNum==objWeekInfo.nWeekNum){
+								
+								objWeekInfo.nOccupied=nOccupied;
+								Logger.info("nWeekNum:"+week.nWeekNum);
+								Logger.info("nOccupied:"+week.nOccupied);
+							}
+							
+						}
+						
+					}
+					
+					// If week occupied are not found in db, change that values to Zero
+					for(WeekInfo week: listWeekInfo){
+						
+						if(week.nOccupied==NOTCHANGED){
+							week.nOccupied=DEFAULT;
+						}
+						
+						
+					}
+				}
+				
+				objProjectInfo.listWeekInfo=listWeekInfo;
+				listProjectInfo.add(objProjectInfo);
 			}
 		}
 		
-		return dicWorkingProjects;
+		return listProjectInfo;
 	}
-    
-	
-	
 }

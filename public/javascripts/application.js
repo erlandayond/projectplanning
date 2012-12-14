@@ -15,9 +15,16 @@ $(document).ready(function () {
     
     $('.toggler').live('click',function(){
 
+    	var thisRow=$(this).parent().parent();
     	$(this).toggleClass('opened');
+    	if(thisRow.next().hasClass('employee-info')){
+
+    		thisRow.next('.employee-info').toggle();
+    		
+    }
 
     });
+
     $("#addEmployee").change(function(){
     	var empId=$("#addEmployee option:selected").val();
     	var empName=$('#addEmployee option:selected').text();

@@ -1,18 +1,21 @@
 package controllers;
 
-import play.*;
-import play.db.jpa.JPA;
-import play.mvc.*;
-
-import groovy.ui.Console;
-
-import java.util.*;
+import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import flexjson.JSONSerializer;
 
-import models.*;
+import models.Employee;
+import models.EmployeeInfo;
+import models.EmployeeListAPI;
+import models.EmployeeQuarter;
+import models.Project;
+import models.ProjectInfo;
+import models.ProjectOccupied;
+import models.WeekInfo;
+import play.Logger;
+import play.db.jpa.JPA;
+import play.mvc.Controller;
+import flexjson.JSONSerializer;
 
 public class Application extends Controller {
 
@@ -50,12 +53,12 @@ public class Application extends Controller {
     }
     
     public static void getJSONEmployeeInfo(){
-    	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
+    	/*EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
         List<EmployeeInfo> listObjEmployeeInfo= objEmployeeListAPI.MakeAPIObject();
        
         
         JSONSerializer modelSerializer = new JSONSerializer().exclude("class").include("listProjectWorking").rootName("employees").exclude("listProjectWorking.class","nEmpId","listProjectWorking.nProjectId", "listProjectWorking.nWeekNumber", "listProjectWorking.nOccupied");
-        renderJSON(modelSerializer.serialize(listObjEmployeeInfo));
+        renderJSON(modelSerializer.serialize(listObjEmployeeInfo));*/
         
     }
     
@@ -83,15 +86,26 @@ public class Application extends Controller {
     	
     	
     	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
-        List<EmployeeInfo> listObjEmployeeInfo= objEmployeeListAPI.MakeAPIObject();
-       
+        List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject();
+        JSONSerializer modelSerializer = new JSONSerializer().include("listProjectInfo","listProjectInfo.listWeekInfo").exclude("class","NEmpId")
+        									.exclude("listProjectInfo.NProjectId","listProjectInfo.class")
+        									.exclude("listProjectInfo.listWeekInfo.NOccupied", "listProjectInfo.listWeekInfo.NWeekNum","listProjectInfo.listWeekInfo.class");
         
-    	EmployeeListAPI objEmpListAPI=new EmployeeListAPI();
-        List<Employee> listEmployees= objEmpListAPI.getAllEmployees();
+        for(EmployeeInfo employee: listEmployeeInfo){
+        	
+        	for(ProjectInfo project: employee.listProjectInfo){
+        		
+        		for(WeekInfo week: project.listWeekInfo){
+        			
+        		}
+        	}
+        }
+       // renderJSON(modelSerializer.serialize(listEmployeeInfo));
+        
+        List<Employee> listEmployees=objEmployeeListAPI.getAllEmployees();
+        
        
-        JSONSerializer modelSerializer=new JSONSerializer().exclude("class","entityId","persistent").rootName("employees");
-        Logger.info("number of employees:"+listEmployees.size());
-        render("Application/index.html", listEmployees, listObjEmployeeInfo);
+       render("Application/index.html",listEmployeeInfo);
     }
     
     /**
