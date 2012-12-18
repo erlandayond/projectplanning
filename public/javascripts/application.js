@@ -78,12 +78,10 @@ $(document).ready(function () {
     $('#btnNewContractor').click(function(){
 
     	var newContractorName=prompt("Contractor Name");
-    	var newEmpUrl="http://localhost:9000/addNewContractor";
+    	var newContractUrl="http://localhost:9000/addNewContractor";
 
-    	if(newEmpName.length>0){
-    		$.post(newEmpUrl, {contractorName:newContractorName}, function(data){
-
-    		});
+    	if(newContractorName.length>0){
+    		$.post(newContractUrl, {contractorName:newContractorName}, function(data){})
     	}
     });
     $("#addContractor").change(function(){

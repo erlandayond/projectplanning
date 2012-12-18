@@ -93,6 +93,7 @@ public class Application extends Controller {
     public static void addNewContractor(String contractorName){
     	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
     	String strEmpType="contractor";
+    	
     	if(contractorName.length()>0){
     		objEmployeeListAPI.addNewEmployee(contractorName, strEmpType);
     		Logger.info("New contractor added :"+contractorName);
@@ -105,7 +106,7 @@ public class Application extends Controller {
     	
     }
     
-    public static void getEmployees(){
+   public static void getEmployees(){
     	
     	
     	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
