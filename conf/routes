@@ -5,7 +5,8 @@
 # Home page
 GET     /                                       Application.index
 
-POST     /addEmployee				            Application.addEmployee
+POST 	/addProject								Application.addProject
+POST    /addEmployee				            Application.addEmployee
 GET     /getJSONEmployeeInfo					Application.getJSONEmployeeInfo
 GET     /getEmployees                           Application.getEmployees
 GET     /getProjects                            Application.getProjects

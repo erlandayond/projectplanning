@@ -55,40 +55,7 @@
                 
                  
                 
-				<div class="table-row">
-					<div class="column first-column">
-						<!-- <a href="#" class="add-employee regular">Add person</a> -->
-						
-						<select id="addEmployee">
-                 
-                  %{ for(emp in listEmployeeInfo) {
-                  
-                       if(emp.strEmpType=="regular") {
-                  %}
-								<option value="${emp.nEmpId}">${emp.strEmpName}</option>
-				  %{
-				     } 
-				     	}
-				  %}
-				  
-				   <option value="new">New Employee</option>
-				   </select>
-					</div>
-					<div class="column second-column">
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-					</div>
-				</div>
+				
 				 %{ for(emp in listEmployeeInfo) {
                    		if(emp.strEmpType=="regular") {
 
@@ -132,13 +99,14 @@
                 	%{ } %}
                 	<div class="table-row">
                 		<div class="column first-column">
-                			<select id="addProject" class="new-project">
+                			<div class="add-project"></div>
+                			<select id="addProject" class="add-project">
                 				%{ for(project in listProjects) { %}
                 					<option value="${project.projectId}">${project.projectName}</option>
                 		    	%{ 
                 					} 
                 				%}
-                				 <option value="new">New Project</option>
+                				 
                 			</select>
                 		</div>
                 		<div class="column second-column">
@@ -189,37 +157,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="table-row">
-					<div class="column first-column">
-						<!-- <a href="#" class="add-employee subcontractor">Add person</a> -->
-						<select id="addContractor">
-                 %{ for(emp in listEmployeeInfo) {
-                  
-                       if(emp.strEmpType=="contractor") {
-                  %}
-								<option value="${emp.nEmpId}">${emp.strEmpName}</option>
-				  %{
-				     } 
-				     	}
-				  %}
-				   <option value="new">New Contractor</option>
-				   </select>
-					</div>
-					<div class="column second-column">
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-						<div class="week"></div>
-					</div>
-				</div>
+			
 					 %{ for(emp in listEmployeeInfo) {
                   
                        if(emp.strEmpType=="contractor") {

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 
 import play.db.jpa.JPA;
@@ -28,13 +29,13 @@ public class ProjectOccupied {
 		int nProjId=Integer.parseInt(sProjId);
 		int nOccupied=Integer.parseInt(sOccupied);
 		
-		int nResId=projectExists(nEmpId, nProjId, nWeekNumber);
+		//int nResId=projectExists(nEmpId, nProjId, nWeekNumber);
 		boolean flag=false;
 		// Update record in Resourceplan table
-		if(nResId>0){
-			updateProject(nEmpId, nProjId, nResId, sProjName, nWeekNumber, nOccupied);
+	//	if(nResId>0){
+		//	updateProject(nEmpId, nProjId, nResId, sProjName, nWeekNumber, nOccupied);
 			flag=true;
-		}
+		//}
 		
 		return flag;
 	}
@@ -58,23 +59,29 @@ public class ProjectOccupied {
 		return nQuarter*13+nWeekNum;
 	}
 	
-	private int projectExists(int nEmpId, int nProjId, int nWeekNum){
+	public static void addProject(int nEmpId, int nProjId, String strProjName, int nWeekNum){
 		
-		CriteriaBuilder cb=JPA.em().getCriteriaBuilder();
+		Resourceplan objResourceplan=new Resourceplan();
+		objResourceplan.setProjectId(nProjId);
+		objResourceplan.setProjectName(strProjName);
+		objResourceplan.setWeek(nWeekNum);
+		objResourceplan.setEmployee(EmployeeListAPI.getEmployee(nEmpId));
+		objResourceplan.save();
+	}
+	private boolean projectExists(int nEmpId, int nProjId, int nWeekNum){
 		
 		Query query=JPA.em().createQuery("select id from Resourceplan where week:weekNum and empId=:eId and projectId=:projId ");
 		query.setParameter("eId",nEmpId);
 		query.setParameter("projId",nProjId);
 		query.setParameter("weekNum", nWeekNum);
 		
-	    Object objTemp=query.getSingleResult();
-	    if(objTemp!=null){
+	    List<Object> objResult=query.getResultList();
+	    if(objResult.size()>0){
 	    
-	    	Object []objResult=(Object[])objTemp;
-	    	return (int)objResult[0];
+	    	return true;
 	    }else{
 	    	
-	    	return -1; // If no resource record found, return -1
+	    	return false;
 	    }
 	}
 	
@@ -88,6 +95,27 @@ public class ProjectOccupied {
 		}else{
 			return false;
 		}
+	}
+	
+	
+	public static String getProjectName(int nProjectId){
+		
+		TypedQuery<Project> query=JPA.em().createQuery("select p from Project p where p.projectId= :nProjectId",Project.class);
+		
+		query.setParameter("nProjectId", nProjectId);
+		List<Project> listProjects=query.getResultList();
+		
+		if(listProjects.size()==1){
+			
+			Project proj=listProjects.get(0);
+			return proj.getProjectName();
+			
+		}else{
+			
+			return "";
+		}
+		
+		
 	}
 }
 

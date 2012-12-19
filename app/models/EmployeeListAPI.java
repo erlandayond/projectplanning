@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import play.Logger;
 import play.db.jpa.JPA;
@@ -90,6 +91,18 @@ public class EmployeeListAPI {
 		return listProjects;
 	}
 	
+	//Get employee
+	public static Employee getEmployee(int nEmpId){
+		TypedQuery<Employee> query=JPA.em().createQuery("select e from Employee e where e.empId=:nEmpId",Employee.class);
+		query.setParameter("nEmpId", nEmpId);
+		List<Employee> listEmployees=query.getResultList();
+		if(listEmployees.size()==1){
+			return listEmployees.get(0);
+		}else{
+			return null;
+		}
+		
+	}
 	public void addNewProject(String strProjectName){
 		EntityManager em=JPA.newEntityManager();
 		Project objProject=new Project();

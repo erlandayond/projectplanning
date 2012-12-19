@@ -44,18 +44,18 @@ $(document).ready(function () {
 			}
     	}
     });
-    $("#addProject").change(function(){
-    	var projId=$("#addProject option:selected").val();
-    	var projName=$('#addProject option:selected').text();
-         var empId=$('#addProject').parent().parent().parent().attr('employeeid');
 
-    	if(projId=="new"){
-    		var addProjectName=prompt("Project Name");
-    		var projUrl="http://localhost:9000/addProject";
-    		if(addProjectName.length>0){
-    			$.post(projUrl, {projectName:addProjectName, employeeId:empId}, function(data){});
-    		}
-    	}
+    $(".add-project").change(function(){
+    	var projId=$(this).find('option:selected').val();
+    	var projName=$(this).find('option:selected').text();
+        var empId=$(this).parent().parent().parent().attr('employeeid');
+        var newProjUrl="http://localhost:9000/addProject";
+         
+        alert("projId:"+projId+"empId:"+empId);
+        $.post(newProjUrl,{projectId:projId, employeeId:empId},function(data){
+
+        }) ;
+
     });
     $("#btnNewProject").click(function(){
     	var newProjectName=prompt("Project Name");

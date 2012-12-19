@@ -415,3 +415,10 @@ a.mark-as-unsure.safe {
 	box-sizing: border-box;
 }
 
+.add-project{
+
+	width: 40%;
+	float: left;
+	font-size: 0.85em;
+	margin-left: 5em;
+}

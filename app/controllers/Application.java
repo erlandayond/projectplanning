@@ -31,27 +31,6 @@ public class Application extends Controller {
     	render("Application/index.html");
     }
     
-    public static void addEmployee(String ename, String eType){
-    	EntityManager em= JPA.newEntityManager();
-    	
-    	if(ename!=null && ! ename.isEmpty())
-    	{
-    		em.getTransaction().begin();
-    	
-    		// Insert Employee record
-    		Employee emp=new Employee();
-    		emp.setEmpName(ename);
-    		emp.setEmpType(eType);
-    		em.persist(emp);
-    		em.getTransaction().commit();
-    	
-    		Logger.info("employee added to database:"+ename+"Type:"+emp.getEmpType());
-    	
-    	}
-    	
-    	redirect("/getEmployees");
-    }
-    
     public static void getJSONEmployeeInfo(){
     	/*EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
         List<EmployeeInfo> listObjEmployeeInfo= objEmployeeListAPI.MakeAPIObject();
@@ -62,15 +41,19 @@ public class Application extends Controller {
         
     }
     
-    // Add project for employee
-    public static void addProject(String projectName, String employeeId ){
+    // Add a project for employee
+    public static void addProject(String projectId, String employeeId ){
+    	   	
+    	int nProjectId=Integer.parseInt(projectId);
+    	int nEmployeeId=Integer.parseInt(employeeId);
+    	//TODO remove fixed value for nWeekNum
+    	int nWeekNum=40;
     	
-    	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
-    	
-        if(projectName.length()>0 && employeeId.length()>0){
-        	//objEmployeeListAPI.addProject(projectName, employeeId);
-        	Logger.info("Project to be added"+projectName+" for employee:"+employeeId);
+        if(nProjectId>0 && nEmployeeId>0){
+        	ProjectOccupied.addProject(nEmployeeId, nProjectId,ProjectOccupied.getProjectName(nProjectId),nWeekNum);
+        	Logger.info("project name:"+ ProjectOccupied.getProjectName(nProjectId));
         }
+        
     }
     
     public static void addNewProject(String projectName){
