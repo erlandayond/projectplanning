@@ -99,7 +99,22 @@ $(document).ready(function () {
 			}
     	}
     });
-   
+    $('.week').blur(function(){
+        
+    	var weekNumber=this.id; // get week number
+
+    	var tempFind='.column.second-column #'+weekNumber;
+    	var total=0;
+    	var empInfoRow=$(this).parent().parent().parent().find(tempFind).each(function(){
+    		total+=parseInt($(this).text());
+    	});
+    	var prevRowWeek=$(this).parent().parent().parent().prev();
+    	
+
+        var prevRowWeekNum=$(this).parent().parent().parent().prev().find(tempFind);
+        $(prevRowWeekNum).text(total);
+
+    });
 	// //add project link click function
 	// $("a.add-project").live('click', function () {
 	// 	var employeeId = $(this).parent().parent().parent().prev().attr('id');
@@ -111,46 +126,46 @@ $(document).ready(function () {
 	// });
 
 	//add employee link click function
-	$('a.add-employee').click(function () {
-		if ($(this).hasClass('regular')) {
-			employees.push(new employee(type = "regular"));
-		} else if ($(this).hasClass('subcontractor')) {
-			employees.push(new employee(type = "subcontractor"));
-		}	
-	});
+	// $('a.add-employee').click(function () {
+	// 	if ($(this).hasClass('regular')) {
+	// 		employees.push(new employee(type = "regular"));
+	// 	} else if ($(this).hasClass('subcontractor')) {
+	// 		employees.push(new employee(type = "subcontractor"));
+	// 	}	
+	// });
 	
-	$('[contenteditable]').live('focus', function() {
-	    var $this = $(this);
-	    $this.data('before', $this.html());
-	    if ($this.hasClass('week')) {
-	    	$this.keydown(function(e) {
-					var code = e.keyCode || e.which;
-					if (code == '9') {
-						console.log('tab pressed');
-						$('.table-row .tool-tip').remove();
-						$this.next().focus();
-						return false;
-					}
-			});
-	    }
-	    return $this;
-	}).live('blur', function(e) {
-	    var $this = $(this);
-	    var $e = $(e.target);
-	    if ($this.hasClass('name')) {
-	    	$this.validateEmployeeName();
-	    }
-	    if ($this.data('before') !== $this.html()) { //if information in field is changed
-	        $this.data('before', $this.html());
-	        if ($this.hasClass('project-name')) { //if the input is in the project name field
-	        	$this.validateProjectName();			        	
-	        }
-	        if($this.hasClass('week')) {
-	        	$this.validateWeek();
-	        }
-	    }
-	    return $this;
-	});
+	// $('[contenteditable]').live('focus', function() {
+	//     var $this = $(this);
+	//     $this.data('before', $this.html());
+	//     if ($this.hasClass('week')) {
+	//     	$this.keydown(function(e) {
+	// 				var code = e.keyCode || e.which;
+	// 				if (code == '9') {
+	// 					console.log('tab pressed');
+	// 					$('.table-row .tool-tip').remove();
+	// 					$this.next().focus();
+	// 					return false;
+	// 				}
+	// 		});
+	//     }
+	//     return $this;
+	// }).live('blur', function(e) {
+	//     var $this = $(this);
+	//     var $e = $(e.target);
+	//     if ($this.hasClass('name')) {
+	//     	$this.validateEmployeeName();
+	//     }
+	//     if ($this.data('before') !== $this.html()) { //if information in field is changed
+	//         $this.data('before', $this.html());
+	//         if ($this.hasClass('project-name')) { //if the input is in the project name field
+	//         	$this.validateProjectName();			        	
+	//         }
+	//         if($this.hasClass('week')) {
+	//         	$this.validateWeek();
+	//         }
+	//     }
+	//     return $this;
+	// });
 	//END OF EVENT HANDLERS ETC.
 
 	//THE EMPLOYEE OBJECT....
@@ -485,14 +500,14 @@ $(document).ready(function () {
 			 // 	}
 			 // });
 	//CREATE SOME OBJECTS FOR TEST PURPOSE... THIS STUFF SHOULD BE FETCHED FROM BACKEND DATABASE LATER ON...
-	total1 = new Array("-", "100", "80", "10", "-", "", "20", "60", "", "-", "10", "-");
-	project1 = new project('testprojekt', new Array("-", "100", "80", "10", "-", "", "20", "60", "", "-", "10", "-"));
-	project2 = new project('BUS', new Array("-", "90", "80", "10", "-", "", "20", "60", "", "-", "10", "-"));
-	projects1 = new Array(project1, project2);
-	employee1 = new employee('regular', 'employee1', 'Pelle Persson', projects1, total1);
-	employee2 = new employee('regular', 'employee2', 'Per Sunesson', projects1, total1);
-	employee3 = new employee('regular', 'employee3', 'Fredrik Aldegren', projects1, total1);
-	employee4 = new employee('regular', 'employee4', 'Anders Velander', projects1, total1);
-	employee5 = new employee('subcontractor', 'employee5', 'Thomas Arctaedius', projects1, total1);
-	employees = new Array(employee1, employee2, employee3, employee4, employee5);
+	// total1 = new Array("-", "100", "80", "10", "-", "", "20", "60", "", "-", "10", "-");
+	// project1 = new project('testprojekt', new Array("-", "100", "80", "10", "-", "", "20", "60", "", "-", "10", "-"));
+	// project2 = new project('BUS', new Array("-", "90", "80", "10", "-", "", "20", "60", "", "-", "10", "-"));
+	// projects1 = new Array(project1, project2);
+	// employee1 = new employee('regular', 'employee1', 'Pelle Persson', projects1, total1);
+	// employee2 = new employee('regular', 'employee2', 'Per Sunesson', projects1, total1);
+	// employee3 = new employee('regular', 'employee3', 'Fredrik Aldegren', projects1, total1);
+	// employee4 = new employee('regular', 'employee4', 'Anders Velander', projects1, total1);
+	// employee5 = new employee('subcontractor', 'employee5', 'Thomas Arctaedius', projects1, total1);
+	// employees = new Array(employee1, employee2, employee3, employee4, employee5);
 });
