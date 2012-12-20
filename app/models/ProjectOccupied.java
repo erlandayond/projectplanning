@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 
+import play.Logger;
 import play.db.jpa.JPA;
 
 /**
@@ -29,13 +30,16 @@ public class ProjectOccupied {
 		int nProjId=Integer.parseInt(sProjId);
 		int nOccupied=Integer.parseInt(sOccupied);
 		
-		//int nResId=projectExists(nEmpId, nProjId, nWeekNumber);
+		long nResId=projectExists(nEmpId, nProjId, nWeekNumber);
 		boolean flag=false;
 		// Update record in Resourceplan table
-	//	if(nResId>0){
-		//	updateProject(nEmpId, nProjId, nResId, sProjName, nWeekNumber, nOccupied);
+		if(nResId>0){
+			updateProject(nEmpId, nProjId, nResId, sProjName, nWeekNumber, nOccupied);
 			flag=true;
-		//}
+		}else{
+			//add occupied recored to Resource plan
+			addProject(nEmpId,nProjId, sProjName,nWeekNumber, nOccupied );
+		}
 		
 		return flag;
 	}
@@ -59,6 +63,16 @@ public class ProjectOccupied {
 		return nQuarter*13+nWeekNum;
 	}
 	
+	public static void addProject(int nEmpId, int nProjId, String strProjName, int nWeekNum, int nOccupied){
+		Resourceplan objResourceplan=new Resourceplan();
+		objResourceplan.setProjectId(nProjId);
+		objResourceplan.setProjectName(strProjName);
+		objResourceplan.setWeek(nWeekNum);
+		objResourceplan.setEmployee(EmployeeListAPI.getEmployee(nEmpId));
+		objResourceplan.setOccupied(nOccupied);
+		objResourceplan.save();
+		
+	}
 	public static void addProject(int nEmpId, int nProjId, String strProjName, int nWeekNum){
 		
 		Resourceplan objResourceplan=new Resourceplan();
@@ -68,24 +82,29 @@ public class ProjectOccupied {
 		objResourceplan.setEmployee(EmployeeListAPI.getEmployee(nEmpId));
 		objResourceplan.save();
 	}
-	private boolean projectExists(int nEmpId, int nProjId, int nWeekNum){
+	private long projectExists(int nEmpId, int nProjId, int nWeekNum){
 		
-		Query query=JPA.em().createQuery("select id from Resourceplan where week:weekNum and empId=:eId and projectId=:projId ");
+		Query query=JPA.em().createQuery("select r.resId from Resourceplan r where r.week=:weekNum and r.employee.empId=:eId and r.projectId=:projId ");
 		query.setParameter("eId",nEmpId);
 		query.setParameter("projId",nProjId);
 		query.setParameter("weekNum", nWeekNum);
 		
-	    List<Object> objResult=query.getResultList();
-	    if(objResult.size()>0){
-	    
-	    	return true;
-	    }else{
+	    List<Object> listObjResult=query.getResultList();
+	    Long nResId=0L;
+	    if(listObjResult.size()>0){
 	    	
-	    	return false;
+	    	// It iterates only one time
+	    	for(Object tempObj: listObjResult){
+	    		Object[] objResult=(Object[])tempObj;
+	    		nResId= Long.parseLong((String) objResult[0]);
+	    	}
+	    	 
 	    }
+	    Logger.info("project already exists and record Id:"+nResId);
+	    return nResId;
 	}
 	
-	private boolean updateProject(int nEmpId, int nProjId, int nResId, String sProjName, int nWeekNum, int nOccupied){
+	private boolean updateProject(int nEmpId, int nProjId, long nResId, String sProjName, int nWeekNum, int nOccupied){
 		
 		Resourceplan objResourceplan=new Resourceplan().findById(nResId);
 		

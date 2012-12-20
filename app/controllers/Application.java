@@ -125,6 +125,8 @@ public class Application extends Controller {
 	   sOccupied="89";
 	   
 	   int nWeekNum= ProjectOccupied.getWeekNumber(sQuarter, sWeekNumber);
+	   //TODO remove nweekNumber
+	   nWeekNum=50;
 	   new ProjectOccupied().updateResourcePlan(sEmpId, sProjId, sProjName, nWeekNum, sOccupied);
    }
 
