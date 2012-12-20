@@ -89,24 +89,15 @@ public class ProjectOccupied {
 		query.setParameter("projId",nProjId);
 		query.setParameter("weekNum", nWeekNum);
 		
-	    List<Object> listObjResult=query.getResultList();
-	    long nResId=0;
-	    if(listObjResult.size()>0){
-	    	
-	    	// It iterates only one time
-	    	for(Object tempObj: listObjResult){
-	    		Object[] objResult=(Object[])tempObj;
-	    		//nResId=(long) objResult[0];
-	    	}
-	    	 
-	    }
-	    Logger.info("project already exists and record Id:"+nResId);
+		long nResId= Long.parseLong((String) query.getSingleResult());
+	    
+		Logger.info("project already exists and record Id:"+nResId);
 	    return nResId;
 	}
 	
 	private boolean updateProject(int nEmpId, int nProjId, long nResId, String sProjName, int nWeekNum, int nOccupied){
 		
-		Resourceplan objResourceplan=new Resourceplan().findById(nResId);
+		Resourceplan objResourceplan=new Resourceplan().findById(String.valueOf(nResId)); // in Model class, resId is a string type. So we have to convert 
 		
 		if(objResourceplan!=null){
 			objResourceplan.setOccupied(nOccupied);
