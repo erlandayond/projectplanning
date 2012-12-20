@@ -90,13 +90,13 @@ public class ProjectOccupied {
 		query.setParameter("weekNum", nWeekNum);
 		
 	    List<Object> listObjResult=query.getResultList();
-	    Long nResId=0L;
+	    long nResId=0;
 	    if(listObjResult.size()>0){
 	    	
 	    	// It iterates only one time
 	    	for(Object tempObj: listObjResult){
 	    		Object[] objResult=(Object[])tempObj;
-	    		nResId= Long.parseLong((String) objResult[0]);
+	    		//nResId=(long) objResult[0];
 	    	}
 	    	 
 	    }
