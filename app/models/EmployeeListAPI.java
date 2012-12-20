@@ -314,7 +314,7 @@ public class EmployeeListAPI {
 							
 							if(week.nWeekNum==objWeekInfo.nWeekNum){
 								
-								objWeekInfo.nOccupied=nOccupied;
+								week.nOccupied=nOccupied;
 								Logger.info("nWeekNum:"+week.nWeekNum);
 								Logger.info("nOccupied:"+week.nOccupied);
 							}
