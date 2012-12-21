@@ -4,7 +4,7 @@ $(document).ready(function () {
 	$(".employee-info .project .week").attr('contentEditable', 'true');
 	var hiddenChangeStatus = $('#hidden-change-status').html();
 
-	
+	$('.employee-info').hide();
     
     $('.toggler').live('click',function(){
 
