@@ -10,11 +10,11 @@ POST    /addEmployee				            Application.addEmployee
 GET     /getJSONEmployeeInfo					Application.getJSONEmployeeInfo
 GET     /getEmployees                           Application.getEmployees
 GET     /getProjects                            Application.getProjects
-GET     /updateEmpProjOccupied					Application.updateEmpProjOccupied
+
 POST    /addNewEmployee							Application.addNewEmployee
 POST	/addNewProject                          Application.addNewProject
 POST	/addNewContractor						Application.addNewContractor
-GET     /updateEmpProjOccupied					Application.updateEmpProjOccupied
+POST    /updateEmpProjOccupied					Application.updateEmpProjOccupied
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

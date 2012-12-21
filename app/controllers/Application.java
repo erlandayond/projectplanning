@@ -115,18 +115,24 @@ public class Application extends Controller {
      * @param sQuarter
      * @param sWeekNumber
      */
-   public static void updateEmpProjOccupied(String sEmpId, String sProjId, String sProjName, String sQuarter, String sWeekNumber, String sOccupied){
+   public static void updateEmpProjOccupied(String sEmpId, String sProjId, String sQuarter, String sWeekNumber, String sOccupied){
 	
-	   // Testing 
-	   sEmpId="1";
-	   sProjId="1";
-	   sProjName="BUS";
-	   sQuarter="4";
-	   sOccupied="89";
+	   Logger.info("employee Id to be added:"+sEmpId);
+	   Logger.info("Project Id to be added:"+sProjId);
+	   Logger.info("Quarter to be added:"+sQuarter);
+	   Logger.info("WeekNumber to be added:"+sWeekNumber);
+	   Logger.info("Occupied :"+sOccupied);
+	   
+	   // testing
+	   
+	   
+	   String sProjName=ProjectOccupied.getProjectName((Integer.parseInt(sProjId)));
+	   Logger.info("Project Name :"+sProjName);
 	   
 	   int nWeekNum= ProjectOccupied.getWeekNumber(sQuarter, sWeekNumber);
-	   //TODO remove nweekNumber
-	   nWeekNum=50;
+	   // TODO : remove
+	   nWeekNum=Integer.parseInt(sWeekNumber);
+	   Logger.info("week number:"+nWeekNum);
 	   new ProjectOccupied().updateResourcePlan(sEmpId, sProjId, sProjName, nWeekNum, sOccupied);
    }
 

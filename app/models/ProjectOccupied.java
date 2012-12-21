@@ -88,8 +88,12 @@ public class ProjectOccupied {
 		query.setParameter("eId",nEmpId);
 		query.setParameter("projId",nProjId);
 		query.setParameter("weekNum", nWeekNum);
+		long nResId=0;
+		Object obj=query.getSingleResult();
+		if(obj!=null){
+			nResId= Long.parseLong((String) query.getSingleResult());
+		}
 		
-		long nResId= Long.parseLong((String) query.getSingleResult());
 	    
 		Logger.info("project already exists and record Id:"+nResId);
 	    return nResId;
