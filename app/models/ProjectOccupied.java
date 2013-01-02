@@ -85,20 +85,30 @@ public class ProjectOccupied {
 	}
 	private long projectExists(int nEmpId, int nProjId, int nWeekNum){
 		
-		
-		Query query=JPA.em().createQuery("select r.resId from Resourceplan r where r.week=:weekNum and r.employee.empId=:eId and r.projectId=:projId ");
-		query.setParameter("eId",nEmpId);
-		query.setParameter("projId",nProjId);
-		query.setParameter("weekNum", nWeekNum);
 		long nResId=0;
-		Object obj=query.getSingleResult();
-		if(obj!=null){
-			nResId= Long.parseLong((String) query.getSingleResult());
+		try{
+			
+			Query query=JPA.em().createQuery("select r.resId from Resourceplan r where r.week=:weekNum and r.employee.empId=:eId and r.projectId=:projId ");
+			query.setParameter("eId",nEmpId);
+			query.setParameter("projId",nProjId);
+			query.setParameter("weekNum", nWeekNum);
+		
+			Object obj=query.getSingleResult();
+			if(obj!=null){
+				nResId= Long.parseLong((String) query.getSingleResult());
+			}
+			
+			Logger.info("project already exists and record Id:"+nResId);
+		    return nResId;
+		}catch(Exception exp){
+			
+			return nResId; // Returns zero
 		}
 		
+		
+		
 	    
-		Logger.info("project already exists and record Id:"+nResId);
-	    return nResId;
+		
 	}
 	
 	private boolean updateProject(int nEmpId, int nProjId, long nResId, String sProjName, int nWeekNum, int nOccupied){
