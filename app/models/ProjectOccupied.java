@@ -30,6 +30,7 @@ public class ProjectOccupied {
 		int nProjId=Integer.parseInt(sProjId);
 		int nOccupied=Integer.parseInt(sOccupied);
 		
+		
 		long nResId=projectExists(nEmpId, nProjId, nWeekNumber);
 		boolean flag=false;
 		// Update record in Resourceplan table
@@ -84,6 +85,7 @@ public class ProjectOccupied {
 	}
 	private long projectExists(int nEmpId, int nProjId, int nWeekNum){
 		
+		
 		Query query=JPA.em().createQuery("select r.resId from Resourceplan r where r.week=:weekNum and r.employee.empId=:eId and r.projectId=:projId ");
 		query.setParameter("eId",nEmpId);
 		query.setParameter("projId",nProjId);
@@ -105,6 +107,7 @@ public class ProjectOccupied {
 		
 		if(objResourceplan!=null){
 			objResourceplan.setOccupied(nOccupied);
+			objResourceplan.save();
 			return true;
 		}else{
 			return false;
