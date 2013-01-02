@@ -61,7 +61,7 @@
 
                         
                   %}
-				<div class="table-row" id="employee-${emp.nEmpId}" >
+				<div class="table-row employee" id="employee-${emp.nEmpId}" >
 					<div class="column person first-column">
 						<div class="toggler"></div>
 						<span class="name">${emp.strEmpName}</span>
@@ -209,6 +209,7 @@
 	</div>
 
 	<!--HTML ELEMENTS FOR HIDDEN PARTS...-->	
+    <input type="hidden" id="nWeekNumber" value="40">
 	<div id="hidden-change-status">
 		<div class="tool-tip">
 			<div class="content">

@@ -4,6 +4,8 @@ $(document).ready(function () {
 	$(".employee-info .project .week").attr('contentEditable', 'true');
 	var hiddenChangeStatus = $('#hidden-change-status').html();
 
+   
+
 	$('.employee-info').hide();
     
     $('.toggler').live('click',function(){
@@ -94,6 +96,7 @@ $(document).ready(function () {
     });
     $('.week').blur(function(){
         
+
         var quarter=4;
 
     	var weekNumber=this.id; // get week number
@@ -123,5 +126,30 @@ $(document).ready(function () {
         });
 
     });
-	
+
+    //nWeekNumber is a hidden field
+      var tempWeekNumber=$('#nWeekNumber').val();
+     
+
+      $('.table-row.employee').each(function(index){
+
+            var employee=$(this);
+            var employeeInfo=$(this).next();
+
+            for (var i = tempWeekNumber; i <52; i++) {
+              
+                var selector=".column.second-column #"+i;
+
+                var nWeekTotal=0;
+
+                $(employeeInfo).find(selector).each(function(){
+                    nWeekTotal+=parseInt($(this).text());
+                });
+
+                $(employee).find(selector).text(nWeekTotal);
+               
+            };
+      });
+      
+
 });
