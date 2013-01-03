@@ -151,5 +151,11 @@ $(document).ready(function () {
             };
       });
       
+      $('li.month-button').click(function(){
+
+            $('li.month-button').removeClass('active');
+            $(this).addClass('active');
+
+      });
 
 });
