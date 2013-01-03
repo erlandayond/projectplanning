@@ -162,10 +162,12 @@ $(document).ready(function () {
            $('li.month-button').removeClass('active');
            $(this).addClass('active');
 
+           var quarterNum=this.id;
+           $("#nQuarterNumber").val(quarterNum);
+
+           alert("clicked quarter number:"+$('#nQuarterNumber').val())
+
       });
-
-  
-
 
 
 });
@@ -202,5 +204,5 @@ function getMonthName(month){
     var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
     var monthNum=tempMonth.getMonth();
 
-    alert("month name:"+monthNames[monthNum]);
+   return monthNames[monthNum];
 }
