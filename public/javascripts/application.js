@@ -4,7 +4,13 @@ $(document).ready(function () {
 	$(".employee-info .project .week").attr('contentEditable', 'true');
 	var hiddenChangeStatus = $('#hidden-change-status').html();
 
-   
+     // Displaying week numbers
+     var year=2013;
+       
+       for (var i = 0; i <12; i++) {
+           getMonthName(i);
+       };
+     
 
 	$('.employee-info').hide();
     
@@ -151,11 +157,50 @@ $(document).ready(function () {
             };
       });
       
-      $('li.month-button').click(function(){
+     $('li.month-button').click(function(){
 
-            $('li.month-button').removeClass('active');
-            $(this).addClass('active');
+           $('li.month-button').removeClass('active');
+           $(this).addClass('active');
 
       });
 
+  
+
+
+
 });
+
+function getNumOfWeeks(year,month){
+    
+    var firstDayOfMonth= new Date(year,month-1,1);
+    var lastDayOfMonth=new Date(year, month,0);
+
+    var day=firstDayOfMonth.getDay();
+    var date=lastDayOfMonth.getDate();
+
+    var firstMondayDate=1;
+    if(day!=1){
+        var firstMondayDate=1+(6-day)+2;
+    }
+    
+    var nMondayCount=0;
+
+        for (var tempDate = firstMondayDate; tempDate <= lastDayOfMonth.getDate();  ) {
+                nMondayCount+=1;
+                tempDate+=7;
+        };
+    //alert("number of mondays:"+nMondayCount);
+
+    return nMondayCount;
+
+}
+
+function getMonthName(month){
+    // can be any year
+    var tempMonth=new Date(2013,month);
+
+    var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+    var monthNum=tempMonth.getMonth();
+
+    alert("month name:"+monthNames[monthNum]);
+}
