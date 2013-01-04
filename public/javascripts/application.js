@@ -7,10 +7,58 @@ $(document).ready(function () {
      // Displaying week numbers
      var year=2013;
        
-       for (var i = 0; i <12; i++) {
-           getMonthName(i);
-       };
+       var startMonth=$("#nQuarterNumber").val()-1;
+       var endMonth=startMonth+2;
+
+       var nQuarter=$('#nQuarterNumber').val();
+       var startWeek=(nQuarter-1)*13+1;
+       var endWeek=(nQuarter-1)*13+13;
+
      
+        for (var month = startMonth; month <=endMonth; month++) {
+            
+            var monthName=getMonthName(month);
+            var numberOfWeeks=getNumOfWeeks(year,month);
+            var nWeekCounter=numberOfWeeks;
+           
+            if(parseInt(month)%3==0){
+
+                var monthParent= $('.column.second-column.month');
+                var monthChild='<span class="title">'+monthName+'</span>';
+
+                  for (var week = startWeek;nWeekCounter>0; week++, nWeekCounter--) {
+                      monthChild+='<span class="week">v'+week+'</span>';
+                };
+
+                $(monthParent).html(monthChild);
+                startWeek=week;
+
+            }
+
+            if(parseInt(month)%3==1){
+                var monthParent='.column.third-column.month';
+                var monthChild='<span class="title">'+monthName+'</span>';
+
+                 for (var week = startWeek; nWeekCounter>0; week++, nWeekCounter--) {
+                      monthChild+='<span class="week">v'+week+'</span>';
+                };
+
+                $(monthParent).html(monthChild);
+                startWeek=week;
+            }
+
+            if(parseInt(month)%3==2){
+                 var monthParent='.column.fourth-column.month';
+                var monthChild='<span class="title">'+monthName+'</span>';
+
+                for (var week = startWeek; nWeekCounter>0; week++, nWeekCounter--) {
+                      monthChild+='<span class="week">v'+week+'</span>';
+                };
+
+                $(monthParent).html(monthChild);
+                
+            }
+        };
 
 	$('.employee-info').hide();
     
@@ -162,16 +210,18 @@ $(document).ready(function () {
            $('li.month-button').removeClass('active');
            $(this).addClass('active');
 
+           // change the quarter hidden field value
            var quarterNum=this.id;
            $("#nQuarterNumber").val(quarterNum);
 
-           alert("clicked quarter number:"+$('#nQuarterNumber').val())
+          
 
       });
 
 
 });
 
+// return no of "mondays" in a year, month
 function getNumOfWeeks(year,month){
     
     var firstDayOfMonth= new Date(year,month-1,1);
@@ -181,6 +231,7 @@ function getNumOfWeeks(year,month){
     var date=lastDayOfMonth.getDate();
 
     var firstMondayDate=1;
+
     if(day!=1){
         var firstMondayDate=1+(6-day)+2;
     }
@@ -197,6 +248,7 @@ function getNumOfWeeks(year,month){
 
 }
 
+// return month name
 function getMonthName(month){
     // can be any year
     var tempMonth=new Date(2013,month);
