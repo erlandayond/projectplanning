@@ -4,62 +4,7 @@ $(document).ready(function () {
 	$(".employee-info .project .week").attr('contentEditable', 'true');
 	var hiddenChangeStatus = $('#hidden-change-status').html();
 
-     // Displaying week numbers
-     var year=2013;
-       
-       var startMonth=$("#nQuarterNumber").val()-1;
-       var endMonth=startMonth+2;
-
-       var nQuarter=$('#nQuarterNumber').val();
-       var startWeek=(nQuarter-1)*13+1;
-       var endWeek=(nQuarter-1)*13+13;
-
      
-        for (var month = startMonth; month <=endMonth; month++) {
-            
-            var monthName=getMonthName(month);
-            var numberOfWeeks=getNumOfWeeks(year,month);
-            var nWeekCounter=numberOfWeeks;
-           
-            if(parseInt(month)%3==0){
-
-                var monthParent= $('.column.second-column.month');
-                var monthChild='<span class="title">'+monthName+'</span>';
-
-                  for (var week = startWeek;nWeekCounter>0; week++, nWeekCounter--) {
-                      monthChild+='<span class="week">v'+week+'</span>';
-                };
-
-                $(monthParent).html(monthChild);
-                startWeek=week;
-
-            }
-
-            if(parseInt(month)%3==1){
-                var monthParent='.column.third-column.month';
-                var monthChild='<span class="title">'+monthName+'</span>';
-
-                 for (var week = startWeek; nWeekCounter>0; week++, nWeekCounter--) {
-                      monthChild+='<span class="week">v'+week+'</span>';
-                };
-
-                $(monthParent).html(monthChild);
-                startWeek=week;
-            }
-
-            if(parseInt(month)%3==2){
-                 var monthParent='.column.fourth-column.month';
-                var monthChild='<span class="title">'+monthName+'</span>';
-
-                for (var week = startWeek; nWeekCounter>0; week++, nWeekCounter--) {
-                      monthChild+='<span class="week">v'+week+'</span>';
-                };
-
-                $(monthParent).html(monthChild);
-                
-            }
-        };
-
 	$('.employee-info').hide();
     
     $('.toggler').live('click',function(){
@@ -214,9 +159,14 @@ $(document).ready(function () {
            var quarterNum=this.id;
            $("#nQuarterNumber").val(quarterNum);
 
-          
-
+           displayMonthWeekNumbers(); // display week numbers and months
       });
+
+     var activeQuarter= $('li.month-button').hasClass('active');
+
+     if(activeQuarter){
+        displayMonthWeekNumbers();
+     }
 
 
 });
@@ -257,4 +207,61 @@ function getMonthName(month){
     var monthNum=tempMonth.getMonth();
 
    return monthNames[monthNum];
+}
+
+function displayMonthWeekNumbers(){
+
+            var year=2013;
+            var startMonth=$("#nQuarterNumber").val()-1;
+            var endMonth=startMonth+2;
+
+            var nQuarter=$('#nQuarterNumber').val();
+            var startWeek=(nQuarter-1)*13+1;
+            var endWeek=(nQuarter-1)*13+13;
+
+
+    for (var month = startMonth; month <=endMonth; month++) {
+            
+            var monthName=getMonthName(month);
+            var numberOfWeeks=getNumOfWeeks(year,month);
+            var nWeekCounter=numberOfWeeks;
+           
+            if(parseInt(month)%3==0){
+
+                var monthParent= $('.column.second-column.month');
+                var monthChild='<span class="title">'+monthName+'</span>';
+
+                  for (var week = startWeek;nWeekCounter>0; week++, nWeekCounter--) {
+                      monthChild+='<span class="week">v'+week+'</span>';
+                };
+
+                $(monthParent).html(monthChild);
+                startWeek=week;
+
+            }
+
+            if(parseInt(month)%3==1){
+                var monthParent='.column.third-column.month';
+                var monthChild='<span class="title">'+monthName+'</span>';
+
+                 for (var week = startWeek; nWeekCounter>0; week++, nWeekCounter--) {
+                      monthChild+='<span class="week">v'+week+'</span>';
+                };
+
+                $(monthParent).html(monthChild);
+                startWeek=week;
+            }
+
+            if(parseInt(month)%3==2){
+                 var monthParent='.column.fourth-column.month';
+                var monthChild='<span class="title">'+monthName+'</span>';
+
+                for (var week = startWeek; nWeekCounter>0; week++, nWeekCounter--) {
+                      monthChild+='<span class="week">v'+week+'</span>';
+                };
+
+                $(monthParent).html(monthChild);
+                
+            }
+        };
 }
