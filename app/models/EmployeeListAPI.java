@@ -209,7 +209,7 @@ public class EmployeeListAPI {
 				//Initialize key with week numbers and values are -1
 				//TODO: remove 12 here
 				int nTempWeek=nStartWeek;
-				for(int i=0;i<12;i++){
+				for(int i=0;i<13;i++){
 					WeekInfo week = new WeekInfo();
 					week.nOccupied=NOTCHANGED;
 					week.nWeekNum=nTempWeek;

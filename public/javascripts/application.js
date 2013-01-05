@@ -96,7 +96,7 @@ $(document).ready(function () {
     $('.week').blur(function(){
         
 
-        var quarter=4;
+        var quarter=$('#nQuarterNumber').val();
 
     	var weekNumber=this.id; // get week number
         
@@ -159,7 +159,7 @@ $(document).ready(function () {
            var quarterNum=this.id;
            $("#nQuarterNumber").val(quarterNum);
 
-           displayMonthWeekNumbers(); // display week numbers and months
+           displayMonthWeekNumbers(this); // display week numbers and months
       });
 
      var activeQuarter= $('li.month-button').hasClass('active');
@@ -201,7 +201,7 @@ function getNumOfWeeks(year,month){
 // return month name
 function getMonthName(month){
     // can be any year
-    var tempMonth=new Date(2013,month);
+    var tempMonth=new Date(2013,month-1);
 
     var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
     var monthNum=tempMonth.getMonth();
@@ -209,11 +209,11 @@ function getMonthName(month){
    return monthNames[monthNum];
 }
 
-function displayMonthWeekNumbers(){
+function displayMonthWeekNumbers(element){
 
             var year=2013;
-            var startMonth=$("#nQuarterNumber").val()-1;
-            var endMonth=startMonth+2;
+            var startMonth=$(element).attr('startmon');
+            var endMonth=parseInt(startMonth)+2;
 
             var nQuarter=$('#nQuarterNumber').val();
             var startWeek=(nQuarter-1)*13+1;
@@ -226,7 +226,7 @@ function displayMonthWeekNumbers(){
             var numberOfWeeks=getNumOfWeeks(year,month);
             var nWeekCounter=numberOfWeeks;
            
-            if(parseInt(month)%3==0){
+            if(parseInt(month)%3==1){
 
                 var monthParent= $('.column.second-column.month');
                 var monthChild='<span class="title">'+monthName+'</span>';
@@ -240,7 +240,7 @@ function displayMonthWeekNumbers(){
 
             }
 
-            if(parseInt(month)%3==1){
+            if(parseInt(month)%3==2){
                 var monthParent='.column.third-column.month';
                 var monthChild='<span class="title">'+monthName+'</span>';
 
@@ -252,7 +252,7 @@ function displayMonthWeekNumbers(){
                 startWeek=week;
             }
 
-            if(parseInt(month)%3==2){
+            if(parseInt(month)%3==0){
                  var monthParent='.column.fourth-column.month';
                 var monthChild='<span class="title">'+monthName+'</span>';
 

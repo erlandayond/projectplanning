@@ -47,7 +47,7 @@ public class Application extends Controller {
     	int nProjectId=Integer.parseInt(projectId);
     	int nEmployeeId=Integer.parseInt(employeeId);
     	//TODO remove fixed value for nWeekNum
-    	int nWeekNum=40;
+    	int nWeekNum=1;
     	
         if(nProjectId>0 && nEmployeeId>0){
         	ProjectOccupied.addProject(nEmployeeId, nProjectId,ProjectOccupied.getProjectName(nProjectId),nWeekNum);
