@@ -181,9 +181,9 @@ function getNumOfWeeks(year,month){
     var date=lastDayOfMonth.getDate();
 
     var firstMondayDate=1;
-
-    if(day!=1){
-        var firstMondayDate=1+(6-day)+2;
+    
+       if(day!=1){
+        firstMondayDate=1+(6-day)+2;
     }
     
     var nMondayCount=0;
@@ -217,8 +217,14 @@ function displayMonthWeekNumbers(element){
 
             var nQuarter=$('#nQuarterNumber').val();
             var startWeek=(nQuarter-1)*13+1;
+            //Remove hardcoded
+            if(nQuarter==4){
+                startWeek=startWeek+1;
+            }
             var endWeek=(nQuarter-1)*13+13;
-
+       
+            // Get first day of the year
+            var firstDayOfYear=new Date(2013,0,1);
 
     for (var month = startMonth; month <=endMonth; month++) {
             
@@ -228,6 +234,9 @@ function displayMonthWeekNumbers(element){
            
             if(parseInt(month)%3==1){
 
+                if(parseInt(firstDayOfYear)!=0 && parseInt(month)==1){
+                    nWeekCounter=nWeekCounter+1;
+                }
                 var monthParent= $('.column.second-column.month');
                 var monthChild='<span class="title">'+monthName+'</span>';
 
@@ -253,6 +262,12 @@ function displayMonthWeekNumbers(element){
             }
 
             if(parseInt(month)%3==0){
+
+                //Remove hard-carded
+                 if(parseInt(month)==9){
+                    nWeekCounter=nWeekCounter+1;
+
+                 }
                  var monthParent='.column.fourth-column.month';
                 var monthChild='<span class="title">'+monthName+'</span>';
 
