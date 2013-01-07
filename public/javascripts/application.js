@@ -1,7 +1,6 @@
 $(document).ready(function () {
 	//JQUERY STUFF FOR EVENT HANDLERS ETC...
-	$(".employee-info .project .project-name").attr('contentEditable', 'true');
-	$(".employee-info .project .week").attr('contentEditable', 'true');
+	
 	var hiddenChangeStatus = $('#hidden-change-status').html();
 
 
@@ -154,7 +153,12 @@ $(document).ready(function () {
 
         $.ajax({
             url:'/deleteEmployee',
-            data:{nEmpId:empId}
+            data:{nEmpId:empId},
+            success:function(){ },
+            error:function(){
+                window.location.reload(true);
+            }
+
         });
     });
 });
@@ -327,7 +331,11 @@ function displayMonthWeekNumbers(element){
                 var nWeekTotal=0;
 
                 $(employeeInfo).find(selector).each(function(){
-                    nWeekTotal+=parseInt($(this).text());
+
+                    if($(this).text().length>0){
+                        nWeekTotal+=parseInt($(this).text());
+                    }
+                    
                 });
 
                 $(employee).find(selector).text(nWeekTotal);

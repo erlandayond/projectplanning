@@ -145,6 +145,7 @@ public class Application extends Controller {
 	   Logger.info("employee Id to be deleted:"+nEmpId);
 	   ProjectOccupied objProjOccupied=new ProjectOccupied();
 	   objProjOccupied.makeInActive(nEmpId);
+	   redirect("/index");
    }
 
 }
