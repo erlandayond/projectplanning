@@ -121,15 +121,6 @@ public class Application extends Controller {
      */
    public static void updateEmpProjOccupied(String sEmpId, String sProjId, String sQuarter, String sWeekNumber, String sOccupied){
 	
-	   Logger.info("employee Id to be added:"+sEmpId);
-	   Logger.info("Project Id to be added:"+sProjId);
-	   Logger.info("Quarter to be added:"+sQuarter);
-	   Logger.info("WeekNumber to be added:"+sWeekNumber);
-	   Logger.info("Occupied :"+sOccupied);
-	   
-	   // testing
-	   
-	   
 	   String sProjName=ProjectOccupied.getProjectName((Integer.parseInt(sProjId)));
 	   Logger.info("Project Name :"+sProjName);
 	   
@@ -145,7 +136,7 @@ public class Application extends Controller {
 	   Logger.info("employee Id to be deleted:"+nEmpId);
 	   ProjectOccupied objProjOccupied=new ProjectOccupied();
 	   objProjOccupied.makeInActive(nEmpId);
-	   redirect("/index");
+	   
    }
 
 }
