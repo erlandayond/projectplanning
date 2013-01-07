@@ -12,7 +12,7 @@ import play.db.jpa.JPA;
 
 public class EmployeeListAPI {
 	
-	public List<EmployeeInfo> MakeAPIObject(){
+	public List<EmployeeInfo> MakeAPIObject(int nStartWeek, int nEndWeek){
 		
 		List<Employee> listEmployee=getAllEmployees();
 		List<EmployeeInfo> listEmployeeInfo=new ArrayList<EmployeeInfo>();
@@ -26,7 +26,7 @@ public class EmployeeListAPI {
 			tempEmployeeInfo.strEmpName=emp.getEmpName();
 			tempEmployeeInfo.strEmpType=emp.getEmpType();
 			tempEmployeeInfo.listProjectWorking= getProjectsForEmployee(emp.getEmpId());
-			tempEmployeeInfo.listProjectInfo=getEmployeeProjectInfo(emp.getEmpId());
+			tempEmployeeInfo.listProjectInfo=getEmployeeProjectInfo(emp.getEmpId(), nStartWeek, nEndWeek);
 		
 		
 			listEmployeeInfo.add(tempEmployeeInfo);
@@ -158,12 +158,11 @@ public class EmployeeListAPI {
 	}
 	
 	
-	public List<ProjectInfo> getEmployeeProjectInfo(int nEmpId){
+	public List<ProjectInfo> getEmployeeProjectInfo(int nEmpId, int startWeek, int endWeek){
 		
-		//TODO: change quarter
-		int nQuarter=4; 
-		int nStartWeek=40; 
-		int nLastWeek=52;
+		
+		int nStartWeek=startWeek; 
+		int nLastWeek=endWeek;
 		String strProjectName="";
 		int nProjectId=0;
 		final int NOTCHANGED=-1;
@@ -209,7 +208,7 @@ public class EmployeeListAPI {
 				//Initialize key with week numbers and values are -1
 				//TODO: remove 12 here
 				int nTempWeek=nStartWeek;
-				for(int i=0;i<13;i++){
+				for(int i=nStartWeek;i<=nLastWeek;i++){
 					WeekInfo week = new WeekInfo();
 					week.nOccupied=NOTCHANGED;
 					week.nWeekNum=nTempWeek;
@@ -245,15 +244,17 @@ public class EmployeeListAPI {
 						
 					}
 					
-					// If week occupied are not found in db, change that values to Zero
-					for(WeekInfo week: listWeekInfo){
-						
-						if(week.nOccupied==NOTCHANGED){
-							week.nOccupied=DEFAULT;
-						}
-						
-						
+					
+				}
+				
+				// If week occupied are not found in db, change that values to Zero
+				for(WeekInfo week: listWeekInfo){
+					
+					if(week.nOccupied==NOTCHANGED){
+						week.nOccupied=DEFAULT;
 					}
+					
+					
 				}
 				
 				objProjectInfo.listWeekInfo=listWeekInfo;

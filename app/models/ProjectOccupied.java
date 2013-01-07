@@ -99,7 +99,21 @@ public class ProjectOccupied {
 			}
 			
 			Logger.info("project already exists and record Id:"+nResId);
+			
+			
+			List<Object> listResPlan=query.getResultList();
+			if(listResPlan.size()==1){
+				Object[] tempObj=(Object[])listResPlan.get(0);
+				nResId=(long)tempObj[0];
+				
+			}else{
+				nResId=-1; // to mark more than one record is returning
+			}
 		    return nResId;
+		    
+		    
+		    
+		    
 		}catch(Exception exp){
 			
 			return nResId; // Returns zero
@@ -143,6 +157,15 @@ public class ProjectOccupied {
 		}
 		
 		
+	}
+	
+	public void makeInActive(int nEmployeeId){
+			Employee objEmployee=new Employee().findById(nEmployeeId);
+			
+			if(objEmployee!=null){
+				objEmployee.setEmpActive(false);
+				objEmployee.save();
+			}
 	}
 }
 

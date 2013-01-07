@@ -4,7 +4,7 @@ $(document).ready(function () {
 	$(".employee-info .project .week").attr('contentEditable', 'true');
 	var hiddenChangeStatus = $('#hidden-change-status').html();
 
-     
+
 	$('.employee-info').hide();
     
     $('.toggler').live('click',function(){
@@ -126,29 +126,7 @@ $(document).ready(function () {
 
     });
 
-    //nWeekNumber is a hidden field
-      var tempWeekNumber=$('#nWeekNumber').val();
-     
-
-      $('.table-row.employee').each(function(index){
-
-            var employee=$(this);
-            var employeeInfo=$(this).next();
-
-            for (var i = tempWeekNumber; i <52; i++) {
-              
-                var selector=".column.second-column #"+i;
-
-                var nWeekTotal=0;
-
-                $(employeeInfo).find(selector).each(function(){
-                    nWeekTotal+=parseInt($(this).text());
-                });
-
-                $(employee).find(selector).text(nWeekTotal);
-               
-            };
-      });
+  
       
      $('li.month-button').click(function(){
 
@@ -165,10 +143,20 @@ $(document).ready(function () {
      var activeQuarter= $('li.month-button').hasClass('active');
 
      if(activeQuarter){
-        displayMonthWeekNumbers();
+        var ele=$('li.month-button.active').get();
+
+        var nQuarter=$('#nQuarterNumber').val();
+        displayMonthWeekNumbers(ele);
      }
 
+    $('.remove').click(function(){
+        var empId=this.id;
 
+        $.ajax({
+            url:'/deleteEmployee',
+            data:{nEmpId:empId}
+        });
+    });
 });
 
 // return no of "mondays" in a year, month
@@ -222,9 +210,14 @@ function displayMonthWeekNumbers(element){
                 startWeek=startWeek+1;
             }
             var endWeek=(nQuarter-1)*13+13;
+
+            var countWeekInQuarter=1;
+            var tempStartWeek=startWeek; // just saving startweek before changing
        
             // Get first day of the year
             var firstDayOfYear=new Date(2013,0,1);
+            
+            var week=1;  //initialisation
 
     for (var month = startMonth; month <=endMonth; month++) {
             
@@ -240,8 +233,9 @@ function displayMonthWeekNumbers(element){
                 var monthParent= $('.column.second-column.month');
                 var monthChild='<span class="title">'+monthName+'</span>';
 
-                  for (var week = startWeek;nWeekCounter>0; week++, nWeekCounter--) {
-                      monthChild+='<span class="week">v'+week+'</span>';
+                  for (week = startWeek;nWeekCounter>0; week++, nWeekCounter--) {
+                      monthChild+='<span id="'+week+'" class="week">v'+week+'</span>';
+                      countWeekInQuarter=countWeekInQuarter+1;
                 };
 
                 $(monthParent).html(monthChild);
@@ -253,8 +247,9 @@ function displayMonthWeekNumbers(element){
                 var monthParent='.column.third-column.month';
                 var monthChild='<span class="title">'+monthName+'</span>';
 
-                 for (var week = startWeek; nWeekCounter>0; week++, nWeekCounter--) {
-                      monthChild+='<span class="week">v'+week+'</span>';
+                 for (week = startWeek; nWeekCounter>0; week++, nWeekCounter--) {
+                      monthChild+='<span id="'+week+'" class="week">v'+week+'</span>';
+                      countWeekInQuarter=countWeekInQuarter+1;
                 };
 
                 $(monthParent).html(monthChild);
@@ -271,12 +266,73 @@ function displayMonthWeekNumbers(element){
                  var monthParent='.column.fourth-column.month';
                 var monthChild='<span class="title">'+monthName+'</span>';
 
-                for (var week = startWeek; nWeekCounter>0; week++, nWeekCounter--) {
-                      monthChild+='<span class="week">v'+week+'</span>';
+                for (week = startWeek; nWeekCounter>0; week++, nWeekCounter--) {
+                      monthChild+='<span id="'+week+'" class="week">v'+week+'</span>';
+                      countWeekInQuarter=countWeekInQuarter+1;
                 };
 
                 $(monthParent).html(monthChild);
                 
             }
+
+
         };
+
+     $('.table-row.employee').each(function(index){
+
+        var tempCounter1=tempStartWeek;
+        var tempCounter2=tempStartWeek;
+
+        var employee=$(this);
+        var employeeInfo=$(this).next();
+
+       $(employee).find('.column.second-column div.week').each(function(){
+            
+            this.id=tempCounter1;
+            tempCounter1=tempCounter1+1;
+
+        });
+       
+       $(employeeInfo).find('.column.second-column div.week').each(function(){
+
+            this.id=tempCounter2;
+            tempCounter2=tempCounter2+1;
+       });
+
+     });
+
+
+     if(startMonth>3){
+         var getEmployeesUrl="/getEmployees";
+        $.ajax({
+            url: getEmployeesUrl,
+            data: { strStartWeek:tempStartWeek, strEndWeek:week-1}
+        });
+     }
+
+
+       //nWeekNumber is a hidden field
+      var tempWeekNumber=1;
+     
+
+      $('.table-row.employee').each(function(index){
+
+            var employee=$(this);
+            var employeeInfo=$(this).next();
+
+            for (var i = tempWeekNumber; i <52; i++) {
+              
+                var selector=".column.second-column #"+i;
+
+                var nWeekTotal=0;
+
+                $(employeeInfo).find(selector).each(function(){
+                    nWeekTotal+=parseInt($(this).text());
+                });
+
+                $(employee).find(selector).text(nWeekTotal);
+               
+            };
+      });
+    
 }

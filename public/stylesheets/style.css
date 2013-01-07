@@ -430,3 +430,17 @@ a.mark-as-unsure.safe {
 .employee{
 	
 }
+
+.remove {
+	float: left;
+	height: 25px;
+	width: 60px;
+	text-align: center;
+	color: #f1d4d4; 
+	font-size: 12px;
+	font-family: Arial, sans-serif;
+}
+
+.remove:hover {
+	cursor: pointer;
+}

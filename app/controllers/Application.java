@@ -21,14 +21,13 @@ public class Application extends Controller {
 
     public static void index() {
     	
-    	EntityManager em= JPA.newEntityManager();
-    	
-    	em.getTransaction().begin();
+    	int nStartWeek=1;
+    	int nEndWeek=13;
     	
     	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
-    	objEmployeeListAPI.MakeAPIObject();
-    	
-    	render("Application/index.html");
+    	List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject(nStartWeek, nEndWeek);
+    	List<Project> listProjects=new EmployeeListAPI().getAllProjects();
+    	render("Application/index.html",listEmployeeInfo,listProjects);
     }
     
     public static void getJSONEmployeeInfo(){
@@ -89,11 +88,16 @@ public class Application extends Controller {
     	
     }
     
-   public static void getEmployees(){
+   public static void getEmployees(String strStartWeek, String strEndWeek){
     	
+    	int nStartWeek=Integer.parseInt(strStartWeek);
+    	int nEndWeek=Integer.parseInt(strEndWeek);
+    	
+    	Logger.info("startweek :"+nStartWeek);
+    	Logger.info("EndWeek :"+nEndWeek);
     	
     	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
-        List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject();
+        List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject(nStartWeek, nEndWeek);
         JSONSerializer modelSerializer = new JSONSerializer().include("listProjectInfo","listProjectInfo.listWeekInfo").exclude("class","NEmpId")
         									.exclude("listProjectInfo.NProjectId","listProjectInfo.class")
         									.exclude("listProjectInfo.listWeekInfo.NOccupied", "listProjectInfo.listWeekInfo.NWeekNum","listProjectInfo.listWeekInfo.class");
@@ -134,6 +138,13 @@ public class Application extends Controller {
 	   nWeekNum=Integer.parseInt(sWeekNumber);
 	   Logger.info("week number:"+nWeekNum);
 	   new ProjectOccupied().updateResourcePlan(sEmpId, sProjId, sProjName, nWeekNum, sOccupied);
+   }
+   
+   public static void deleteEmployee(int nEmpId){
+	   
+	   Logger.info("employee Id to be deleted:"+nEmpId);
+	   ProjectOccupied objProjOccupied=new ProjectOccupied();
+	   objProjOccupied.makeInActive(nEmpId);
    }
 
 }

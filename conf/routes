@@ -10,7 +10,7 @@ POST    /addEmployee				            Application.addEmployee
 GET     /getJSONEmployeeInfo					Application.getJSONEmployeeInfo
 GET     /getEmployees                           Application.getEmployees
 GET     /getProjects                            Application.getProjects
-
+GET     /deleteEmployee							Application.deleteEmployee
 POST    /addNewEmployee							Application.addNewEmployee
 POST	/addNewProject                          Application.addNewProject
 POST	/addNewContractor						Application.addNewContractor
