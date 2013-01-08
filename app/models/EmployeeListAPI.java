@@ -49,7 +49,7 @@ public class EmployeeListAPI {
     		
     		for(Object objEmployee : listObjEmployee){
     			Object[] objResult=(Object[])objEmployee;
-    		    int nEmpId=(int)objResult[0];
+    		    int nEmpId=(Integer)objResult[0];
     			String strEmpName=(String)objResult[1];
     			String strEmpType=(String)objResult[2];
     			
@@ -71,14 +71,14 @@ public class EmployeeListAPI {
     
 	public List<Project> getAllProjects(){
 	
-		Query query=JPA.em().createQuery("select id, projectName from Project");
+		Query query=JPA.em().createQuery("select id, projectName from Project ORDER BY projectName");
 		List<Object> listResult=query.getResultList();
 		List<Project> listProjects=new ArrayList<Project>();
 		if(listResult.size()>0){
 			for(Object tempObj: listResult){
 				Object[] objResult=(Object[])tempObj;
 				Project tmpProject=new Project();
-				tmpProject.setProjectId((int)objResult[0]);
+				tmpProject.setProjectId((Integer)objResult[0]);
 				tmpProject.setProjectName((String)objResult[1]);
 				
 				//Logging
@@ -128,7 +128,7 @@ public class EmployeeListAPI {
    }
 	private List<ProjectOccupied> getProjectsForEmployee(int nEmpId){
 	    
-		Query query=JPA.em().createQuery("select projectId, projectName, week, occupied from Resourceplan where empId=:id ");
+		Query query=JPA.em().createQuery("select projectId, projectName, week, occupied from Resourceplan where empId=:id and projActive=1 ");
 		query.setParameter("id",nEmpId);
 		
 		List<Object> listResult=query.getResultList();
@@ -138,10 +138,10 @@ public class EmployeeListAPI {
 			for(Object tempObj: listResult){
 				Object[] objResult=(Object[])tempObj;
 				ProjectOccupied tmpProjectOccupied=new ProjectOccupied();
-				tmpProjectOccupied.nProjectId=(int)objResult[0];
+				tmpProjectOccupied.nProjectId=(Integer)objResult[0];
 				tmpProjectOccupied.strProjectName=(String)objResult[1];
-				tmpProjectOccupied.nWeekNumber=(int)objResult[2];
-				tmpProjectOccupied.nOccupied=(int)objResult[3];
+				tmpProjectOccupied.nWeekNumber=(Integer)objResult[2];
+				tmpProjectOccupied.nOccupied=(Integer)objResult[3];
 				
 				//Logging employee-project info
 				Logger.info("emp Id:"+nEmpId);
@@ -158,6 +158,7 @@ public class EmployeeListAPI {
 	}
 	
 	
+	
 	public List<ProjectInfo> getEmployeeProjectInfo(int nEmpId, int startWeek, int endWeek){
 		
 		
@@ -169,7 +170,7 @@ public class EmployeeListAPI {
 		final int DEFAULT=0;
 		
 		//Get ProjectInfo for the employee
-		Query query=JPA.em().createQuery("select distinct(projectId), projectName FROM Resourceplan where empId=:nEId");
+		Query query=JPA.em().createQuery("select distinct(projectId), projectName FROM Resourceplan where empId=:nEId and projActive=1");
 		query.setParameter("nEId",nEmpId);
 		
 		List<Object> listObjResult=query.getResultList();
@@ -186,7 +187,7 @@ public class EmployeeListAPI {
 				ProjectInfo objProjectInfo=new ProjectInfo();
 				
 				// Set to local variables
-				nProjectId=(int)objResult[0];
+				nProjectId=(Integer)objResult[0];
 				strProjectName=objResult[1].toString();
 				
 				//set values to ProjectInfo object
@@ -194,7 +195,7 @@ public class EmployeeListAPI {
 				objProjectInfo.strProjectName=strProjectName;
 				
 				//Get week info - week number and occupied for each project
-				Query tempQuery=JPA.em().createQuery("SELECT week, occupied FROM Resourceplan where empId=:nEid and projectId=:nProjId and week>=:nWeek");
+				Query tempQuery=JPA.em().createQuery("SELECT week, occupied FROM Resourceplan where empId=:nEid and projectId=:nProjId and week>=:nWeek and projActive=1");
 				tempQuery.setParameter("nEid", nEmpId);
 				tempQuery.setParameter("nProjId", nProjectId); 
 				tempQuery.setParameter("nWeek",nStartWeek);
@@ -225,8 +226,8 @@ public class EmployeeListAPI {
 						WeekInfo objWeekInfo=new WeekInfo();
 						
 						// Set to local variables;
-						int nWeek=(int)objTempWeekResult[0];
-						int nOccupied=(int)objTempWeekResult[1];
+						int nWeek=(Integer)objTempWeekResult[0];
+						int nOccupied=(Integer)objTempWeekResult[1];
 						
 						objWeekInfo.nWeekNum=nWeek;
 						

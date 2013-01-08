@@ -24,6 +24,8 @@ public class Resourceplan extends play.db.jpa.GenericModel implements Serializab
 
 	private int week;
 
+	private boolean projActive;
+	
 	//bi-directional many-to-one association to Employee
 	@ManyToOne
 	@JoinColumn(name="empId")
@@ -72,6 +74,14 @@ public class Resourceplan extends play.db.jpa.GenericModel implements Serializab
 		this.week = week;
 	}
 
+	public boolean getProjActive(){
+		return this.projActive;
+	}
+	
+	public void setProjActive(boolean projActive){
+		this.projActive=projActive;
+	}
+	
 	public Employee getEmployee() {
 		return this.employee;
 	}

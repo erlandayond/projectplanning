@@ -27,7 +27,7 @@ public class Application extends Controller {
     	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
     	List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject(nStartWeek, nEndWeek);
     	List<Project> listProjects=new EmployeeListAPI().getAllProjects();
-    	render("Application/index.html",listEmployeeInfo,listProjects);
+    	render("Application/index.html",listEmployeeInfo,listProjects, nStartWeek, nEndWeek);
     }
     
     public static void getJSONEmployeeInfo(){
@@ -88,29 +88,73 @@ public class Application extends Controller {
     	
     }
     
-   public static void getEmployees(String strStartWeek, String strEndWeek){
-    	
-    	int nStartWeek=Integer.parseInt(strStartWeek);
-    	int nEndWeek=Integer.parseInt(strEndWeek);
-    	
-    	Logger.info("startweek :"+nStartWeek);
-    	Logger.info("EndWeek :"+nEndWeek);
-    	
-    	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
-        List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject(nStartWeek, nEndWeek);
-        JSONSerializer modelSerializer = new JSONSerializer().include("listProjectInfo","listProjectInfo.listWeekInfo").exclude("class","NEmpId")
-        									.exclude("listProjectInfo.NProjectId","listProjectInfo.class")
-        									.exclude("listProjectInfo.listWeekInfo.NOccupied", "listProjectInfo.listWeekInfo.NWeekNum","listProjectInfo.listWeekInfo.class");
-        
-        
-        List<Project> listProjects=new EmployeeListAPI().getAllProjects();
-        // renderJSON(modelSerializer.serialize(listEmployeeInfo));
-        
-        List<Employee> listEmployees=objEmployeeListAPI.getAllEmployees();
-        
+   
+   
+   public static void view2(){
+   	
+   	int nStartWeek=14; //Integer.parseInt(strStartWeek);
+   	int nEndWeek=26; //Integer.parseInt(strEndWeek);
+   	
+   	Logger.info("startweek :"+nStartWeek);
+   	Logger.info("EndWeek :"+nEndWeek);
+   	
+   	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
+       List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject(nStartWeek, nEndWeek);
+       JSONSerializer modelSerializer = new JSONSerializer().include("listProjectInfo","listProjectInfo.listWeekInfo").exclude("class","NEmpId")
+       									.exclude("listProjectInfo.NProjectId","listProjectInfo.class")
+       									.exclude("listProjectInfo.listWeekInfo.NOccupied", "listProjectInfo.listWeekInfo.NWeekNum","listProjectInfo.listWeekInfo.class");
        
-       render("Application/index.html",listEmployeeInfo, listProjects);
-    }
+       
+       List<Project> listProjects=new EmployeeListAPI().getAllProjects();
+       // renderJSON(modelSerializer.serialize(listEmployeeInfo));
+    
+      
+      
+      render(listEmployeeInfo, listProjects, nStartWeek, nEndWeek);
+   }
+   
+   public static void view3(){
+   	
+   	int nStartWeek=27; //Integer.parseInt(strStartWeek);
+   	int nEndWeek=39; //Integer.parseInt(strEndWeek);
+   	
+   	Logger.info("startweek :"+nStartWeek);
+   	Logger.info("EndWeek :"+nEndWeek);
+   	
+   	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
+       List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject(nStartWeek, nEndWeek);
+       JSONSerializer modelSerializer = new JSONSerializer().include("listProjectInfo","listProjectInfo.listWeekInfo").exclude("class","NEmpId")
+       									.exclude("listProjectInfo.NProjectId","listProjectInfo.class")
+       									.exclude("listProjectInfo.listWeekInfo.NOccupied", "listProjectInfo.listWeekInfo.NWeekNum","listProjectInfo.listWeekInfo.class");
+       
+       
+       List<Project> listProjects=new EmployeeListAPI().getAllProjects();
+       // renderJSON(modelSerializer.serialize(listEmployeeInfo));
+      
+      
+      render(listEmployeeInfo, listProjects, nStartWeek, nEndWeek);
+   }
+   
+   public static void view4(){
+   	
+   	int nStartWeek=40; //Integer.parseInt(strStartWeek);
+   	int nEndWeek=52; //Integer.parseInt(strEndWeek);
+   	
+   	Logger.info("startweek :"+nStartWeek);
+   	Logger.info("EndWeek :"+nEndWeek);
+   	
+   	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
+       List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject(nStartWeek, nEndWeek);
+       JSONSerializer modelSerializer = new JSONSerializer().include("listProjectInfo","listProjectInfo.listWeekInfo").exclude("class","NEmpId")
+       									.exclude("listProjectInfo.NProjectId","listProjectInfo.class")
+       									.exclude("listProjectInfo.listWeekInfo.NOccupied", "listProjectInfo.listWeekInfo.NWeekNum","listProjectInfo.listWeekInfo.class");
+       
+       
+       List<Project> listProjects=new EmployeeListAPI().getAllProjects();
+       // renderJSON(modelSerializer.serialize(listEmployeeInfo));
+       
+      render(listEmployeeInfo, listProjects, nStartWeek, nEndWeek);
+   }
     
     /**
      * 
@@ -137,6 +181,12 @@ public class Application extends Controller {
 	   ProjectOccupied objProjOccupied=new ProjectOccupied();
 	   objProjOccupied.makeInActive(nEmpId);
 	   
+   }
+   
+   public static void deleteProject(int nEmpId, int nProjId){
+	   Logger.info("deleting a project "+nProjId+"for employee:"+nEmpId);
+	   ProjectOccupied objProjOccupied=new ProjectOccupied();
+	   objProjOccupied.makeInActiveProject(nEmpId, nProjId);
    }
 
 }

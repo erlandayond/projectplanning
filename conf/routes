@@ -8,9 +8,12 @@ GET     /                                       Application.index
 POST 	/addProject								Application.addProject
 POST    /addEmployee				            Application.addEmployee
 GET     /getJSONEmployeeInfo					Application.getJSONEmployeeInfo
-GET     /getEmployees                           Application.getEmployees
+GET     /view2                           		Application.view2
+GET     /view3                           		Application.view3
+GET     /view4                           		Application.view4
 GET     /getProjects                            Application.getProjects
 GET     /deleteEmployee							Application.deleteEmployee
+GET     /deleteProject							Application.deleteProject
 POST    /addNewEmployee							Application.addNewEmployee
 POST	/addNewProject                          Application.addNewProject
 POST	/addNewContractor						Application.addNewContractor

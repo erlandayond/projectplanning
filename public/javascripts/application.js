@@ -28,7 +28,7 @@ $(document).ready(function () {
     	
     	if(empId==="new"){
     		var newEmpName=prompt("FirstName LastName");
-    		var empUrl="http://localhost:9000/addEmployee";
+    		var empUrl="/addEmployee";
     		if(newEmpName.length>0)
     		{
 			 	$.post(empUrl, {ename:newEmpName, eType:"regular"},function(data){
@@ -42,25 +42,27 @@ $(document).ready(function () {
     	var projId=$(this).find('option:selected').val();
     	var projName=$(this).find('option:selected').text();
         var empId=$(this).parent().parent().parent().attr('employeeid');
-        var newProjUrl="http://localhost:9000/addProject";
+        var newProjUrl="/addProject";
          
-        alert("projId:"+projId+"empId:"+empId);
+       
         $.post(newProjUrl,{projectId:projId, employeeId:empId},function(data){
-
+           alert('Project added ! Please Refresh');
         }) ;
 
     });
     $("#btnNewProject").click(function(){
     	var newProjectName=prompt("Project Name");
-    	var newProjUrl="http://localhost:9000/addNewProject";
+    	var newProjUrl="/addNewProject";
     	if(newProjectName.length>0){
-    		$.post(newProjUrl, {projectName:newProjectName}, function(data){});
+    		$.post(newProjUrl, {projectName:newProjectName}, function(data){
+                window.location.reload(true);
+            });
     	}
     });
     $('#btnNewEmployee').click(function(){
 
     	var newEmpName=prompt("Employee Name");
-    	var newEmpUrl="http://localhost:9000/addNewEmployee";
+    	var newEmpUrl="/addNewEmployee";
 
     	if(newEmpName.length>0){
     		$.post(newEmpUrl, {employeeName:newEmpName}, function(data){
@@ -73,10 +75,12 @@ $(document).ready(function () {
     $('#btnNewContractor').click(function(){
 
     	var newContractorName=prompt("Contractor Name");
-    	var newContractUrl="http://localhost:9000/addNewContractor";
+    	var newContractUrl="/addNewContractor";
 
     	if(newContractorName.length>0){
-    		$.post(newContractUrl, {contractorName:newContractorName}, function(data){})
+    		$.post(newContractUrl, {contractorName:newContractorName}, function(data){
+                window.location.reload(true);
+            })
     	}
     });
     $("#addContractor").change(function(){
@@ -85,7 +89,7 @@ $(document).ready(function () {
     	
     	if(empId==="new"){
     		var newEmpName=prompt("FirstName LastName");
-    		var empUrl="http://localhost:9000/addEmployee";
+    		var empUrl="/addEmployee";
     		if(newEmpName.length>0)
     		{
 			 	$.post(empUrl, {ename:newEmpName, eType:"contractor"},function(data){
@@ -96,9 +100,7 @@ $(document).ready(function () {
     });
     $('.week').blur(function(){
         
-
-        var quarter=$('#nQuarterNumber').val();
-
+         quarter=1;
     	var weekNumber=this.id; // get week number
         
         var occupied=$(this).text(); // occupied percentage
@@ -119,7 +121,14 @@ $(document).ready(function () {
         var prevRowWeekNum=$(this).parent().parent().parent().prev().find(tempFind);
         $(prevRowWeekNum).text(total);
 
-        var updateProjUrl="http://localhost:9000/updateEmpProjOccupied";
+        if(parseInt(total)>100){
+            $(prevRowWeekNum).addClass('overload');
+         }
+         if(parseInt(total)>80){
+            $(prevRowWeekNum).addClass('full');
+         }
+
+        var updateProjUrl="/updateEmpProjOccupied";
 
         $.post(updateProjUrl, {sEmpId:employeeid, sProjId:projectId, sQuarter:quarter, sWeekNumber:weekNumber, sOccupied:occupied},function(data){
 
@@ -128,7 +137,69 @@ $(document).ready(function () {
     });
 
   
+
+            //nWeekNumber is a hidden field
+      var tempWeekNumber=1;
+     
+
+      $('.table-row.employee').each(function(index){
+
+            var employee=$(this);
+            var employeeInfo=$(this).next();
+
+            for (var i = tempWeekNumber; i <52; i++) {
+              
+                var selector=".column.second-column #"+i;
+
+                var nWeekTotal=0;
+
+                $(employeeInfo).find(selector).each(function(){
+
+                    if($(this).text().length>0){
+                        nWeekTotal+=parseInt($(this).text());
+                    }
+                    
+                });
+
+                $(employee).find(selector).text(nWeekTotal);
+                 if(parseInt(nWeekTotal)>100){
+                    $(employee).find(selector).addClass('overload');
+                 }
+                if(parseInt(nWeekTotal)>80){
+                    $(employee).find(selector).addClass('full');
+                }
+            };
+      });
       
+       $('.table-row.contractor').each(function(index){
+
+            var employee=$(this);
+            var employeeInfo=$(this).next();
+
+            for (var i = tempWeekNumber; i <52; i++) {
+              
+                var selector=".column.second-column #"+i;
+
+                var nWeekTotal=0;
+
+                $(employeeInfo).find(selector).each(function(){
+
+                    if($(this).text().length>0){
+                        nWeekTotal+=parseInt($(this).text());
+                    }
+                    
+                });
+
+                $(employee).find(selector).text(nWeekTotal);
+                if(parseInt(nWeekTotal)>100){
+                    $(employee).find(selector).addClass('overload');
+                 }
+                if(parseInt(nWeekTotal)>80){
+                    $(employee).find(selector).addClass('full');
+                }
+               
+            };
+      });
      $('li.month-button').click(function(){
 
            $('li.month-button').removeClass('active');
@@ -138,7 +209,9 @@ $(document).ready(function () {
            var quarterNum=this.id;
            $("#nQuarterNumber").val(quarterNum);
 
-           displayMonthWeekNumbers(this); // display week numbers and months
+          // displayWeekNumbers(this);
+           //displayMonthWeekNumbers(this); // display week numbers and months
+
       });
 
      var activeQuarter= $('li.month-button').hasClass('active');
@@ -146,8 +219,9 @@ $(document).ready(function () {
      if(activeQuarter){
         var ele=$('li.month-button.active').get();
 
-        var nQuarter=$('#nQuarterNumber').val();
-        displayMonthWeekNumbers(ele);
+       
+        //displayMonthWeekNumbers(ele);
+        //displayWeekNumbers(ele);
      }
 
     $('.remove').click(function(){
@@ -158,50 +232,105 @@ $(document).ready(function () {
             data:{nEmpId:empId},
             success:function(){
             window.location.reload(true); },
-            error:function(){}
+            error:function(){
+                
+            }
 
         });
     });
+
+    $('.remove-project').click(function(){
+        var empId=$(this).parent().parent().parent().attr('employeeid');
+        var projId=$(this).attr('projid');
+
+        $.ajax({
+            url:'/deleteProject',
+            data:{nEmpId:empId, nProjId:projId},
+            success:function(){
+            alert('project is deleted !');
+             window.location.reload(true);
+            $(this).parent().parent().parent().parent().show() },
+            error:function(){
+                
+            }
+
+        });
+    })
 });
 
-// return no of "mondays" in a year, month
-function getNumOfWeeks(year,month){
+// // return no of "mondays" in a year, month
+// function getNumOfWeeks(year,month){
     
-    var firstDayOfMonth= new Date(year,month-1,1);
-    var lastDayOfMonth=new Date(year, month,0);
+//     var firstDayOfMonth= new Date(year,month-1,1);
+//     var lastDayOfMonth=new Date(year, month,0);
 
-    var day=firstDayOfMonth.getDay();
-    var date=lastDayOfMonth.getDate();
+//     var day=firstDayOfMonth.getDay();
+//     var date=lastDayOfMonth.getDate();
 
-    var firstMondayDate=1;
+//     var firstMondayDate=1;
     
-       if(day!=1){
-        firstMondayDate=1+(6-day)+2;
-    }
+//        if(day!=1){
+//         firstMondayDate=1+(6-day)+2;
+//     }
     
-    var nMondayCount=0;
+//     var nMondayCount=0;
 
-        for (var tempDate = firstMondayDate; tempDate <= lastDayOfMonth.getDate();  ) {
-                nMondayCount+=1;
-                tempDate+=7;
-        };
-    //alert("number of mondays:"+nMondayCount);
+//         for (var tempDate = firstMondayDate; tempDate <= lastDayOfMonth.getDate();  ) {
+//                 nMondayCount+=1;
+//                 tempDate+=7;
+//         };
+//     //alert("number of mondays:"+nMondayCount);
 
-    return nMondayCount;
+//     return nMondayCount;
 
-}
+// }
 
 // return month name
-function getMonthName(month){
-    // can be any year
-    var tempMonth=new Date(2013,month-1);
+// function getMonthName(month){
+//     // can be any year
+//     var tempMonth=new Date(2013,month-1);
 
-    var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
-    var monthNum=tempMonth.getMonth();
+//     var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+//     var monthNum=tempMonth.getMonth();
 
-   return monthNames[monthNum];
+//    return monthNames[monthNum];
+// }
+
+function displayWeekNumbers(element){
+
+    var startweek=$(element).attr('startweek');
+    var endweek=$(element).attr('endweek');
+
+    var ohtml="";
+    for (var week = startweek; week <= endweek; week++) {
+        
+        ohtml+='<span id="'+week+'" class="week">v'+week+'</span>';
+    };
+
+    $('.weeks').html(ohtml);
+   
+        //nWeekNumber is a hidden field
+      var tempWeekNumber=40;
+     
+      $('.table-row.employee').each(function(index){
+
+            var employee=$(this);
+            var tempWeek=startweek;
+            for (var i = tempWeekNumber; i <=52; i++) {
+              
+                var selector=".column.second-column #"+i;
+
+                $(employee).find(selector).each(function(){
+                    this.id=i;
+                });
+               
+            };
+      });
+
+   
+     
+     
 }
-
 function displayMonthWeekNumbers(element){
 
             var year=2013;
@@ -224,69 +353,64 @@ function displayMonthWeekNumbers(element){
             
             var week=1;  //initialisation
 
-            var monthChild="";
-
-    for (var month = startMonth; month <=endMonth; month++) {
+    // for (var month = startMonth; month <=endMonth; month++) {
             
-            var monthName=getMonthName(month);
-            var numberOfWeeks=getNumOfWeeks(year,month);
-            var nWeekCounter=numberOfWeeks;
-            
-            var secondcol='.table-header div.column.second-column';
+    //         var monthName=getMonthName(month);
+    //         var numberOfWeeks=getNumOfWeeks(year,month);
+    //         var nWeekCounter=numberOfWeeks;
+           
+    //         if(parseInt(month)%3==1){
 
-            if(parseInt(month)%3==1){
+    //             if(parseInt(firstDayOfYear)!=0 && parseInt(month)==1){
+    //                 nWeekCounter=nWeekCounter+1;
+    //             }
+    //             var monthParent= $('.column.second-column.month');
+    //             var monthChild='<span class="title">'+monthName+'</span>';
 
-                if(parseInt(firstDayOfYear)!=0 && parseInt(month)==1){
-                    nWeekCounter=nWeekCounter+1;
-                }
+    //               for (week = startWeek;nWeekCounter>0; week++, nWeekCounter--) {
+    //                   monthChild+='<span id="'+week+'" class="week">v'+week+'</span>';
+    //                   countWeekInQuarter=countWeekInQuarter+1;
+    //             };
+
+    //             $(monthParent).html(monthChild);
+    //             startWeek=week;
+
+    //         }
+
+    //         if(parseInt(month)%3==2){
+    //             var monthParent='.column.third-column.month';
+    //             var monthChild='<span class="title">'+monthName+'</span>';
+
+    //              for (week = startWeek; nWeekCounter>0; week++, nWeekCounter--) {
+    //                   monthChild+='<span id="'+week+'" class="week">v'+week+'</span>';
+    //                   countWeekInQuarter=countWeekInQuarter+1;
+    //             };
+
+    //             $(monthParent).html(monthChild);
+    //             startWeek=week;
+    //         }
+
+    //         if(parseInt(month)%3==0){
+
+    //             //Remove hard-carded
+    //              if(parseInt(month)==9){
+    //                 nWeekCounter=nWeekCounter+1;
+
+    //              }
+    //              var monthParent='.column.fourth-column.month';
+    //             var monthChild='<span class="title">'+monthName+'</span>';
+
+    //             for (week = startWeek; nWeekCounter>0; week++, nWeekCounter--) {
+    //                   monthChild+='<span id="'+week+'" class="week">v'+week+'</span>';
+    //                   countWeekInQuarter=countWeekInQuarter+1;
+    //             };
+
+    //             $(monthParent).html(monthChild);
                 
-                monthChild+='<span class="title"></span>';
+    //         }
 
-                  for (week = startWeek;nWeekCounter>0; week++, nWeekCounter--) {
-                      monthChild+='<span id="'+week+'" class="week">v'+week+'</span>';
-                      countWeekInQuarter=countWeekInQuarter+1;
-                };
 
-                
-                startWeek=week;
-
-            }
-
-            if(parseInt(month)%3==2){
-                
-                monthChild+='<span class="title"></span>';
-
-                 for (week = startWeek; nWeekCounter>0; week++, nWeekCounter--) {
-                      monthChild+='<span id="'+week+'" class="week">v'+week+'</span>';
-                      countWeekInQuarter=countWeekInQuarter+1;
-                };
-
-                
-                startWeek=week;
-            }
-
-            if(parseInt(month)%3==0){
-
-                //Remove hard-carded
-                 if(parseInt(month)==9){
-                    nWeekCounter=nWeekCounter+1;
-
-                 }
-                
-                monthChild+='<span class="title"></span>';
-
-                for (week = startWeek; nWeekCounter>0; week++, nWeekCounter--) {
-                      monthChild+='<span id="'+week+'" class="week">v'+week+'</span>';
-                      countWeekInQuarter=countWeekInQuarter+1;
-                };
-
-               
-                
-            }
-
-        };
-
-         $(secondcol).html(monthChild);
+    //     };
 
      $('.table-row.employee').each(function(index){
 
@@ -312,44 +436,7 @@ function displayMonthWeekNumbers(element){
      });
 
 
-     if(startMonth>3){
-         var getEmployeesUrl="/getEmployees";
-        $.ajax({
-            url: getEmployeesUrl,
-            data: { strStartWeek:tempStartWeek, strEndWeek:week-1},
-            success:function(data){
-                
-            }
-        });
-     }
-
-
-       //nWeekNumber is a hidden field
-      var tempWeekNumber=1;
      
-
-      $('.table-row.employee').each(function(index){
-
-            var employee=$(this);
-            var employeeInfo=$(this).next();
-
-            for (var i = tempWeekNumber; i <52; i++) {
-              
-                var selector=".column.second-column #"+i;
-
-                var nWeekTotal=0;
-
-                $(employeeInfo).find(selector).each(function(){
-
-                    if($(this).text().length>0){
-                        nWeekTotal+=parseInt($(this).text());
-                    }
-                    
-                });
-
-                $(employee).find(selector).text(nWeekTotal);
-               
-            };
-      });
+      
     
 }

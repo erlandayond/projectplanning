@@ -83,6 +83,15 @@ public class ProjectOccupied {
 		objResourceplan.setEmployee(EmployeeListAPI.getEmployee(nEmpId));
 		objResourceplan.save();
 	}
+	
+	public void makeInActiveProject(int nEmpId, int nProjId){
+		
+		Query query=JPA.em().createQuery("update Resourceplan r set r.projActive=0 where r.employee.empId=:eId and r.projectId=:projId");
+		query.setParameter("eId",nEmpId);
+		query.setParameter("projId", nProjId);
+		Object obj=query.executeUpdate();
+		
+	}
 	private long projectExists(int nEmpId, int nProjId, int nWeekNum){
 		
 		long nResId=0;
@@ -104,7 +113,7 @@ public class ProjectOccupied {
 			List<Object> listResPlan=query.getResultList();
 			if(listResPlan.size()==1){
 				Object[] tempObj=(Object[])listResPlan.get(0);
-				nResId=(long)tempObj[0];
+				nResId=(Long)tempObj[0];
 				
 			}else{
 				nResId=-1; // to mark more than one record is returning
