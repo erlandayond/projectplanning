@@ -71,6 +71,7 @@ public class ProjectOccupied {
 		objResourceplan.setWeek(nWeekNum);
 		objResourceplan.setEmployee(EmployeeListAPI.getEmployee(nEmpId));
 		objResourceplan.setOccupied(nOccupied);
+		objResourceplan.setProjActive(true);
 		objResourceplan.save();
 		
 	}
@@ -81,6 +82,7 @@ public class ProjectOccupied {
 		objResourceplan.setProjectName(strProjName);
 		objResourceplan.setWeek(nWeekNum);
 		objResourceplan.setEmployee(EmployeeListAPI.getEmployee(nEmpId));
+		objResourceplan.setProjActive(true);
 		objResourceplan.save();
 	}
 	
