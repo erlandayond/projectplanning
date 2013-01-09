@@ -94,6 +94,22 @@ public class ProjectOccupied {
 		Object obj=query.executeUpdate();
 		
 	}
+	
+	public boolean projectNameExists(String strProjectName){
+		TypedQuery<Project> query=JPA.em().createQuery("select p from Project p where p.projectName Like :projName",Project.class);
+		query.setParameter("projName", strProjectName);
+		List<Project> listProjects=query.getResultList();
+		
+		if(listProjects.size()>0){
+			
+			return true;
+			
+		}else{
+			
+			return false;
+		}
+		
+	}
 	private long projectExists(int nEmpId, int nProjId, int nWeekNum){
 		
 		long nResId=0;

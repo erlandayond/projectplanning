@@ -59,8 +59,13 @@ public class Application extends Controller {
     	
     	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
     	if(projectName.length()>0){
-    		objEmployeeListAPI.addNewProject(projectName);
-        	Logger.info("New project added :"+projectName);
+    		boolean flag=new ProjectOccupied().projectNameExists(projectName);
+    		if(!flag){
+    			
+    			objEmployeeListAPI.addNewProject(projectName);
+            	Logger.info("New project added :"+projectName);
+    		}
+    		
     	}
     }
     public static void addNewEmployee(String employeeName){
