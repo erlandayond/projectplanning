@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -32,7 +33,7 @@ public class EmployeeListAPI {
 			listEmployeeInfo.add(tempEmployeeInfo);
 			
 		}
-		
+			Collections.sort(listEmployeeInfo,EmployeeInfo.EmployeeNameComparator);
 		return listEmployeeInfo;
 	}
 	
