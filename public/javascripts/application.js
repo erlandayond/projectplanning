@@ -147,7 +147,7 @@ $(document).ready(function () {
             var employee=$(this);
             var employeeInfo=$(this).next();
 
-            for (var i = tempWeekNumber; i <52; i++) {
+            for (var i = tempWeekNumber; i <=52; i++) {
               
                 var selector=".column.second-column #"+i;
 
@@ -176,7 +176,7 @@ $(document).ready(function () {
             var employee=$(this);
             var employeeInfo=$(this).next();
 
-            for (var i = tempWeekNumber; i <52; i++) {
+            for (var i = tempWeekNumber; i <=52; i++) {
               
                 var selector=".column.second-column #"+i;
 
