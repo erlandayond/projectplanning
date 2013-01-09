@@ -105,10 +105,7 @@ public class Application extends Controller {
    	
    	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
        List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject(nStartWeek, nEndWeek);
-       JSONSerializer modelSerializer = new JSONSerializer().include("listProjectInfo","listProjectInfo.listWeekInfo").exclude("class","NEmpId")
-       									.exclude("listProjectInfo.NProjectId","listProjectInfo.class")
-       									.exclude("listProjectInfo.listWeekInfo.NOccupied", "listProjectInfo.listWeekInfo.NWeekNum","listProjectInfo.listWeekInfo.class");
-       
+     
        
        List<Project> listProjects=new EmployeeListAPI().getAllProjects();
        // renderJSON(modelSerializer.serialize(listEmployeeInfo));
@@ -128,10 +125,7 @@ public class Application extends Controller {
    	
    	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
        List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject(nStartWeek, nEndWeek);
-       JSONSerializer modelSerializer = new JSONSerializer().include("listProjectInfo","listProjectInfo.listWeekInfo").exclude("class","NEmpId")
-       									.exclude("listProjectInfo.NProjectId","listProjectInfo.class")
-       									.exclude("listProjectInfo.listWeekInfo.NOccupied", "listProjectInfo.listWeekInfo.NWeekNum","listProjectInfo.listWeekInfo.class");
-       
+     
        
        List<Project> listProjects=new EmployeeListAPI().getAllProjects();
        // renderJSON(modelSerializer.serialize(listEmployeeInfo));
@@ -150,10 +144,6 @@ public class Application extends Controller {
    	
    	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
        List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject(nStartWeek, nEndWeek);
-       JSONSerializer modelSerializer = new JSONSerializer().include("listProjectInfo","listProjectInfo.listWeekInfo").exclude("class","NEmpId")
-       									.exclude("listProjectInfo.NProjectId","listProjectInfo.class")
-       									.exclude("listProjectInfo.listWeekInfo.NOccupied", "listProjectInfo.listWeekInfo.NWeekNum","listProjectInfo.listWeekInfo.class");
-       
        
        List<Project> listProjects=new EmployeeListAPI().getAllProjects();
        // renderJSON(modelSerializer.serialize(listEmployeeInfo));

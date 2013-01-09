@@ -20,7 +20,7 @@ $(document).ready(function () {
     		$(thisEmployeeInfo).find('.week').attr('contenteditable','true');
     }
 
-    });
+    });    
 
     $("#addEmployee").change(function(){
     	var empId=$("#addEmployee option:selected").val();
