@@ -267,7 +267,8 @@ $(document).ready(function () {
         var empId=$(this).parent().parent().parent().attr('employeeid');
         var projId=$(this).attr('projid');
 
-        $.ajax({
+        if(confirm("Are you sure you want to delete project this employee ?")){
+            $.ajax({
             url:'/deleteProjectForEmployee',
             data:{nEmpId:empId, nProjId:projId},
             success:function(){
@@ -279,6 +280,8 @@ $(document).ready(function () {
             }
 
         });
+        }
+        
     })
 });
 
