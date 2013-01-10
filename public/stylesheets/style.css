@@ -520,3 +520,6 @@ a.linkButton{
 .remove-project:hover{
 	cursor: pointer;
 }
+.del-project{
+	float:right;
+}
