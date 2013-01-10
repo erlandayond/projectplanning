@@ -178,10 +178,18 @@ public class Application extends Controller {
 	   
    }
    
-   public static void deleteProject(int nEmpId, int nProjId){
+   public static void deleteProjectForEmployee(int nEmpId, int nProjId){
 	   Logger.info("deleting a project "+nProjId+"for employee:"+nEmpId);
 	   ProjectOccupied objProjOccupied=new ProjectOccupied();
-	   objProjOccupied.makeInActiveProject(nEmpId, nProjId);
+	   objProjOccupied.makeInActiveProjectForEmployee(nEmpId, nProjId);
+   }
+   
+   public static void deleteProject(int nProjId){
+	   Logger.info("deleting a project :"+nProjId+" from system");
+	   
+	   ProjectOccupied objProjOccupied=new ProjectOccupied();
+	   objProjOccupied.makeInActiveProject(nProjId);
+	   
    }
 
 }

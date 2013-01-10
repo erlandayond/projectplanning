@@ -13,7 +13,8 @@ GET     /view3                           		Application.view3
 GET     /view4                           		Application.view4
 GET     /getProjects                            Application.getProjects
 GET     /deleteEmployee							Application.deleteEmployee
-GET     /deleteProject							Application.deleteProject
+GET     /deleteProjectForEmployee				Application.deleteProjectForEmployee
+GET		/deleteProject							Application.deleteProject
 POST    /addNewEmployee							Application.addNewEmployee
 POST	/addNewProject                          Application.addNewProject
 POST	/addNewContractor						Application.addNewContractor

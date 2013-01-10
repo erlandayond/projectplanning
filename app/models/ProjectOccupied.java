@@ -86,15 +86,32 @@ public class ProjectOccupied {
 		objResourceplan.save();
 	}
 	
-	public void makeInActiveProject(int nEmpId, int nProjId){
+	public void makeInActiveProjectForEmployee(int nEmpId, int nProjId){
 		
 		Query query=JPA.em().createQuery("update Resourceplan r set r.projActive=0 where r.employee.empId=:eId and r.projectId=:projId");
 		query.setParameter("eId",nEmpId);
 		query.setParameter("projId", nProjId);
-		Object obj=query.executeUpdate();
+		query.executeUpdate();
 		
 	}
 	
+	public void makeInActiveProject(int nProjId){
+		
+		/*
+		 * Make project inactive in Project table
+		 * Make project inactive in Resourceplan table
+		 */
+		
+		//Make project inactive in Project table
+		Query query=JPA.em().createQuery("update Project p set p.active=0 where p.projectId=:projId");
+		query.setParameter("projId", nProjId);
+		query.executeUpdate();
+		
+		//Make project inactive in Resourceplan table
+		Query resQuery=JPA.em().createQuery("update Resourceplan r set r.projActive=0 where r.projectId=:projId");
+		resQuery.setParameter("projId", nProjId);
+		resQuery.executeUpdate();
+	}
 	public boolean projectNameExists(String strProjectName){
 		TypedQuery<Project> query=JPA.em().createQuery("select p from Project p where p.projectName Like :projName",Project.class);
 		query.setParameter("projName", strProjectName);

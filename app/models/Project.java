@@ -18,6 +18,8 @@ public class Project extends play.db.jpa.GenericModel implements Serializable {
 
 	private String projectName;
     
+	private boolean active;
+	
 	public Project() {
 	}
 
@@ -29,6 +31,14 @@ public class Project extends play.db.jpa.GenericModel implements Serializable {
 		this.projectId = projectId;
 	}
 
+	public boolean getActive(){
+		return this.active;
+	}
+	
+	public void setActive(boolean active){
+		this.active=active;
+	}
+	
 	public String getProjectName() {
 		return this.projectName;
 	}

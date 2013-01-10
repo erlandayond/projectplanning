@@ -50,6 +50,24 @@ $(document).ready(function () {
         }) ;
 
     });
+    $('.del-project').change(function(){
+        var projId=$(this).find('option:selected').val();
+        var projName=$(this).find('option:selected').text();
+
+        $.ajax({
+            url:'/deleteProject',
+            data:{nProjId:projId},
+            success:function(){
+                alert('project is deleted !');
+                window.location.reload(true);
+             },
+            error:function(){
+                
+            }
+
+        });
+
+    });
     $("#btnNewProject").click(function(){
     	var newProjectName=prompt("Project Name");
     	var newProjUrl="/addNewProject";
@@ -227,7 +245,8 @@ $(document).ready(function () {
     $('.remove').click(function(){
         var empId=this.id;
 
-        $.ajax({
+        if(confirm("Are you sure you want to delete employee ?")){
+            $.ajax({
             url:'/deleteEmployee',
             data:{nEmpId:empId},
             success:function(){
@@ -237,6 +256,11 @@ $(document).ready(function () {
             }
 
         });
+
+        }else{
+
+        }
+        
     });
 
     $('.remove-project').click(function(){
@@ -244,7 +268,7 @@ $(document).ready(function () {
         var projId=$(this).attr('projid');
 
         $.ajax({
-            url:'/deleteProject',
+            url:'/deleteProjectForEmployee',
             data:{nEmpId:empId, nProjId:projId},
             success:function(){
             alert('project is deleted !');

@@ -72,7 +72,7 @@ public class EmployeeListAPI {
     
 	public List<Project> getAllProjects(){
 	
-		Query query=JPA.em().createQuery("select id, projectName from Project ORDER BY projectName");
+		Query query=JPA.em().createQuery("select id, projectName from Project where active=1 ORDER BY projectName");
 		List<Object> listResult=query.getResultList();
 		List<Project> listProjects=new ArrayList<Project>();
 		if(listResult.size()>0){
