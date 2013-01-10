@@ -283,6 +283,12 @@ $(document).ready(function () {
         }
         
     })
+
+    $('input.autocomplete').each(function(){
+        var $input=$(this);
+        var serverUrl=$input.data('url');
+        $input.autocomplete({source:'http://localhost:9000/autocompleteLabel'});
+    });
 });
 
 // // return no of "mondays" in a year, month

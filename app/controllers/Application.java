@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -19,6 +20,7 @@ import flexjson.JSONSerializer;
 
 public class Application extends Controller {
 
+	public static int AUTOCOMPLETE_MAX=3;
     public static void index() {
     	
     	int nStartWeek=1;
@@ -86,11 +88,23 @@ public class Application extends Controller {
     		Logger.info("New contractor added :"+contractorName);
     	}
     }
-    public static void getProjects(){
+    public static void autocompleteLabel(final String term){
     	
-    	// Get projects for Employee with Id : nEmpId
-    	List<Project> listProjectsForEmployee=new EmployeeListAPI().getAllProjects();
+    	Logger.info("term received for autocomplete:"+term);
+    	// get all projects
+    	List<Project> listProjects=new EmployeeListAPI().getAllProjects();
     	
+    	final List<String> response=new ArrayList<String>();
+    	for(Project proj: listProjects){
+    		if(proj.getProjectName().toLowerCase().startsWith(term.toLowerCase())){
+    			response.add(proj.getProjectName());
+    		}
+    		if(response.size()==AUTOCOMPLETE_MAX){
+    			break;
+    		}
+    	}
+    	
+    	renderJSON(response);
     }
     
    

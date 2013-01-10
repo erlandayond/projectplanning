@@ -15,6 +15,7 @@ GET     /getProjects                            Application.getProjects
 GET     /deleteEmployee							Application.deleteEmployee
 GET     /deleteProjectForEmployee				Application.deleteProjectForEmployee
 GET		/deleteProject							Application.deleteProject
+GET		/autocompleteLabel						Application.autocompleteLabel
 POST    /addNewEmployee							Application.addNewEmployee
 POST	/addNewProject                          Application.addNewProject
 POST	/addNewContractor						Application.addNewContractor
