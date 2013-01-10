@@ -239,10 +239,13 @@
 					</div>
 					<div class="control-panel-row">
 						<p>Choose a project to delete: </p>
-						<select id="delProject" class="">
-							<option>project 1</option>
-							<option>project 2</option>
-							<option>project 3</option>
+						<select id="delProject" class="del-project">
+							<option value="0">Delete project</option>
+                				%{ for(project in listProjects) { %}
+                					<option value="${project.projectId}">${project.projectName}</option>
+                		    	%{ 
+                					} 
+                				%}
 						</select>
 					</div>
 				</div>

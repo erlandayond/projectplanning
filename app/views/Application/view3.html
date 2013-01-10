@@ -231,9 +231,23 @@
 			</div>
 			<div id="bottom-bar">
 				<div class="control-panel">
-					<div class="control-button" id="btnNewContractor">New Contractor</div>
-					<div class="control-button" id="btnNewEmployee">New Employee</div>
-					<div class="control-button" id="btnNewProject"> New Project </div>
+
+					<div class="control-panel-row">
+						<div class="control-button" id="btnNewContractor">New Contractor</div>
+						<div class="control-button" id="btnNewEmployee">New Employee</div>
+						<div class="control-button" id="btnNewProject"> New Project </div>
+					</div>
+					<div class="control-panel-row">
+						<p>Choose a project to delete: </p>
+						<select id="delProject" class="del-project">
+							<option value="0">Delete project</option>
+                				%{ for(project in listProjects) { %}
+                					<option value="${project.projectId}">${project.projectName}</option>
+                		    	%{ 
+                					} 
+                				%}
+						</select>
+					</div>
 				</div>
 				<div class="navigation">
 					<ul>

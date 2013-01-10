@@ -54,18 +54,21 @@ $(document).ready(function () {
         var projId=$(this).find('option:selected').val();
         var projName=$(this).find('option:selected').text();
 
-        $.ajax({
+         if(confirm("Are you sure you want to delete project ?")){
+            $.ajax({
             url:'/deleteProject',
             data:{nProjId:projId},
             success:function(){
-                alert('project is deleted !');
                 window.location.reload(true);
              },
             error:function(){
                 
             }
 
-        });
+            });
+        }else{
+
+        }
 
     });
     $("#btnNewProject").click(function(){
