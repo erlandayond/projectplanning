@@ -44,7 +44,6 @@
 									<span class="c c9">November</span>
 									<span class="c c13">December</span> -->
 								</div>
-								
 									<div class="weeks">
 										#{list items:nStartWeek..nEndWeek, as:'i'}
 												
@@ -88,7 +87,7 @@
 							</div>
 							<div class="column second-column">
 								%{ for(week in proj.listWeekInfo){ %}
-									<!-- <span>weeknumber:${week.nWeekNum}---occupied:${week.nOccupied}</span> -->
+									
 									<div class="week" id="${week.nWeekNum}">${week.nOccupied}</div>
 								%{ 
 									}
@@ -234,6 +233,7 @@
 				<div class="control-panel">
 
 					<div class="control-panel-row">
+						
 						<div class="control-button" id="btnNewProject"> New Project </div>
 						<div class="control-button" id="btnNewEmployee">New Employee</div>
 						<div class="control-button" id="btnNewContractor">New Contractor</div>
@@ -250,17 +250,23 @@
 						</select>
 					</div>
 				</div>
+
 				<div class="navigation">
 					<ul>
 						<li class="prev"><div></div></li>
-						<li class="month-button button-1" id="1" startmon="1" startweek="1" endweek="13"><a class="linkButton" href="@{view1}">V1 - V13</a></li>
+						<li class="month-button button-1 active" id="1" startmon="1" startweek="1" endweek="13"><a class="linkButton" href="@{view1}">V1 - V13</a></li>
 						<li class="month-button button-2" id="2" startmon="4" startweek="14" endweek="26"><a class="linkButton" href="@{view2}">V14 - V26</a></li>
 						<li class="month-button button-3" id="3" startmon="7" startweek="27" endweek="39"><a class="linkButton" href="@{view3}">V27 - V39</a></li>
-						<li class="month-button button-4 active" id="4" startmon="10" startweek="40" endweek="52"><a class="linkButton" href="@{view4}">V40 - V52</a></li>
+						<li class="month-button button-4" id="4" startmon="10" startweek="40" endweek="52"><a class="linkButton" href="@{view4}">V40 - V52</a></li>
 						<li class="next"><div></div></li>
 					</ul>	
 				</div>
+
+				
 			</div>
+
+			
+			
 		</div>
 	</div>
 
@@ -271,7 +277,7 @@
 		<div class="tool-tip">
 			<div class="content">
 				<div class="arrow"></div>
-				<a href="#" class="mark-as-unsure">Markera som os‰ker</a>
+				<a href="#" class="mark-as-unsure">Markera som os√§ker</a>
 			</div>
 		</div>
 	</div>

@@ -2,36 +2,68 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.EntityManager;
+
 
 import models.Employee;
 import models.EmployeeInfo;
-import models.EmployeeListAPI;
 import models.EmployeeQuarter;
-import models.Project;
-import models.ProjectInfo;
+import models.EmployeeListAPI;
 import models.ProjectOccupied;
-import models.WeekInfo;
-import play.Logger;
+import models.Login;
+import models.Project;
+import models.Login;
 import play.db.jpa.JPA;
+import play.Logger;
 import play.mvc.Controller;
-import flexjson.JSONSerializer;
+
 
 public class Application extends Controller {
 
 	public static int AUTOCOMPLETE_MAX=3;
     public static void index() {
     	
-    	int nStartWeek=1;
-    	int nEndWeek=13;
     	
-    	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
-    	List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject(nStartWeek, nEndWeek);
-    	List<Project> listProjects=new EmployeeListAPI().getAllProjects();
-    	render("Application/index.html",listEmployeeInfo,listProjects, nStartWeek, nEndWeek);
+    	render("Application/index.html");
     }
     
+    
+    public static void login(String sPassword, String sUsername){
+    	Logger.info("username:"+sUsername+" Password:"+sPassword);
+    
+    	Login objLogin=new Login(sPassword,sUsername);
+    	boolean flag=objLogin.authenticateUser();
+    	if(flag){
+    		Logger.info("login successful");
+    		
+    		
+    	}else{
+    		Logger.info("login not successful");
+    		
+    		
+    	}
+    	
+    	renderJSON(flag);
+    }
+    
+    public static void view1(){
+       	
+       	int nStartWeek=1; //Integer.parseInt(strStartWeek);
+       	int nEndWeek=13; //Integer.parseInt(strEndWeek);
+       	
+       	Logger.info("startweek :"+nStartWeek);
+       	Logger.info("EndWeek :"+nEndWeek);
+       	
+       	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
+           List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject(nStartWeek, nEndWeek);
+         
+           
+           List<Project> listProjects=new EmployeeListAPI().getAllProjects();
+           // renderJSON(modelSerializer.serialize(listEmployeeInfo));
+        
+          
+          render(listEmployeeInfo, listProjects, nStartWeek, nEndWeek);
+       }
     public static void getJSONEmployeeInfo(){
     	/*EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
         List<EmployeeInfo> listObjEmployeeInfo= objEmployeeListAPI.MakeAPIObject();

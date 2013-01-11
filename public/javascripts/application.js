@@ -3,6 +3,27 @@ $(document).ready(function () {
 	
 	var hiddenChangeStatus = $('#hidden-change-status').html();
 
+     $('#loginButton').click(function(){
+        
+        var password=$('#pass').val();
+        var username=$('#user').val();
+        $.ajax({
+            url:'/login',
+            data:{sPassword:password, sUsername:username},
+            success:function(data){
+                if(data){
+                     window.location="/view1";
+                 }else{
+                    window.location.reload(true);
+                 }
+              
+            },
+            error:function(){
+                
+            }
+
+        });
+     });
 
 	$('.employee-info').hide();
     
@@ -46,7 +67,8 @@ $(document).ready(function () {
          
        
         $.post(newProjUrl,{projectId:projId, employeeId:empId},function(data){
-           alert('Project added ! Please Refresh');
+           //alert('Project added ! Please Refresh');
+           window.location.reload(true);
         }) ;
 
     });

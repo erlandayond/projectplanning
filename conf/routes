@@ -8,6 +8,8 @@ GET     /                                       Application.index
 POST 	/addProject								Application.addProject
 POST    /addEmployee				            Application.addEmployee
 GET     /getJSONEmployeeInfo					Application.getJSONEmployeeInfo
+GET     /login                           		Application.login
+GET     /view1                           		Application.view1
 GET     /view2                           		Application.view2
 GET     /view3                           		Application.view3
 GET     /view4                           		Application.view4
@@ -29,3 +31,4 @@ GET     /public/                                staticDir:public
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}
+

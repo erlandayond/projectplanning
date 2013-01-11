@@ -1,288 +1,48 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta content="text/html; charset=utf-8" http-equiv="Content-type">
+
+
+<meta content="text/html; charset=utf-8" http-equiv="Content-type">
 	<!--meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/ -->
 	<meta content="en-US" http-equiv="Content-Language">
-	<link href="@{'/public/stylesheets/reset.css'}" media="screen" rel="stylesheet" />
-	<link href="@{'/public/stylesheets/style.css'}" media="screen" rel="stylesheet" />
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<title>Login</title>
 
-	<title>Project Planning</title>
+<link href="@{'/public/stylesheets/login-box.css'}" rel="stylesheet" type="text/css" />
 </head>
+
 <body>
-	<header>
-		<div class="wrapper">
-			<div class="content">
-				<div class="logo-holder">
-					<img src="@{'/public/images/logo.png'}" />
-				</div>
-				<span class="title">Project Planning & Staffing</span>
-			</div>
-		</div>
-	</header>
-	<div class="content">
-		<div class="wrapper">
-			<div class="table">
-				<div class="employees-regular">
-					<div class="table-header">
-						<div class="first-column">
-							<span class="title">Employees</span>
-						</div>
-						<div class="column second-column">
-								<div class="month-names">
-									<!-- <span class="c">January</span>
-									<span class="c">February</span>
-									<span class="c">March</span>
-									<span class="c">April</span>
-									<span class="c">May</span>
-									<span class="c">June</span>
-									<span class="c">July</span>
-									<span class="c">August</span>
-									<span class="c">September</span>
-									<span class="c c2">October</span>
-									<span class="c c9">November</span>
-									<span class="c c13">December</span> -->
-								</div>
-									<div class="weeks">
-										#{list items:nStartWeek..nEndWeek, as:'i'}
-												
-												<span class="week">v${i}</span>
-						
-										#{/list}
-									</div>
-						</div>
-						
-						
-					</div>
-				</div>
-                
-                 
-                
-				
-				 %{ for(emp in listEmployeeInfo) {
-                   		if(emp.strEmpType=="regular") {
 
-                        
-                  %}
-				<div class="table-row employee" id="employee-${emp.nEmpId}" >
-					<div class="column person first-column">
-						<div class="toggler"></div>
-						<span class="name">${emp.strEmpName}</span>
-						<div id="${emp.nEmpId}" class="remove" >Delete</div>
-					</div>
-					<div class="column second-column">
-						#{list items:nStartWeek..nEndWeek, as:'i'}
-						<div class="week" id="${i}"></div>
-						
-						#{/list}
-					</div>
-                </div>
-                <div class="employee-info" style="display: block;" employeeId="${emp.nEmpId}"> 
-               		%{ for(proj in emp.listProjectInfo){ %}
-                		<div class="table-row" id="project-${proj.nProjectId}" projectId="${proj.nProjectId}">
-							<div class="column first-column">
-								<span class="project-name">${proj.strProjectName}</span>
-								<div class="remove-project" projId="${proj.nProjectId}">Delete</div>
-							</div>
-							<div class="column second-column">
-								%{ for(week in proj.listWeekInfo){ %}
-									
-									<div class="week" id="${week.nWeekNum}">${week.nOccupied}</div>
-								%{ 
-									}
-								%}
-							</div>
-                    	</div>
-                	%{ } %}
-                	<div class="table-row">
-                		<div class="column first-column">
-                			<div class="add-project"></div>
-                			<select id="addProject" class="add-project">
-                				<option value="0">Add project</option>
-                				%{ for(project in listProjects) { %}
-                					<option value="${project.projectId}">${project.projectName}</option>
-                		    	%{ 
-                					} 
-                				%}
-                				 
-                			</select>
-                		</div>
-                		<div class="column second-column">
-							<div class="week" id="week1"></div>
-							<div class="week" id="week2"></div>
-							<div class="week" id="week3"></div>
-							<div class="week" id="week4"></div>
-							<div class="week" id="week5"></div>
-							<div class="week" id="week6"></div>
-							<div class="week" id="week7"></div>
-							<div class="week" id="week8"></div>
-							<div class="week" id="week9"></div>
-							<div class="week" id="week10"></div>
-							<div class="week" id="week11"></div>
-							<div class="week" id="week12"></div>
-						</div>
-                	</div>
-            	</div>
-                %{
-				     } 
-				    } 	
-				  %}
-				<div class="employees-subcontractor">
-					<div class="table-header">
-						<div class="first-column">
-							<span class="title">Subcontractors</span>
-						</div>
-						<div class="column second-column ">
-								<div class="month-names">
-									<!-- <span class="c">January</span>
-									<span class="c">February</span>
-									<span class="c">March</span>
-									<span class="c">April</span>
-									<span class="c">May</span>
-									<span class="c">June</span>
-									<span class="c">July</span>
-									<span class="c">August</span>
-									<span class="c">September</span>
-									<span class="c c2">October</span>
-									<span class="c c9">November</span>
-									<span class="c c13">December</span> -->
-								</div>
-									<div class="weeks">
-										#{list items:nStartWeek..nEndWeek, as:'i'}
-												
-												<span class="week">v${i}</span>
-						
-										#{/list}
-									</div>
-							
-						</div>
-						
-					</div>
-				</div>
-			
-					 %{ for(emp in listEmployeeInfo) {
-                  
-                       if(emp.strEmpType=="contractor") {
-                  %}
-				<div class="table-row contractor" id="employee-${emp.nEmpId}">
-					<div class="column person first-column">
-						<div class="toggler"></div>
-						<span class="name">${emp.strEmpName}</span>
-						<div id="${emp.nEmpId}" class="remove" >Delete</div>
-					</div>
-					<div class="column second-column">
-						#{list items:nStartWeek..nEndWeek, as:'i'}
-						<div class="week" id="${i}"></div>
-						
-						#{/list}
-					</div>
-                </div>
-                <div class="employee-info" style="display: block;" employeeId="${emp.nEmpId}"> 
-               		%{ for(proj in emp.listProjectInfo){ %}
-                		<div class="table-row" id="project-${proj.nProjectId}" projectId="${proj.nProjectId}">
-							<div class="column first-column">
-								<span class="project-name">${proj.strProjectName}</span>
-								<div class="remove-project" projId="${proj.nProjectId}">Delete</div>
-							</div>
-							<div class="column second-column">
-								%{ for(week in proj.listWeekInfo){ %}
 
-									<div class="week" id="${week.nWeekNum}">${week.nOccupied}</div>
-								%{ 
-									}
-								%}
-							</div>
-                    	</div>
-                	%{ } %}
-                	<div class="table-row">
-                		<div class="column first-column">
-                			<div class="add-project"></div>
-                			<select id="addProject" class="add-project">
-                				<option value="0">Add project</option>
-                				%{ for(project in listProjects) { %}
-                					<option value="${project.projectId}">${project.projectName}</option>
-                		    	%{ 
-                					} 
-                				%}
-                				 
-                			</select>
-                		</div>
-                		<div class="column second-column">
-							<div class="week" id="week1"></div>
-							<div class="week" id="week2"></div>
-							<div class="week" id="week3"></div>
-							<div class="week" id="week4"></div>
-							<div class="week" id="week5"></div>
-							<div class="week" id="week6"></div>
-							<div class="week" id="week7"></div>
-							<div class="week" id="week8"></div>
-							<div class="week" id="week9"></div>
-							<div class="week" id="week10"></div>
-							<div class="week" id="week11"></div>
-							<div class="week" id="week12"></div>
-						</div>
-                	</div>
-            	</div>
-                %{
-				     } 
-				    } 	
-				  %}
-			</div>
-			<div id="bottom-bar">
-				<div class="control-panel">
+<div style="padding: 100px 0 0 250px;">
 
-					<div class="control-panel-row">
-						
-						<div class="control-button" id="btnNewProject"> New Project </div>
-						<div class="control-button" id="btnNewEmployee">New Employee</div>
-						<div class="control-button" id="btnNewContractor">New Contractor</div>
-					</div>
-					<div class="control-panel-row">
-						<p>Choose a project to delete: </p>
-						<select id="delProject" class="del-project">
-							<option value="0">Delete project</option>
-                				%{ for(project in listProjects) { %}
-                					<option value="${project.projectId}">${project.projectName}</option>
-                		    	%{ 
-                					} 
-                				%}
-						</select>
-					</div>
-				</div>
 
-				<div class="navigation">
-					<ul>
-						<li class="prev"><div></div></li>
-						<li class="month-button button-1 active" id="1" startmon="1" startweek="1" endweek="13"><a class="linkButton" href="@{index}">V1 - V13</a></li>
-						<li class="month-button button-2" id="2" startmon="4" startweek="14" endweek="26"><a class="linkButton" href="@{view2}">V14 - V26</a></li>
-						<li class="month-button button-3" id="3" startmon="7" startweek="27" endweek="39"><a class="linkButton" href="@{view3}">V27 - V39</a></li>
-						<li class="month-button button-4" id="4" startmon="10" startweek="40" endweek="52"><a class="linkButton" href="@{view4}">V40 - V52</a></li>
-						<li class="next"><div></div></li>
-					</ul>	
-				</div>
+<div id="login-box">
 
-				
-			</div>
+<H2>Ayond</H2>
+Project Planning
+<br />
+<br />
+<div id="login-box-name" style="margin-top:20px;">Username:</div><div id="login-box-field" style="margin-top:20px;"><input name="username" id="user" class="form-login" title="Username" value="" size="30" maxlength="2048" /></div>
+<div id="login-box-name">Password:</div><div id="login-box-field"><input name="password" id="pass" type="password" class="form-login" title="Password" value="" size="30" maxlength="2048" /></div>
+<br />
 
-			
-			
-		</div>
-	</div>
+<br />
+<br />
+<div id="loginButton">
 
-	<!--HTML ELEMENTS FOR HIDDEN PARTS...-->	
-    <input type="hidden" id="nWeekNumber" value="40">
-    <input type="hidden" id="nQuarterNumber" value="1">
-	<div id="hidden-change-status">
-		<div class="tool-tip">
-			<div class="content">
-				<div class="arrow"></div>
-				<a href="#" class="mark-as-unsure">Markera som osäker</a>
-			</div>
-		</div>
-	</div>
-</body>
+	<img  src="@{'/public/images/login-btn.png'}" width="103" height="42" style="margin-left:90px;" />
+</div>
 
+
+
+
+
+
+</div>
+
+</div>
 <script src="@{'/public/javascripts/application.js'}"></script>
-
 </html>
