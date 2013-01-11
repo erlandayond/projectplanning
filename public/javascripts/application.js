@@ -14,7 +14,7 @@ $(document).ready(function () {
                 if(data){
                      window.location="/view1";
                  }else{
-                    window.location.reload(true);
+                    window.location="/";
                  }
               
             },

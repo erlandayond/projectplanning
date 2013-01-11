@@ -1,5 +1,6 @@
 package controllers;
 
+import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -15,18 +16,37 @@ import models.Project;
 import models.Login;
 import play.db.jpa.JPA;
 import play.Logger;
+import play.mvc.Before;
 import play.mvc.Controller;
+import play.mvc.Scope.Session;
 
 
 public class Application extends Controller {
 
 	public static int AUTOCOMPLETE_MAX=3;
+	
+	@Before(unless={"index","login"})
+    public static void isUserConnected(){
+    	
+    	String tempVal=Session.current().get("login");
+    	Logger.info("login value:"+tempVal);
+    	
+    	if(tempVal!=null && tempVal.length()>0){
+    		if(tempVal.equals("ayond")){
+        		Logger.info("user is connected...");
+        	}
+    	}
+    	else{
+    		Logger.info("user is not connected...");
+    	}
+    }
+	
+	
     public static void index() {
     	
     	
     	render("Application/index.html");
     }
-    
     
     public static void login(String sPassword, String sUsername){
     	Logger.info("username:"+sUsername+" Password:"+sPassword);
@@ -35,7 +55,7 @@ public class Application extends Controller {
     	boolean flag=objLogin.authenticateUser();
     	if(flag){
     		Logger.info("login successful");
-    		
+    		Session.current().put("login", "ayond");
     		
     	}else{
     		Logger.info("login not successful");
