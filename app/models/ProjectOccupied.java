@@ -113,7 +113,7 @@ public class ProjectOccupied {
 		resQuery.executeUpdate();
 	}
 	public boolean projectNameExists(String strProjectName){
-		TypedQuery<Project> query=JPA.em().createQuery("select p from Project p where p.projectName Like :projName",Project.class);
+		TypedQuery<Project> query=JPA.em().createQuery("select p from Project p where p.projectName Like :projName and p.active=1",Project.class);
 		query.setParameter("projName", strProjectName);
 		List<Project> listProjects=query.getResultList();
 		
