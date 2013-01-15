@@ -76,20 +76,19 @@ $(document).ready(function () {
         var projId=$(this).find('option:selected').val();
         var projName=$(this).find('option:selected').text();
 
-         if(confirm("Are you sure you want to delete project ?")){
+        if(parseInt(projId)>0){
+
+         if(confirm("Are you sure you want to delete project: "+ projName+" ?")){
             $.ajax({
             url:'/deleteProject',
             data:{nProjId:projId},
             success:function(){
                 window.location.reload(true);
              },
-            error:function(){
-                
-            }
+            error:function(){}
 
-            });
-        }else{
-
+                });
+             }
         }
 
     });
