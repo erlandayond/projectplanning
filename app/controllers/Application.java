@@ -127,8 +127,13 @@ public class Application extends Controller {
     	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
     	String strEmpType="regular";
     	if(employeeName.length()>0){
-    		objEmployeeListAPI.addNewEmployee(employeeName, strEmpType);
-    		Logger.info("New employee added :"+employeeName);
+    		boolean flag=objEmployeeListAPI.employeeNameExists(employeeName);
+    		if(!flag){
+    		
+    			objEmployeeListAPI.addNewEmployee(employeeName, strEmpType);
+        		Logger.info("New employee added :"+employeeName);
+    		}
+    		
     	}
     }
     public static void addNewContractor(String contractorName){

@@ -127,6 +127,22 @@ public class EmployeeListAPI {
 	   em.persist(objEmployee);
 	   em.getTransaction().commit();
    }
+   
+   public boolean employeeNameExists(String strEmpName){
+		TypedQuery<Employee> query=JPA.em().createQuery("select e from Employee e where e.empName Like :eName and e.empActive=1",Employee.class);
+		query.setParameter("eName", strEmpName);
+		List<Employee> listEmployees=query.getResultList();
+		
+		if(listEmployees.size()>0){
+			
+			return true;
+			
+		}else{
+			
+			return false;
+		}
+		
+	}
 	private List<ProjectOccupied> getProjectsForEmployee(int nEmpId){
 	    
 		Query query=JPA.em().createQuery("select projectId, projectName, week, occupied from Resourceplan where empId=:id and projActive=1 ");

@@ -4,9 +4,6 @@
 
 # Home page
 GET     /                                       Application.index
-
-POST 	/addProject								Application.addProject
-POST    /addEmployee				            Application.addEmployee
 GET     /getJSONEmployeeInfo					Application.getJSONEmployeeInfo
 GET     /login                           		Application.login
 GET     /view1                           		Application.view1
@@ -18,6 +15,8 @@ GET     /deleteEmployee							Application.deleteEmployee
 GET     /deleteProjectForEmployee				Application.deleteProjectForEmployee
 GET		/deleteProject							Application.deleteProject
 GET		/autocompleteLabel						Application.autocompleteLabel
+POST 	/addProject								Application.addProject
+POST    /addEmployee				            Application.addEmployee
 POST    /addNewEmployee							Application.addNewEmployee
 POST	/addNewProject                          Application.addNewProject
 POST	/addNewContractor						Application.addNewContractor
