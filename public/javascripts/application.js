@@ -297,7 +297,6 @@ $(document).ready(function () {
             url:'/deleteProjectForEmployee',
             data:{nEmpId:empId, nProjId:projId},
             success:function(){
-            alert('project is deleted !');
              window.location.reload(true);
             $(this).parent().parent().parent().parent().show() },
             error:function(){
