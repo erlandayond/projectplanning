@@ -164,11 +164,39 @@ $(document).ready(function () {
         $(prevRowWeekNum).text(total);
 
         if(parseInt(total)>100){
-            $(prevRowWeekNum).addClass('overload');
+
+            if((parseInt(total)+1)%10==0){
+            
+                $(prevRowWeekNum).removeClass('overload full').addClass('prospect');
+            }else{
+
+                $(prevRowWeekNum).removeClass('full').addClass('overload');
+            }
+
+            
          }
-         if(parseInt(total)>80){
-            $(prevRowWeekNum).addClass('full');
+         if(parseInt(total)>80 && parseInt(total)<=100){
+
+            if((parseInt(total)+1)%10==0){
+            
+                $(prevRowWeekNum).removeClass('overload full').addClass('prospect');
+            }else{
+
+                $(prevRowWeekNum).removeClass('overload').addClass('full');   
+            }
+            
          }
+
+         if(parseInt(total)>0 && parseInt(total)<=80){
+
+           $(prevRowWeekNum).removeClass('overload full prospect');  
+         }
+
+         if((parseInt(total)+1)%10==0){
+            
+                $(prevRowWeekNum).removeClass('overload full').addClass('prospect');
+            }
+
 
         var updateProjUrl="/updateEmpProjOccupied";
 
@@ -204,11 +232,33 @@ $(document).ready(function () {
                 });
 
                 $(employee).find(selector).text(nWeekTotal);
-                 if(parseInt(nWeekTotal)>100){
-                    $(employee).find(selector).addClass('overload');
+                 
+                if(parseInt(nWeekTotal)>80 && parseInt(nWeekTotal)<=100){
+                    if((parseInt(nWeekTotal)+1)%10==0){
+            
+                           $(employee).find(selector).removeClass('overload full').addClass('prospect');
+                        }else{
+
+                            $(employee).find(selector).addClass('full');   
+                        }
+                   
+                }
+                if(parseInt(nWeekTotal)>100){
+
+                        if((parseInt(nWeekTotal)+1)%10==0){
+            
+                           $(employee).find(selector).removeClass('overload full').addClass('prospect');
+                        }else{
+
+                            $(employee).find(selector).addClass('overload');
+                        }
+
+                    
                  }
-                if(parseInt(nWeekTotal)>80){
-                    $(employee).find(selector).addClass('full');
+
+               if((parseInt(nWeekTotal)+1)%10==0){
+            
+                     $(employee).find(selector).removeClass('overload full').addClass('prospect');
                 }
             };
       });
@@ -233,11 +283,33 @@ $(document).ready(function () {
                 });
 
                 $(employee).find(selector).text(nWeekTotal);
+                
+                if(parseInt(nWeekTotal)>80 &&  parseInt(nWeekTotal)<=100){
+                    if((parseInt(nWeekTotal)+1)%10==0){
+            
+                           $(employee).find(selector).removeClass('overload full').addClass('prospect');
+                        }else{
+
+                            $(employee).find(selector).addClass('full');   
+                        }
+                   
+                }
+
                 if(parseInt(nWeekTotal)>100){
-                    $(employee).find(selector).addClass('overload');
+
+                        if((parseInt(nWeekTotal)+1)%10==0){
+            
+                           $(employee).find(selector).removeClass('overload full').addClass('prospect');
+                        }else{
+
+                            $(employee).find(selector).addClass('overload');
+                        }
+
+                    
                  }
-                if(parseInt(nWeekTotal)>80){
-                    $(employee).find(selector).addClass('full');
+                if((parseInt(nWeekTotal)+1)%10==0){
+            
+                    $(employee).find(selector).removeClass('overload full').addClass('prospect');
                 }
                
             };

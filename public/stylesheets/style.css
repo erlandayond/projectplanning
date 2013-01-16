@@ -286,7 +286,9 @@ header .content .title {
 .full {
 	background: #aaffa1;
 }
-
+.prospect{
+	background:#FE642E;	
+}
 .overload {
 	background: #ff4747;
 }
