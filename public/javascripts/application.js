@@ -182,7 +182,7 @@ $(document).ready(function () {
                 $(prevRowWeekNum).removeClass('overload full').addClass('prospect');
             }else{
 
-                $(prevRowWeekNum).removeClass('overload').addClass('full');   
+                $(prevRowWeekNum).removeClass('overload prospect').addClass('full');   
             }
             
          }
@@ -285,26 +285,13 @@ $(document).ready(function () {
                 $(employee).find(selector).text(nWeekTotal);
                 
                 if(parseInt(nWeekTotal)>80 &&  parseInt(nWeekTotal)<=100){
-                    if((parseInt(nWeekTotal)+1)%10==0){
-            
-                           $(employee).find(selector).removeClass('overload full').addClass('prospect');
-                        }else{
-
-                            $(employee).find(selector).addClass('full');   
-                        }
                    
+                            $(employee).find(selector).addClass('full');   
                 }
 
                 if(parseInt(nWeekTotal)>100){
 
-                        if((parseInt(nWeekTotal)+1)%10==0){
-            
-                           $(employee).find(selector).removeClass('overload full').addClass('prospect');
-                        }else{
-
                             $(employee).find(selector).addClass('overload');
-                        }
-
                     
                  }
                 if((parseInt(nWeekTotal)+1)%10==0){
