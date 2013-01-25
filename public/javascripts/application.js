@@ -310,8 +310,7 @@ $(document).ready(function () {
            var quarterNum=this.id;
            $("#nQuarterNumber").val(quarterNum);
 
-          // displayWeekNumbers(this);
-           //displayMonthWeekNumbers(this); // display week numbers and months
+         
 
       });
 
@@ -321,8 +320,6 @@ $(document).ready(function () {
         var ele=$('li.month-button.active').get();
 
        
-        //displayMonthWeekNumbers(ele);
-        //displayWeekNumbers(ele);
      }
 
     $('.remove').click(function(){
@@ -373,185 +370,6 @@ $(document).ready(function () {
     });
 });
 
-// // return no of "mondays" in a year, month
-// function getNumOfWeeks(year,month){
-    
-//     var firstDayOfMonth= new Date(year,month-1,1);
-//     var lastDayOfMonth=new Date(year, month,0);
-
-//     var day=firstDayOfMonth.getDay();
-//     var date=lastDayOfMonth.getDate();
-
-//     var firstMondayDate=1;
-    
-//        if(day!=1){
-//         firstMondayDate=1+(6-day)+2;
-//     }
-    
-//     var nMondayCount=0;
-
-//         for (var tempDate = firstMondayDate; tempDate <= lastDayOfMonth.getDate();  ) {
-//                 nMondayCount+=1;
-//                 tempDate+=7;
-//         };
-//     //alert("number of mondays:"+nMondayCount);
-
-//     return nMondayCount;
-
-// }
-
-// return month name
-// function getMonthName(month){
-//     // can be any year
-//     var tempMonth=new Date(2013,month-1);
-
-//     var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
-//     var monthNum=tempMonth.getMonth();
-
-//    return monthNames[monthNum];
-// }
-
-function displayWeekNumbers(element){
-
-    var startweek=$(element).attr('startweek');
-    var endweek=$(element).attr('endweek');
-
-    var ohtml="";
-    for (var week = startweek; week <= endweek; week++) {
-        
-        ohtml+='<span id="'+week+'" class="week">v'+week+'</span>';
-    };
-
-    $('.weeks').html(ohtml);
-   
-        //nWeekNumber is a hidden field
-      var tempWeekNumber=40;
-     
-      $('.table-row.employee').each(function(index){
-
-            var employee=$(this);
-            var tempWeek=startweek;
-            for (var i = tempWeekNumber; i <=52; i++) {
-              
-                var selector=".column.second-column #"+i;
-
-                $(employee).find(selector).each(function(){
-                    this.id=i;
-                });
-               
-            };
-      });
-
-   
-     
-     
-}
-function displayMonthWeekNumbers(element){
-
-            var year=2013;
-            var startMonth=$(element).attr('startmon');
-            var endMonth=parseInt(startMonth)+2;
-
-            var nQuarter=$('#nQuarterNumber').val();
-            var startWeek=(nQuarter-1)*13+1;
-            //Remove hardcoded
-            if(nQuarter==4){
-                startWeek=startWeek+1;
-            }
-            var endWeek=(nQuarter-1)*13+13;
-
-            var countWeekInQuarter=1;
-            var tempStartWeek=startWeek; // just saving startweek before changing
-       
-            // Get first day of the year
-            var firstDayOfYear=new Date(2013,0,1);
-            
-            var week=1;  //initialisation
-
-    // for (var month = startMonth; month <=endMonth; month++) {
-            
-    //         var monthName=getMonthName(month);
-    //         var numberOfWeeks=getNumOfWeeks(year,month);
-    //         var nWeekCounter=numberOfWeeks;
-           
-    //         if(parseInt(month)%3==1){
-
-    //             if(parseInt(firstDayOfYear)!=0 && parseInt(month)==1){
-    //                 nWeekCounter=nWeekCounter+1;
-    //             }
-    //             var monthParent= $('.column.second-column.month');
-    //             var monthChild='<span class="title">'+monthName+'</span>';
-
-    //               for (week = startWeek;nWeekCounter>0; week++, nWeekCounter--) {
-    //                   monthChild+='<span id="'+week+'" class="week">v'+week+'</span>';
-    //                   countWeekInQuarter=countWeekInQuarter+1;
-    //             };
-
-    //             $(monthParent).html(monthChild);
-    //             startWeek=week;
-
-    //         }
-
-    //         if(parseInt(month)%3==2){
-    //             var monthParent='.column.third-column.month';
-    //             var monthChild='<span class="title">'+monthName+'</span>';
-
-    //              for (week = startWeek; nWeekCounter>0; week++, nWeekCounter--) {
-    //                   monthChild+='<span id="'+week+'" class="week">v'+week+'</span>';
-    //                   countWeekInQuarter=countWeekInQuarter+1;
-    //             };
-
-    //             $(monthParent).html(monthChild);
-    //             startWeek=week;
-    //         }
-
-    //         if(parseInt(month)%3==0){
-
-    //             //Remove hard-carded
-    //              if(parseInt(month)==9){
-    //                 nWeekCounter=nWeekCounter+1;
-
-    //              }
-    //              var monthParent='.column.fourth-column.month';
-    //             var monthChild='<span class="title">'+monthName+'</span>';
-
-    //             for (week = startWeek; nWeekCounter>0; week++, nWeekCounter--) {
-    //                   monthChild+='<span id="'+week+'" class="week">v'+week+'</span>';
-    //                   countWeekInQuarter=countWeekInQuarter+1;
-    //             };
-
-    //             $(monthParent).html(monthChild);
-                
-    //         }
 
 
-    //     };
 
-     $('.table-row.employee').each(function(index){
-
-        var tempCounter1=tempStartWeek;
-        var tempCounter2=tempStartWeek;
-
-        var employee=$(this);
-        var employeeInfo=$(this).next();
-
-       $(employee).find('.column.second-column div.week').each(function(){
-            
-            this.id=tempCounter1;
-            tempCounter1=tempCounter1+1;
-
-        });
-       
-       $(employeeInfo).find('.column.second-column div.week').each(function(){
-
-            this.id=tempCounter2;
-            tempCounter2=tempCounter2+1;
-       });
-
-     });
-
-
-     
-      
-    
-}
