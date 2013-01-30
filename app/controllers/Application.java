@@ -14,6 +14,7 @@ import models.ProjectOccupied;
 import models.Login;
 import models.Project;
 import models.Login;
+import models.Utility;
 import play.db.jpa.JPA;
 import play.Logger;
 import play.mvc.Before;
@@ -222,10 +223,13 @@ public class Application extends Controller {
       render(listEmployeeInfo, listProjects, nStartWeek, nEndWeek);
    }
    
+   /**
+    * Current view shows weeks occupied from current week to next 13 weeks
+    */
    public static void current(){
-	   
-	   int nStartWeek=5; //Integer.parseInt(strStartWeek);
-	   	int nEndWeek=17; //Integer.parseInt(strEndWeek);
+	  
+	   	int nStartWeek=Utility.getCurrentWeek(); // gets current week
+	   	int nEndWeek=nStartWeek+12; 
 	   	
 	   	Logger.info("startweek :"+nStartWeek);
 	   	Logger.info("EndWeek :"+nEndWeek);
