@@ -221,7 +221,23 @@ public class Application extends Controller {
        
       render(listEmployeeInfo, listProjects, nStartWeek, nEndWeek);
    }
-    
+   
+   public static void current(){
+	   
+	   int nStartWeek=5; //Integer.parseInt(strStartWeek);
+	   	int nEndWeek=17; //Integer.parseInt(strEndWeek);
+	   	
+	   	Logger.info("startweek :"+nStartWeek);
+	   	Logger.info("EndWeek :"+nEndWeek);
+	   	
+	   	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
+	       List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject(nStartWeek, nEndWeek);
+	       
+	       List<Project> listProjects=new EmployeeListAPI().getAllProjects();
+	       // renderJSON(modelSerializer.serialize(listEmployeeInfo));
+	       
+	      render(listEmployeeInfo, listProjects, nStartWeek, nEndWeek);
+   }
     /**
      * 
      * @param sEmpId 

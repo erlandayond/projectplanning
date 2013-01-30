@@ -7,7 +7,8 @@
 	<link href="@{'/public/stylesheets/reset.css'}" media="screen" rel="stylesheet" />
 	<link href="@{'/public/stylesheets/style.css'}" media="screen" rel="stylesheet" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-
+	<script src="@{'/public/javascripts/jquery-cookie.js'}"></script>
+	
 	<title>Project Planning</title>
 </head>
 <body>
@@ -255,7 +256,8 @@
 				<div class="navigation">
 					<ul>
 						<li class="prev"><div></div></li>
-						<li class="month-button button-1 active" id="1" startmon="1" startweek="1" endweek="13"><a class="linkButton" href="@{view1}">V1 - V13</a></li>
+						<li class="month-button button-0" id="10" startmon="0" startweek="0" endweek="0"><a class="linkButton" href="@{current}">Current</a></li>
+						<li class="month-button button-1  active" id="1" startmon="1" startweek="1" endweek="13"><a class="linkButton" href="@{view1}">V1 - V13</a></li>
 						<li class="month-button button-2" id="2" startmon="4" startweek="14" endweek="26"><a class="linkButton" href="@{view2}">V14 - V26</a></li>
 						<li class="month-button button-3" id="3" startmon="7" startweek="27" endweek="39"><a class="linkButton" href="@{view3}">V27 - V39</a></li>
 						<li class="month-button button-4" id="4" startmon="10" startweek="40" endweek="52"><a class="linkButton" href="@{view4}">V40 - V52</a></li>

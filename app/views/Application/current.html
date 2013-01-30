@@ -7,7 +7,8 @@
 	<link href="@{'/public/stylesheets/reset.css'}" media="screen" rel="stylesheet" />
 	<link href="@{'/public/stylesheets/style.css'}" media="screen" rel="stylesheet" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-
+	<script src="@{'/public/javascripts/jquery-cookie.js'}"></script>
+	
 	<title>Project Planning</title>
 </head>
 <body>
@@ -24,6 +25,7 @@
 	<div class="content">
 		<div class="wrapper">
 			<div class="table">
+				
 				<div class="employees-regular">
 					<div class="table-header">
 						<div class="first-column">
@@ -34,9 +36,9 @@
 									<span class="c">January</span>
 									<span class="c">February</span>
 									<span class="c">March</span>
-									<span class="c c1">April</span>
-									<span class="c c6">May</span>
-									<span class="c c10">June</span>
+									<span class="c">April</span>
+									<span class="c">May</span>
+									<span class="c">June</span>
 									<span class="c">July</span>
 									<span class="c">August</span>
 									<span class="c">September</span>
@@ -45,13 +47,11 @@
 									<span class="c">December</span>
 								</div>
 									<div class="weeks">
-
 										#{list items:nStartWeek..nEndWeek, as:'i'}
 												
 												<span class="week">v${i}</span>
 						
 										#{/list}
-										
 									</div>
 						</div>
 						
@@ -74,7 +74,6 @@
 						<div id="${emp.nEmpId}" class="remove" >Delete</div>
 					</div>
 					<div class="column second-column">
-						
 						#{list items:nStartWeek..nEndWeek, as:'i'}
 						<div class="week" id="${i}"></div>
 						
@@ -90,7 +89,7 @@
 							</div>
 							<div class="column second-column">
 								%{ for(week in proj.listWeekInfo){ %}
-									<!-- <span>weeknumber:${week.nWeekNum}---occupied:${week.nOccupied}</span> -->
+									
 									<div class="week" id="${week.nWeekNum}">${week.nOccupied}</div>
 								%{ 
 									}
@@ -236,6 +235,7 @@
 				<div class="control-panel">
 
 					<div class="control-panel-row">
+						
 						<div class="control-button" id="btnNewProject"> New Project </div>
 						<div class="control-button" id="btnNewEmployee">New Employee</div>
 						<div class="control-button" id="btnNewContractor">New Contractor</div>
@@ -252,18 +252,24 @@
 						</select>
 					</div>
 				</div>
+
 				<div class="navigation">
 					<ul>
 						<li class="prev"><div></div></li>
-						<li class="month-button button-0" id="10" startmon="0" startweek="0" endweek="0"><a class="linkButton" href="@{current}">Current</a></li>
+						<li class="month-button button-0 active" id="10" startmon="0" startweek="0" endweek="0"><a class="linkButton" href="@{current}">Current</a></li>
 						<li class="month-button button-1" id="1" startmon="1" startweek="1" endweek="13"><a class="linkButton" href="@{view1}">V1 - V13</a></li>
-						<li class="month-button button-2 active" id="2" startmon="4" startweek="14" endweek="26"><a class="linkButton" href="@{view2}">V14 - V26</a></li>
+						<li class="month-button button-2" id="2" startmon="4" startweek="14" endweek="26"><a class="linkButton" href="@{view2}">V14 - V26</a></li>
 						<li class="month-button button-3" id="3" startmon="7" startweek="27" endweek="39"><a class="linkButton" href="@{view3}">V27 - V39</a></li>
 						<li class="month-button button-4" id="4" startmon="10" startweek="40" endweek="52"><a class="linkButton" href="@{view4}">V40 - V52</a></li>
 						<li class="next"><div></div></li>
 					</ul>	
 				</div>
+
+				
 			</div>
+
+			
+			
 		</div>
 	</div>
 
@@ -274,7 +280,7 @@
 		<div class="tool-tip">
 			<div class="content">
 				<div class="arrow"></div>
-				<a href="#" class="mark-as-unsure">Markera som os‰ker</a>
+				<a href="#" class="mark-as-unsure">Markera som os√§ker</a>
 			</div>
 		</div>
 	</div>

@@ -12,7 +12,7 @@ $(document).ready(function () {
             data:{sPassword:password, sUsername:username},
             success:function(data){
                 if(data){
-                     window.location="/view1";
+                     window.location="/current";
                  }else{
                     window.location="/";
                  }
@@ -68,7 +68,12 @@ $(document).ready(function () {
        
         $.post(newProjUrl,{projectId:projId, employeeId:empId},function(data){
            //alert('Project added ! Please Refresh');
+           //$.cookie('projAddedToEmpId',empId);
            window.location.reload(true);
+
+           //var empIdSelector1="div.employee-info[employeeid="+$.cookie('projAddedToEmpId')+"]";
+           //var empIdSelector2=".table-row.employee#employee-"+$.cookie('projAddedToEmpId');
+           //$(empIdSelector1).show();$(empIdSelector2).find('.toggler').each(function(){$(this).removeClass('toggler').addClass('toggler opened');});
         }) ;
 
     });

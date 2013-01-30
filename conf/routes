@@ -10,6 +10,7 @@ GET     /view1                           		Application.view1
 GET     /view2                           		Application.view2
 GET     /view3                           		Application.view3
 GET     /view4                           		Application.view4
+GET     /current	                          	Application.current
 GET     /getProjects                            Application.getProjects
 GET     /deleteEmployee							Application.deleteEmployee
 GET     /deleteProjectForEmployee				Application.deleteProjectForEmployee

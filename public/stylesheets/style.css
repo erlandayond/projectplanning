@@ -329,7 +329,7 @@ a.add-project {
 }
 .navigation {
 	float: right;
-	width: 38%;
+	width: 44%;
 	margin-top: 1em;
 	box-sizing: border-box;
 }
@@ -375,7 +375,7 @@ a.add-project {
 }
 
 .navigation ul li.month-button {
-	width: 20%;
+	width: 16%;
 }
 .navigation ul li.prev div{
 	background: url('../images/arrow-left.png') center no-repeat;
