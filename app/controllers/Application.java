@@ -26,7 +26,7 @@ public class Application extends Controller {
 
 	public static int AUTOCOMPLETE_MAX=3;
 	
-	@Before(unless={"index","login"})
+	@Before(unless={"index","login", "current"})
     public static void isUserConnected(){
     	
     	String tempVal=Session.current().get("login");
