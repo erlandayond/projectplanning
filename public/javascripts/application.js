@@ -166,16 +166,16 @@ $(document).ready(function () {
     	
 
         var prevRowWeekNum=$(this).parent().parent().parent().prev().find(tempFind);
-        $(prevRowWeekNum).text(total);
+        $(prevRowWeekNum).first().text(total);
 
         if(parseInt(total)>100){
 
             if((parseInt(total)+1)%10==0){
             
-                $(prevRowWeekNum).removeClass('overload full').addClass('prospect');
+                $(prevRowWeekNum).first().removeClass('overload full').addClass('prospect');
             }else{
 
-                $(prevRowWeekNum).removeClass('full').addClass('overload');
+                $(prevRowWeekNum).first().removeClass('full').addClass('overload');
             }
 
             
@@ -184,22 +184,22 @@ $(document).ready(function () {
 
             if((parseInt(total)+1)%10==0){
             
-                $(prevRowWeekNum).removeClass('overload full').addClass('prospect');
+                $(prevRowWeekNum).first().removeClass('overload full').addClass('prospect');
             }else{
 
-                $(prevRowWeekNum).removeClass('overload prospect').addClass('full');   
+                $(prevRowWeekNum).first().removeClass('overload prospect').addClass('full');   
             }
             
          }
 
          if(parseInt(total)>0 && parseInt(total)<=80){
 
-           $(prevRowWeekNum).removeClass('overload full prospect');  
+           $(prevRowWeekNum).first().removeClass('overload full prospect');  
          }
 
          if((parseInt(total)+1)%10==0){
             
-                $(prevRowWeekNum).removeClass('overload full').addClass('prospect');
+                $(prevRowWeekNum).first().removeClass('overload full').addClass('prospect');
             }
 
 
@@ -236,15 +236,15 @@ $(document).ready(function () {
                     
                 });
 
-                $(employee).find(selector).text(nWeekTotal);
+                $(employee).find(selector).first().text(nWeekTotal);
                  
                 if(parseInt(nWeekTotal)>80 && parseInt(nWeekTotal)<=100){
                     if((parseInt(nWeekTotal)+1)%10==0){
             
-                           $(employee).find(selector).removeClass('overload full').addClass('prospect');
+                           $(employee).find(selector).first().removeClass('overload full').addClass('prospect');
                         }else{
 
-                            $(employee).find(selector).addClass('full');   
+                            $(employee).find(selector).first().addClass('full');   
                         }
                    
                 }
@@ -252,10 +252,10 @@ $(document).ready(function () {
 
                         if((parseInt(nWeekTotal)+1)%10==0){
             
-                           $(employee).find(selector).removeClass('overload full').addClass('prospect');
+                           $(employee).find(selector).first().removeClass('overload full').addClass('prospect');
                         }else{
 
-                            $(employee).find(selector).addClass('overload');
+                            $(employee).find(selector).first().addClass('overload');
                         }
 
                     
@@ -263,7 +263,7 @@ $(document).ready(function () {
 
                if((parseInt(nWeekTotal)+1)%10==0){
             
-                     $(employee).find(selector).removeClass('overload full').addClass('prospect');
+                     $(employee).find(selector).first().removeClass('overload full').addClass('prospect');
                 }
             };
       });
@@ -287,21 +287,21 @@ $(document).ready(function () {
                     
                 });
 
-                $(employee).find(selector).text(nWeekTotal);
+                $(employee).find(selector).first().text(nWeekTotal);
                 
                 if(parseInt(nWeekTotal)>80 &&  parseInt(nWeekTotal)<=100){
                    
-                            $(employee).find(selector).addClass('full');   
+                            $(employee).find(selector).first().addClass('full');   
                 }
 
                 if(parseInt(nWeekTotal)>100){
 
-                            $(employee).find(selector).addClass('overload');
+                            $(employee).find(selector).first().addClass('overload');
                     
                  }
                 if((parseInt(nWeekTotal)+1)%10==0){
             
-                    $(employee).find(selector).removeClass('overload full').addClass('prospect');
+                    $(employee).find(selector).first().removeClass('overload full').addClass('prospect');
                 }
                
             };
