@@ -160,7 +160,12 @@ $(document).ready(function () {
 
     	var total=0;
     	var empInfoRow=$(this).parent().parent().parent().find(tempFind).each(function(){
-    		total+=parseInt($(this).text());
+            if($(this).text().length>0){
+                total+=parseInt($(this).text());
+            }else{
+                $(this).text(0);
+            }
+    		
     	});
     	var prevRowWeek=$(this).parent().parent().parent().prev();
     	
