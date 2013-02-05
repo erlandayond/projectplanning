@@ -104,19 +104,7 @@ public class EmployeeListAPI {
 		}
 		
 	}
-	public void addNewProject(String strProjectName){
-		EntityManager em=JPA.newEntityManager();
-		Project objProject=new Project();
-			
-		
-			em.getTransaction().begin();
-			//Adding a new employee to the database
-			objProject.setProjectName(strProjectName);
-			objProject.setActive(true);
-			em.persist(objProject);
-			em.getTransaction().commit();
-			
-	}
+	
 	
    public void addNewEmployee(String strEmployeeName, String strEmpType){
 	   EntityManager em=JPA.newEntityManager();

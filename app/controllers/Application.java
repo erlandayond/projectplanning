@@ -10,6 +10,8 @@ import models.Employee;
 import models.EmployeeInfo;
 import models.EmployeeQuarter;
 import models.EmployeeListAPI;
+import models.ProjectAPI;
+
 import models.ProjectOccupied;
 import models.Login;
 import models.Project;
@@ -110,14 +112,23 @@ public class Application extends Controller {
         
     }
     
+    /**
+     *  Adding new project to the system. Once it is added, it will be available to add to employees
+     * @param projectName
+     */
     public static void addNewProject(String projectName){
+    	//TODO: take parameter project type
     	
-    	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
+    	short nProjectType=1; //1 --- external
+    	
+    	ProjectAPI objProjectAPI=new ProjectAPI();
+    	
+    	// project name not null ?
     	if(projectName.length()>0){
     		boolean flag=new ProjectOccupied().projectNameExists(projectName);
     		if(!flag){
     			
-    			objEmployeeListAPI.addNewProject(projectName);
+    			objProjectAPI.addNewProject(projectName, nProjectType);
             	Logger.info("New project added :"+projectName);
     		}
     		

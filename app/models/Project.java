@@ -20,6 +20,8 @@ public class Project extends play.db.jpa.GenericModel implements Serializable {
     
 	private boolean active;
 	
+	private short	projectType;
+	
 	public Project() {
 	}
 
@@ -45,6 +47,14 @@ public class Project extends play.db.jpa.GenericModel implements Serializable {
 
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
+	}
+	
+	public short getProjectType(){
+		return this.projectType;
+	}
+	
+	public void setProjectType(short projectType){
+		this.projectType=projectType;
 	}
 
 }
