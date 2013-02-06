@@ -85,15 +85,15 @@ $(document).ready(function () {
         }
 
     });
-    // $("#btnNewProject").click(function(){
-    // 	var newProjectName=prompt("Project Name");
-    // 	var newProjUrl="/addNewProject";
-    // 	if(newProjectName.length>0){
-    // 		$.post(newProjUrl, {projectName:newProjectName}, function(data){
-    //             window.location.reload(true);
-    //         });
-    // 	}
-    // });
+    $("#btnNewProject").click(function(){
+    	var newProjectName=prompt("Project Name");
+    	var newProjUrl="/addNewProject";
+    	if(newProjectName.length>0){
+    		$.post(newProjUrl, {projectName:newProjectName}, function(data){
+                window.location.reload(true);
+            });
+    	}
+    });
     $('#btnNewEmployee').click(function(){
 
     	var newEmpName=prompt("Employee Name");

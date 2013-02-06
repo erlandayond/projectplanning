@@ -7,19 +7,18 @@ import play.db.jpa.JPA;
 public class ProjectAPI {
 
 	
-//	public enum ProjectType{
-//		EXTERNAL(1), INTERNAL(2);
-//		
-//		private short type;
-//		
-//		private ProjectType(short t){
-//			type=t;
-//		}
-//		
-//		public short getType(){
-//			return type;
-//		}
-//	}
+	public enum ProjectType{
+		 EXTERNAL((short)1), INTERNAL((short)2);
+		
+		 private final short value;
+		 ProjectType(short val){
+			 this.value=val;
+		 }
+		 public short getValue(){
+			 return value;
+		 }
+	}
+	
 	/**
 	 *  Add new project to the system 
 	 * @param strProjectName

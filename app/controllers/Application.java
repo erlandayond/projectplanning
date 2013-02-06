@@ -11,6 +11,7 @@ import models.EmployeeInfo;
 import models.EmployeeQuarter;
 import models.EmployeeListAPI;
 import models.ProjectAPI;
+import models.ProjectAPI.ProjectType;
 
 import models.ProjectOccupied;
 import models.Login;
@@ -72,7 +73,9 @@ public class Application extends Controller {
     	
     	//renderJSON(flag);
     }
-    
+    /**
+     * View for first quarter (week 1- week 13)
+     */
     public static void view1(){
        	
        	int nStartWeek=1; //Integer.parseInt(strStartWeek);
@@ -123,20 +126,22 @@ public class Application extends Controller {
     public static void addNewProject(String projectName){
     	//TODO: take parameter project type
     	
-    	short nProjectType=1; //1 --- external
+    	String strProjectType="EXTERNAL"; //1 --- external
     	
-    	ProjectAPI objProjectAPI=new ProjectAPI();
-    	
-    	// project name not null ?
-    	if(projectName.length()>0){
+    	// Project type not null ? Get project type
+    	if(!strProjectType.isEmpty() && !projectName.isEmpty()){
+    		ProjectType eProjectType=ProjectType.valueOf(strProjectType);
+    		
+    		ProjectAPI objProjectAPI=new ProjectAPI();
     		boolean flag=new ProjectOccupied().projectNameExists(projectName);
     		if(!flag){
     			
-    			objProjectAPI.addNewProject(projectName, nProjectType);
+    			objProjectAPI.addNewProject(projectName, eProjectType.getValue());
             	Logger.info("New project added :"+projectName);
     		}
-    		
     	}
+    	
+    	
     }
     public static void addNewEmployee(String employeeName){
     	

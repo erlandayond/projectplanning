@@ -16,14 +16,15 @@ GET     /deleteEmployee							Application.deleteEmployee
 GET     /deleteProjectForEmployee				Application.deleteProjectForEmployee
 GET		/deleteProject							Application.deleteProject
 GET		/autocompleteLabel						Application.autocompleteLabel
+POST    /                                       Application.index
+POST    /login                           		Application.login
 POST 	/addProject								Application.addProject
 POST    /addEmployee				            Application.addEmployee
 POST    /addNewEmployee							Application.addNewEmployee
 POST	/addNewProject                          Application.addNewProject
 POST	/addNewContractor						Application.addNewContractor
 POST    /updateEmpProjOccupied					Application.updateEmpProjOccupied
-POST    /                                       Application.index
-POST    /login                           		Application.login
+
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
