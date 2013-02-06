@@ -22,6 +22,8 @@ POST    /addNewEmployee							Application.addNewEmployee
 POST	/addNewProject                          Application.addNewProject
 POST	/addNewContractor						Application.addNewContractor
 POST    /updateEmpProjOccupied					Application.updateEmpProjOccupied
+POST    /                                       Application.index
+POST    /login                           		Application.login
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

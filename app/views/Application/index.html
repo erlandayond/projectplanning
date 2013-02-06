@@ -18,22 +18,29 @@
 
 <div style="padding: 100px 0 0 250px;">
 
-
+<form method="POST" action="/login">
 <div id="login-box">
 
 <H2>Ayond</H2>
 Project Planning
 <br />
 <br />
-<div id="login-box-name" style="margin-top:20px;">Username:</div><div id="login-box-field" style="margin-top:20px;"><input name="username" id="user" class="form-login" title="Username" value="" size="30" maxlength="2048" /></div>
-<div id="login-box-name">Password:</div><div id="login-box-field"><input name="password" id="pass" type="password" class="form-login" title="Password" value="" size="30" maxlength="2048" /></div>
+	<div id="login-box-name" style="margin-top:20px;">Username:</div>
+	<div id="login-box-field" style="margin-top:20px;">
+			<input name="username" id="user" class="form-login" title="Username" value="" size="30" maxlength="2048" />
+	</div>
+	<div id="login-box-name">Password:</div>
+	<div id="login-box-field">
+		<input name="password" id="pass" type="password" class="form-login" title="Password" value="" size="30" maxlength="2048" />
+	</div>
 <br />
 
 <br />
 <br />
-<div id="loginButton">
+<div>
 
-	<img  src="@{'/public/images/login-btn.png'}" width="103" height="42" style="margin-left:90px;" />
+	
+	<input  type="image" id="loginButton" src="@{'/public/images/login-btn.png'}" width="103" height="42" style="margin-left:90px;"/> 
 </div>
 
 
@@ -42,7 +49,7 @@ Project Planning
 
 
 </div>
-
+</form>
 </div>
 <script src="@{'/public/javascripts/application.js'}"></script>
 </html>

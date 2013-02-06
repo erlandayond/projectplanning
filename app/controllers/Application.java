@@ -51,7 +51,10 @@ public class Application extends Controller {
     	render("Application/index.html");
     }
     
-    public static void login(String sPassword, String sUsername){
+    public static void login(){
+    	String sPassword=params.get("password");
+    	String sUsername=params.get("username");
+    	
     	Logger.info("username:"+sUsername+" Password:"+sPassword);
     
     	Login objLogin=new Login(sPassword,sUsername);
@@ -59,14 +62,15 @@ public class Application extends Controller {
     	if(flag){
     		Logger.info("login successful");
     		Session.current().put("login", "ayond");
+    		redirect("/current");
     		
     	}else{
     		Logger.info("login not successful");
-    		
+    		redirect("/");
     		
     	}
     	
-    	renderJSON(flag);
+    	//renderJSON(flag);
     }
     
     public static void view1(){
