@@ -3,10 +3,7 @@ $(document).ready(function () {
 	
 	var hiddenChangeStatus = $('#hidden-change-status').html();
 
-        $('#wrapper').hide();
-        $('#inline').hide();
-        $(".modalbox").fancybox();
-        $("#contact").submit(function() { return false; });
+       
 
 
      $('#loginButton').submit(function(){
