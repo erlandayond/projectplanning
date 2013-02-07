@@ -23,6 +23,7 @@ POST    /addEmployee				            Application.addEmployee
 POST    /addNewEmployee							Application.addNewEmployee
 POST	/addNewProject                          Application.addNewProject
 POST	/addNewContractor						Application.addNewContractor
+POST 	/addNewStaff							Application.addNewStaff
 POST    /updateEmpProjOccupied					Application.updateEmpProjOccupied
 
 

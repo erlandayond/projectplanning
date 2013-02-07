@@ -123,10 +123,9 @@ public class Application extends Controller {
      *  Adding new project to the system. Once it is added, it will be available to add to employees
      * @param projectName
      */
-    public static void addNewProject(String projectName){
-    	//TODO: take parameter project type
+    public static void addNewProject(String projectName, String projectType){
     	
-    	String strProjectType="EXTERNAL"; //1 --- external
+    	String strProjectType=projectType;
     	
     	// Project type not null ? Get project type
     	if(!strProjectType.isEmpty() && !projectName.isEmpty()){
@@ -141,9 +140,21 @@ public class Application extends Controller {
     		}
     	}
     	
-    	
     }
-    public static void addNewEmployee(String employeeName){
+    
+    public static void addNewStaff(String strStaffName, String strStaffType){
+    	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
+    	
+    	if(!strStaffName.isEmpty() && !strStaffType.isEmpty()){
+    		boolean bEmpNameExists=objEmployeeListAPI.employeeNameExists(strStaffName);
+    		
+    		if(!bEmpNameExists){
+    			objEmployeeListAPI.addNewEmployee(strStaffName, strStaffType);
+    			Logger.info("New Staff :"+strStaffName +"of Type: "+strStaffType);
+    		}
+    	}
+    }
+   /* public static void addNewEmployee(String employeeName){
     	
     	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
     	String strEmpType="regular";
@@ -165,7 +176,7 @@ public class Application extends Controller {
     		objEmployeeListAPI.addNewEmployee(contractorName, strEmpType);
     		Logger.info("New contractor added :"+contractorName);
     	}
-    }
+    }*/
     public static void autocompleteLabel(final String term){
     	
     	Logger.info("term received for autocomplete:"+term);

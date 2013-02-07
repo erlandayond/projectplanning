@@ -3,9 +3,10 @@ $(document).ready(function () {
 	
 	var hiddenChangeStatus = $('#hidden-change-status').html();
 
-       
-
-
+      // $('#staffPopUp').hide();
+    $('#projectPopUp').dialog();
+    $('#staffPopUp').dialog();
+    $(".ui-dialog").css('z-index', 99999);
      $('#loginButton').submit(function(){
         
         var password=$('#pass').val();
@@ -85,15 +86,33 @@ $(document).ready(function () {
         }
 
     });
-    $("#btnNewProject").click(function(){
-    	var newProjectName=prompt("Project Name");
-    	var newProjUrl="/addNewProject";
-    	if(newProjectName.length>0){
-    		$.post(newProjUrl, {projectName:newProjectName}, function(data){
-                window.location.reload(true);
-            });
-    	}
+    // $("#btnNewProject").click(function(){
+    // 	var newProjectName=prompt("Project Name");
+    // 	var newProjUrl="/addNewProject";
+    // 	if(newProjectName.length>0){
+    // 		$.post(newProjUrl, {projectName:newProjectName}, function(data){
+    //             window.location.reload(true);
+    //         });
+    // 	}
+    // });
+
+    $('#btnNewProject').click(function(){
+
+        var newProjectName=$('#txtProjectName').val();
+        var newProjectType=$('select#ddProjectType').find('option:selected').val();
+        var newProjUrl="/addNewProject";
+        alert('Project Name:'+newProjectName+'newProjectType:'+newProjectType);
+
+        if(newProjectName.length>0 && newProjectType.length>0){
+
+            $.post(newProjUrl, {projectName:newProjectName, projectType:newProjectType}, function(data){
+                 window.location.reload(true);
+             });  
+
+        }
     });
+
+
     $('#btnNewEmployee').click(function(){
 
     	var newEmpName=prompt("Employee Name");
@@ -118,21 +137,23 @@ $(document).ready(function () {
             })
     	}
     });
-    $("#addContractor").change(function(){
-    	var empId=$("#addContractor option:selected").val();
-    	var empName=$('#addContractor option:selected').text();
-    	
-    	if(empId==="new"){
-    		var newEmpName=prompt("FirstName LastName");
-    		var empUrl="/addEmployee";
-    		if(newEmpName.length>0)
-    		{
-			 	$.post(empUrl, {ename:newEmpName, eType:"contractor"},function(data){
 
-			 	});
-			}
-    	}
+    $('#btnAddStaff').click(function(){
+
+        var newStaffName=$('#txtStaffName').val();
+        var newStaffType=$('select#ddStaffType').find('option:selected').val();
+        var newStaffUrl="/addNewStaff";
+        alert('Staff Name:'+newStaffName+"Staff type:"+newStaffType);
+
+        if(newStaffName.length>0 && newStaffType.length>0){
+            $.post(newStaffUrl, {strStaffName:newStaffName, strStaffType:newStaffType}, function(data){
+
+                window.location.reload(true);
+
+            });
+        }
     });
+    
     $('.week').blur(function(){
         
          quarter=1;
