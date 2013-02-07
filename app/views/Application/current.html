@@ -88,7 +88,7 @@
                 </div>
                 <div class="employee-info" style="display: block;" employeeId="${emp.nEmpId}"> 
                		%{ for(proj in emp.listProjectInfo){ %}
-                		<div class="table-row" id="project-${proj.nProjectId}" projectId="${proj.nProjectId}">
+                		<div class="table-row" id="project-${proj.nProjectId}" projectId="${proj.nProjectId}" projectType="${proj.strProjectType}">
 							<div class="column first-column">
 								<span class="project-name">${proj.strProjectName}</span>
 								<div class="remove-project" projId="${proj.nProjectId}">Delete</div>
@@ -188,7 +188,7 @@
                 </div>
                 <div class="employee-info" style="display: block;" employeeId="${emp.nEmpId}"> 
                		%{ for(proj in emp.listProjectInfo){ %}
-                		<div class="table-row" id="project-${proj.nProjectId}" projectId="${proj.nProjectId}">
+                		<div class="table-row" id="project-${proj.nProjectId}" projectId="${proj.nProjectId}" projectType="${proj.strProjectType}">
 							<div class="column first-column">
 								<span class="project-name">${proj.strProjectName}</span>
 								<div class="remove-project" projId="${proj.nProjectId}">Delete</div>

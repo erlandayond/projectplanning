@@ -3,7 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+import models.ProjectAPI;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -198,6 +198,7 @@ public class EmployeeListAPI {
 				//set values to ProjectInfo object
 				objProjectInfo.nProjectId=nProjectId;
 				objProjectInfo.strProjectName=strProjectName;
+				objProjectInfo.strProjectType=ProjectAPI.getProjectType(nProjectId);
 				
 				//Get week info - week number and occupied for each project
 				Query tempQuery=JPA.em().createQuery("SELECT week, occupied FROM Resourceplan where empId=:nEid and projectId=:nProjId and week>=:nWeek and projActive=1");
