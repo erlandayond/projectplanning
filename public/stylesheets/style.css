@@ -292,6 +292,9 @@ header .content .title {
 .overload {
 	background: #ff4747;
 }
+.less-external{
+	background:#F0F0F0   ;
+}
 .unsure {
 	background: #ffbd0c;
 }
@@ -551,7 +554,6 @@ a.linkButton{
 }
 
 
-
 .ui-dialog {	 	
 	overflow: hidden;	 	
 	background: rgba(33, 33, 33, 0.2);	 	
@@ -617,9 +619,36 @@ a.ui-dialog-titlebar-close.ui-corner-all:hover{
 	padding: 0;	 	
 	overflow: hidden;	 	
 	}
-
+#staffPopUp {	 	
+	background: #f4f4f4;	 	
+	padding: 0;	 	
+	overflow: hidden;	 	
+	}
 #ui-dialog-title-projectPopUp {	 	
 	text-align: center;	 	
 	width: 100%;	 	
 	line-height: 40px;	 	
+    
 	}
+#ui-dialog-title-staffPopUp {	 	
+	text-align: center;	 	
+	width: 100%;	 	
+	line-height: 40px;	 	
+	}
+.form-row{
+	margin-bottom:5px;
+	margin-left: 10px;
+	margin-top:5px;
+}
+.form-button{
+
+	margin-left: 120px;
+}
+.form-first-column{
+	width:50%;
+	padding-right: 5px;
+}
+.form-second-column{
+	width:50%;
+
+}

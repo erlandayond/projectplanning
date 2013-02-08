@@ -11,7 +11,7 @@ public class ProjectAPI {
 
 	
 	public enum ProjectType{
-		 NONE((short)0), EXTERNAL((short)1), INTERNAL((short)2);
+		 NONE((short)0), EXTERNAL((short)1), INTERNAL((short)2), INNOVATION((short)3), NONWORKING((short)4);
 		
 		 private final short value;
 		 ProjectType(short val){
@@ -59,6 +59,10 @@ public class ProjectAPI {
 			 strType= ProjectType.EXTERNAL.name();
 		  }else if(nTempType==2){
 			  strType= ProjectType.INTERNAL.name();
+		  }else if(nTempType==3){
+			  strType=ProjectType.INNOVATION.name();
+		  }else if(nTempType==4){
+			  strType=ProjectType.NONWORKING.name();
 		  }
 		  
 	  }

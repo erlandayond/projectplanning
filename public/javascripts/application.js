@@ -3,10 +3,14 @@ $(document).ready(function () {
 	
 	var hiddenChangeStatus = $('#hidden-change-status').html();
 
-      // $('#staffPopUp').hide();
-    $('#projectPopUp').dialog();
-    $('#staffPopUp').dialog();
+    $('#staffPopUp').hide();
+    $('#projectPopUp').hide();
+    $('.employee-info').hide();
+    $('#txtProjectNameRequired').hide();
+    $('#txtStaffNameRequired').hide();
+    
     $(".ui-dialog").css('z-index', 99999);
+    
      $('#loginButton').submit(function(){
         
         var password=$('#pass').val();
@@ -14,7 +18,7 @@ $(document).ready(function () {
     
      });
 
-	$('.employee-info').hide();
+	
     
     $('.toggler').live('click',function(){
 
@@ -97,11 +101,19 @@ $(document).ready(function () {
     // });
 
     $('#btnNewProject').click(function(){
+        $('#projectPopUp').dialog({ resizable: false, width: 400, height: 210, title: 'Add project to Planning tool', position:{my: "center", at: "top center", of: window}  });
+    });
+
+     $('#btnNewStaff').click(function(){
+         $('#staffPopUp').dialog({ resizable: false, width: 400, height:210, title: 'Add staff to Planning tool',position:{my: "center", at: "center", of: window} });
+    });
+
+    $('#btnAddProject').click(function(){
 
         var newProjectName=$('#txtProjectName').val();
         var newProjectType=$('select#ddProjectType').find('option:selected').val();
         var newProjUrl="/addNewProject";
-        alert('Project Name:'+newProjectName+'newProjectType:'+newProjectType);
+       
 
         if(newProjectName.length>0 && newProjectType.length>0){
 
@@ -109,41 +121,43 @@ $(document).ready(function () {
                  window.location.reload(true);
              });  
 
+        }else{
+             $('#txtProjectNameRequired').show();
         }
     });
 
 
-    $('#btnNewEmployee').click(function(){
+    // $('#btnNewEmployee').click(function(){
 
-    	var newEmpName=prompt("Employee Name");
-    	var newEmpUrl="/addNewEmployee";
+    // 	var newEmpName=prompt("Employee Name");
+    // 	var newEmpUrl="/addNewEmployee";
 
-    	if(newEmpName.length>0){
-    		$.post(newEmpUrl, {employeeName:newEmpName}, function(data){
+    // 	if(newEmpName.length>0){
+    // 		$.post(newEmpUrl, {employeeName:newEmpName}, function(data){
 
-                window.location.reload(true);
+    //             window.location.reload(true);
 
-    		});
-    	}
-    });
-    $('#btnNewContractor').click(function(){
+    // 		});
+    // 	}
+    // });
+    // $('#btnNewContractor').click(function(){
 
-    	var newContractorName=prompt("Contractor Name");
-    	var newContractUrl="/addNewContractor";
+    // 	var newContractorName=prompt("Contractor Name");
+    // 	var newContractUrl="/addNewContractor";
 
-    	if(newContractorName.length>0){
-    		$.post(newContractUrl, {contractorName:newContractorName}, function(data){
-                window.location.reload(true);
-            })
-    	}
-    });
+    // 	if(newContractorName.length>0){
+    // 		$.post(newContractUrl, {contractorName:newContractorName}, function(data){
+    //             window.location.reload(true);
+    //         })
+    // 	}
+    // });
 
     $('#btnAddStaff').click(function(){
 
         var newStaffName=$('#txtStaffName').val();
         var newStaffType=$('select#ddStaffType').find('option:selected').val();
         var newStaffUrl="/addNewStaff";
-        alert('Staff Name:'+newStaffName+"Staff type:"+newStaffType);
+       
 
         if(newStaffName.length>0 && newStaffType.length>0){
             $.post(newStaffUrl, {strStaffName:newStaffName, strStaffType:newStaffType}, function(data){
@@ -151,6 +165,8 @@ $(document).ready(function () {
                 window.location.reload(true);
 
             });
+        }else{
+            $('#txtStaffNameRequired').show();
         }
     });
     
@@ -164,18 +180,39 @@ $(document).ready(function () {
     	var tempFind='.column.second-column #'+weekNumber;
 
     	var projectId=$(this).parent().parent().attr('projectid');
+
+        
     	
         var employeeid=$(this).parent().parent().parent().attr('employeeid');
 
     	var total=0;
+        var nInnovation=0;
+        var nNonworking=0;
+        var nExternal=0;
+        var nInternal=0;
+
     	var empInfoRow=$(this).parent().parent().parent().find(tempFind).each(function(){
+
+            var projectType=$(this).parent().parent().attr('projecttype');
             if($(this).text().length>0){
+
+                if(projectType=="EXTERNAL"){
+                     nExternal+=parseInt($(this).text());
+                }else if(projectType=="INTERNAL"){
+                    nInternal+=parseInt($(this).text());
+                }else if(projectType=="NONWORKING"){
+                    nNonworking+=parseInt($(this).text());
+                }else if(projectType=="INNOVATION"){
+                    nInnovation+=parseInt($(this).text());
+                }
+
                 total+=parseInt($(this).text());
             }else{
                 $(this).text(0);
             }
     		
     	});
+        
     	var prevRowWeek=$(this).parent().parent().parent().prev();
     	
 
@@ -186,34 +223,42 @@ $(document).ready(function () {
 
             if((parseInt(total)+1)%10==0){
             
-                $(prevRowWeekNum).first().removeClass('overload full').addClass('prospect');
+                $(prevRowWeekNum).first().removeClass('overload full less-external').addClass('prospect');
             }else{
 
-                $(prevRowWeekNum).first().removeClass('full').addClass('overload');
+                $(prevRowWeekNum).first().removeClass('full less-external').addClass('overload');
             }
 
             
          }
-         if(parseInt(total)>80 && parseInt(total)<=100){
+         if(parseInt(nExternal)>=80 && parseInt(total)<=100){
 
             if((parseInt(total)+1)%10==0){
             
-                $(prevRowWeekNum).first().removeClass('overload full').addClass('prospect');
+                $(prevRowWeekNum).first().removeClass('overload full less-external').addClass('prospect');
             }else{
 
-                $(prevRowWeekNum).first().removeClass('overload prospect').addClass('full');   
+                $(prevRowWeekNum).first().removeClass('overload prospect less-external').addClass('full');   
             }
             
          }
 
-         if(parseInt(total)>0 && parseInt(total)<=80){
+         if(parseInt(nExternal)<80 && parseInt(total)<=100){
 
-           $(prevRowWeekNum).first().removeClass('overload full prospect');  
+            if((parseInt(total)+1)%10==0){
+            
+                $(prevRowWeekNum).first().removeClass('overload full less-external').addClass('prospect');
+            }else{
+
+                $(prevRowWeekNum).first().removeClass('overload prospect full').addClass('less-external');   
+            }
+            
          }
+
 
          if((parseInt(total)+1)%10==0){
             
-                $(prevRowWeekNum).first().removeClass('overload full').addClass('prospect');
+                $(prevRowWeekNum).first().removeClass('overload full less-external').addClass('prospect');
             }
 
 
@@ -240,8 +285,57 @@ $(document).ready(function () {
               
                 var selector=".column.second-column #"+i;
 
-                var nWeekTotal=0;
+                var nWeekTotal=0; 
+                var nWeekInternal=0;
+                var nWeekExternal=0;
+                var nWeekInnovation=0;
+                var nWeekNonWorking=0;
 
+                // Sum of external projects
+                $(employeeInfo).find('.table-row[projecttype="EXTERNAL"]').each(function(){
+                    $(this).find(selector).each(function(){
+
+                    if($(this).text().length>0){
+                        nWeekExternal+=parseInt($(this).text());
+                    }
+                    
+                    });
+                });
+
+                // Sum of internal projects
+                $(employeeInfo).find('.table-row[projecttype="INTERNAL"]').each(function(){
+                    $(this).find(selector).each(function(){
+
+                    if($(this).text().length>0){
+                        nWeekInternal+=parseInt($(this).text());
+                    }
+                    
+                    });
+                });
+
+                // Sum of innovation projects
+                $(employeeInfo).find('.table-row[projecttype="INNOVATION"]').each(function(){
+                    $(this).find(selector).each(function(){
+
+                    if($(this).text().length>0){
+                        nWeekInnovation+=parseInt($(this).text());
+                    }
+                    
+                    });
+                });
+
+                // Sum of Non-working projects
+                $(employeeInfo).find('.table-row[projecttype="NONWORKING"]').each(function(){
+                    $(this).find(selector).each(function(){
+
+                    if($(this).text().length>0){
+                        nWeekNonWorking+=parseInt($(this).text());
+                    }
+                    
+                    });
+                });
+
+                // SUm of total working includes External, Intennal, Nonworking, Innnovation
                 $(employeeInfo).find(selector).each(function(){
 
                     if($(this).text().length>0){
@@ -250,15 +344,29 @@ $(document).ready(function () {
                     
                 });
 
+                
+
                 $(employee).find(selector).first().text(nWeekTotal);
-                 
-                if(parseInt(nWeekTotal)>80 && parseInt(nWeekTotal)<=100){
+                
+                // Validation rules 
+                if(parseInt(nWeekExternal)>80 && parseInt(nWeekTotal)<=100){
                     if((parseInt(nWeekTotal)+1)%10==0){
             
-                           $(employee).find(selector).first().removeClass('overload full').addClass('prospect');
+                           $(employee).find(selector).first().removeClass('overload full less-external').addClass('prospect');
                         }else{
 
                             $(employee).find(selector).first().addClass('full');   
+                        }
+                   
+                }
+
+                if(parseInt(nWeekExternal)<80 && parseInt(nWeekTotal)<=100){
+                    if((parseInt(nWeekTotal)+1)%10==0){
+            
+                           $(employee).find(selector).first().removeClass('overload full less-external').addClass('prospect');
+                        }else{
+
+                            $(employee).find(selector).first().addClass('less-external');   
                         }
                    
                 }
@@ -292,6 +400,56 @@ $(document).ready(function () {
                 var selector=".column.second-column #"+i;
 
                 var nWeekTotal=0;
+                var nWeekInternal=0;
+                var nWeekExternal=0;
+                var nWeekInnovation=0;
+                var nWeekNonWorking=0;
+
+                // Sum of external projects
+                $(employeeInfo).find('.table-row[projecttype="EXTERNAL"]').each(function(){
+                    $(this).find(selector).each(function(){
+
+                    if($(this).text().length>0){
+                        nWeekExternal+=parseInt($(this).text());
+                    }
+                    
+                    });
+                });
+
+                // Sum of internal projects
+                $(employeeInfo).find('.table-row[projecttype="INTERNAL"]').each(function(){
+                    $(this).find(selector).each(function(){
+
+                    if($(this).text().length>0){
+                        nWeekInternal+=parseInt($(this).text());
+                    }
+                    
+                    });
+                });
+
+                // Sum of innovation projects
+                $(employeeInfo).find('.table-row[projecttype="INNOVATION"]').each(function(){
+                    $(this).find(selector).each(function(){
+
+                    if($(this).text().length>0){
+                        nWeekInnovation+=parseInt($(this).text());
+                    }
+                    
+                    });
+                });
+
+                // Sum of Non-working projects
+                $(employeeInfo).find('.table-row[projecttype="NONWORKING"]').each(function(){
+                    $(this).find(selector).each(function(){
+
+                    if($(this).text().length>0){
+                        nWeekNonWorking+=parseInt($(this).text());
+                    }
+                    
+                    });
+                });
+
+                // Sum of total working projects include External, internal, innovation and Non-working
 
                 $(employeeInfo).find(selector).each(function(){
 
@@ -303,19 +461,44 @@ $(document).ready(function () {
 
                 $(employee).find(selector).first().text(nWeekTotal);
                 
-                if(parseInt(nWeekTotal)>80 &&  parseInt(nWeekTotal)<=100){
-                   
+                // Validation rules 
+                if(parseInt(nWeekExternal)>80 && parseInt(nWeekTotal)<=100){
+                    if((parseInt(nWeekTotal)+1)%10==0){
+            
+                           $(employee).find(selector).first().removeClass('overload full less-external').addClass('prospect');
+                        }else{
+
                             $(employee).find(selector).first().addClass('full');   
+                        }
+                   
                 }
 
+                if(parseInt(nWeekExternal)<80 && parseInt(nWeekTotal)<=100){
+                    if((parseInt(nWeekTotal)+1)%10==0){
+            
+                           $(employee).find(selector).first().removeClass('overload full less-external').addClass('prospect');
+                        }else{
+
+                            $(employee).find(selector).first().addClass('less-external');   
+                        }
+                   
+                }
                 if(parseInt(nWeekTotal)>100){
 
+                        if((parseInt(nWeekTotal)+1)%10==0){
+            
+                           $(employee).find(selector).first().removeClass('overload full').addClass('prospect');
+                        }else{
+
                             $(employee).find(selector).first().addClass('overload');
+                        }
+
                     
                  }
-                if((parseInt(nWeekTotal)+1)%10==0){
+
+               if((parseInt(nWeekTotal)+1)%10==0){
             
-                    $(employee).find(selector).first().removeClass('overload full').addClass('prospect');
+                     $(employee).find(selector).first().removeClass('overload full').addClass('prospect');
                 }
                
             };
