@@ -101,11 +101,11 @@ $(document).ready(function () {
     // });
 
     $('#btnNewProject').click(function(){
-        $('#projectPopUp').dialog({ resizable: false, width: 400, height: 210, title: 'Add project to Planning tool', position:{my: "center", at: "top center", of: window}  });
+        $('#projectPopUp').dialog({ resizable: false, width: 400, height: 210, title: 'Add project to Planning tool', position:[750,150]  });
     });
 
      $('#btnNewStaff').click(function(){
-         $('#staffPopUp').dialog({ resizable: false, width: 400, height:210, title: 'Add staff to Planning tool',position:{my: "center", at: "center", of: window} });
+         $('#staffPopUp').dialog({ resizable: false, width: 400, height:210, title: 'Add staff to Planning tool',position:[750,150] });
     });
 
     $('#btnAddProject').click(function(){
