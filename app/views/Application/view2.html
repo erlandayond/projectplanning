@@ -83,7 +83,7 @@
                 </div>
                 <div class="employee-info" style="display: block;" employeeId="${emp.nEmpId}"> 
                		%{ for(proj in emp.listProjectInfo){ %}
-                		<div class="table-row" id="project-${proj.nProjectId}" projectId="${proj.nProjectId}">
+                		<div class="table-row" id="project-${proj.nProjectId}" projectId="${proj.nProjectId}" projectType="${proj.strProjectType}">
 							<div class="column first-column">
 								<span class="project-name">${proj.strProjectName}</span>
 								<div class="remove-project" projId="${proj.nProjectId}">Delete</div>
@@ -183,7 +183,7 @@
                 </div>
                 <div class="employee-info" style="display: block;" employeeId="${emp.nEmpId}"> 
                		%{ for(proj in emp.listProjectInfo){ %}
-                		<div class="table-row" id="project-${proj.nProjectId}" projectId="${proj.nProjectId}">
+                		<div class="table-row" id="project-${proj.nProjectId}" projectId="${proj.nProjectId}" projectType="${proj.strProjectType}">
 							<div class="column first-column">
 								<span class="project-name">${proj.strProjectName}</span>
 								<div class="remove-project" projId="${proj.nProjectId}">Delete</div>
@@ -237,8 +237,8 @@
 
 					<div class="control-panel-row">
 						<div class="control-button" id="btnNewProject"> New Project </div>
-						<div class="control-button" id="btnNewEmployee">New Employee</div>
-						<div class="control-button" id="btnNewContractor">New Contractor</div>
+						<div class="control-button" id="btnNewStaff">New Staff</div>
+						<!-- <div class="control-button" id="btnNewContractor">New Contractor</div> -->
 					</div>
 					<div class="control-panel-row">
 						<p>Choose a project to delete: </p>
@@ -251,6 +251,49 @@
                 				%}
 						</select>
 					</div>
+				</div>
+				<div id="projectPopUp">
+
+					
+							<div class="form-row">
+								 <span class="form-first-column"> Project Name </span>
+								 <input type="text" name="txtProjectName" id="txtProjectName" class="form-second-column"></input>
+								 <span id="txtProjectNameRequired">*</span>
+							</div>
+							<div class="form-row">
+								<span class="form-first-column"> Project Type </span>
+								<select id="ddProjectType" class="form-second-column"> 
+								 	<option selected="selected" value="EXTERNAL"> External </option>
+								 	<option value="INTERNAL"> Internal </option>
+								 	<option value="INNOVATION"> Innovation </option>
+								 	<option value="NONWORKING"> Not Working </option>
+								 	<option value="MANAGEMENT"> Managment </option>
+								 </select>
+							</div>
+							<div class="form-button">
+								<input type="button" id="btnAddProject" value="Add Project" /> 
+							</div>
+				
+				</div>
+
+				<div id="staffPopUp">
+					
+							<div class="form-row">
+								 <span class="form-first-column"> Staff Name </span>
+								 <input type="text" name="txtStaffName" id="txtStaffName" class="form-second-column"></input>
+								 <span id="txtStaffNameRequired">*</span>
+							</div>
+							<div class="form-row">
+								<span class="form-first-column"> Staff Type </span>
+								<select id="ddStaffType" class="form-second-column"> 
+								 	<option selected="selected" value="regular"> Employee </option>
+								 	<option value="contractor"> Contractor </option>
+								 </select>
+							</div>
+							<div class="form-button">
+								<input type="button" id="btnAddStaff" value="Add Staff" /> 
+							</div>
+				    
 				</div>
 				<div class="navigation">
 					<ul>
