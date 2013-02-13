@@ -190,6 +190,7 @@ $(document).ready(function () {
         var nNonworking=0;
         var nExternal=0;
         var nInternal=0;
+        var nManagement=0;
 
     	var empInfoRow=$(this).parent().parent().parent().find(tempFind).each(function(){
 
@@ -204,6 +205,8 @@ $(document).ready(function () {
                     nNonworking+=parseInt($(this).text());
                 }else if(projectType=="INNOVATION"){
                     nInnovation+=parseInt($(this).text());
+                }else if(projectType=="MANAGEMENT"){
+                    nManagement+=parseInt($(this).text());
                 }
 
                 total+=parseInt($(this).text());
@@ -213,6 +216,8 @@ $(document).ready(function () {
     		
     	});
         
+        // External includes external projects, non-working and management
+        nExternal+=nNonworking+nManagement;
     	var prevRowWeek=$(this).parent().parent().parent().prev();
     	
 
@@ -261,6 +266,10 @@ $(document).ready(function () {
                 $(prevRowWeekNum).first().removeClass('overload full less-external').addClass('prospect');
             }
 
+        if(parseInt(total)==0){
+            
+                $(prevRowWeekNum).first().removeClass('overload full less-external prospect');
+            }
 
         var updateProjUrl="/updateEmpProjOccupied";
 
@@ -290,6 +299,7 @@ $(document).ready(function () {
                 var nWeekExternal=0;
                 var nWeekInnovation=0;
                 var nWeekNonWorking=0;
+                var nWeekManagement=0;
 
                 // Sum of external projects
                 $(employeeInfo).find('.table-row[projecttype="EXTERNAL"]').each(function(){
@@ -335,7 +345,21 @@ $(document).ready(function () {
                     });
                 });
 
-                // SUm of total working includes External, Intennal, Nonworking, Innnovation
+                // Sum of Management projects
+                $(employeeInfo).find('.table-row[projecttype="MANAGEMENT"]').each(function(){
+                    $(this).find(selector).each(function(){
+
+                    if($(this).text().length>0){
+                        nWeekManagement+=parseInt($(this).text());
+                    }
+                    
+                    });
+                });
+
+                // External project includes external projects, non working and innovation
+                nWeekExternal+=nWeekNonWorking+nWeekManagement;
+
+                // Sum of total working includes External, Intennal, Nonworking, Innnovation
                 $(employeeInfo).find(selector).each(function(){
 
                     if($(this).text().length>0){
@@ -349,7 +373,7 @@ $(document).ready(function () {
                 $(employee).find(selector).first().text(nWeekTotal);
                 
                 // Validation rules 
-                if(parseInt(nWeekExternal)>80 && parseInt(nWeekTotal)<=100){
+                if(parseInt(nWeekExternal)>=80 && parseInt(nWeekTotal)<=100){
                     if((parseInt(nWeekTotal)+1)%10==0){
             
                            $(employee).find(selector).first().removeClass('overload full less-external').addClass('prospect');
@@ -387,6 +411,11 @@ $(document).ready(function () {
             
                      $(employee).find(selector).first().removeClass('overload full').addClass('prospect');
                 }
+
+               if(parseInt(nWeekTotal)==0){
+
+                    $(employee).find(selector).first().removeClass('overload full less-external prospect');
+               }
             };
       });
       
@@ -405,49 +434,49 @@ $(document).ready(function () {
                 var nWeekInnovation=0;
                 var nWeekNonWorking=0;
 
-                // Sum of external projects
-                $(employeeInfo).find('.table-row[projecttype="EXTERNAL"]').each(function(){
-                    $(this).find(selector).each(function(){
+                // // Sum of external projects
+                // $(employeeInfo).find('.table-row[projecttype="EXTERNAL"]').each(function(){
+                //     $(this).find(selector).each(function(){
 
-                    if($(this).text().length>0){
-                        nWeekExternal+=parseInt($(this).text());
-                    }
+                //     if($(this).text().length>0){
+                //         nWeekExternal+=parseInt($(this).text());
+                //     }
                     
-                    });
-                });
+                //     });
+                // });
 
-                // Sum of internal projects
-                $(employeeInfo).find('.table-row[projecttype="INTERNAL"]').each(function(){
-                    $(this).find(selector).each(function(){
+                // // Sum of internal projects
+                // $(employeeInfo).find('.table-row[projecttype="INTERNAL"]').each(function(){
+                //     $(this).find(selector).each(function(){
 
-                    if($(this).text().length>0){
-                        nWeekInternal+=parseInt($(this).text());
-                    }
+                //     if($(this).text().length>0){
+                //         nWeekInternal+=parseInt($(this).text());
+                //     }
                     
-                    });
-                });
+                //     });
+                // });
 
-                // Sum of innovation projects
-                $(employeeInfo).find('.table-row[projecttype="INNOVATION"]').each(function(){
-                    $(this).find(selector).each(function(){
+                // // Sum of innovation projects
+                // $(employeeInfo).find('.table-row[projecttype="INNOVATION"]').each(function(){
+                //     $(this).find(selector).each(function(){
 
-                    if($(this).text().length>0){
-                        nWeekInnovation+=parseInt($(this).text());
-                    }
+                //     if($(this).text().length>0){
+                //         nWeekInnovation+=parseInt($(this).text());
+                //     }
                     
-                    });
-                });
+                //     });
+                // });
 
-                // Sum of Non-working projects
-                $(employeeInfo).find('.table-row[projecttype="NONWORKING"]').each(function(){
-                    $(this).find(selector).each(function(){
+                // // Sum of Non-working projects
+                // $(employeeInfo).find('.table-row[projecttype="NONWORKING"]').each(function(){
+                //     $(this).find(selector).each(function(){
 
-                    if($(this).text().length>0){
-                        nWeekNonWorking+=parseInt($(this).text());
-                    }
+                //     if($(this).text().length>0){
+                //         nWeekNonWorking+=parseInt($(this).text());
+                //     }
                     
-                    });
-                });
+                //     });
+                // });
 
                 // Sum of total working projects include External, internal, innovation and Non-working
 
@@ -462,7 +491,7 @@ $(document).ready(function () {
                 $(employee).find(selector).first().text(nWeekTotal);
                 
                 // Validation rules 
-                if(parseInt(nWeekExternal)>80 && parseInt(nWeekTotal)<=100){
+                if(parseInt(nWeekTotal)>=80 && parseInt(nWeekTotal)<=100){
                     if((parseInt(nWeekTotal)+1)%10==0){
             
                            $(employee).find(selector).first().removeClass('overload full less-external').addClass('prospect');
@@ -473,16 +502,16 @@ $(document).ready(function () {
                    
                 }
 
-                if(parseInt(nWeekExternal)<80 && parseInt(nWeekTotal)<=100){
-                    if((parseInt(nWeekTotal)+1)%10==0){
+                // if(parseInt(nWeekTotal)<80 && parseInt(nWeekTotal)<=100){
+                //     if((parseInt(nWeekTotal)+1)%10==0){
             
-                           $(employee).find(selector).first().removeClass('overload full less-external').addClass('prospect');
-                        }else{
+                //            $(employee).find(selector).first().removeClass('overload full less-external').addClass('prospect');
+                //         }else{
 
-                            $(employee).find(selector).first().addClass('less-external');   
-                        }
+                //            // $(employee).find(selector).first().addClass('less-external');   
+                //         }
                    
-                }
+                // }
                 if(parseInt(nWeekTotal)>100){
 
                         if((parseInt(nWeekTotal)+1)%10==0){
@@ -490,7 +519,7 @@ $(document).ready(function () {
                            $(employee).find(selector).first().removeClass('overload full').addClass('prospect');
                         }else{
 
-                            $(employee).find(selector).first().addClass('overload');
+                            //$(employee).find(selector).first().addClass('overload');
                         }
 
                     
@@ -500,6 +529,11 @@ $(document).ready(function () {
             
                      $(employee).find(selector).first().removeClass('overload full').addClass('prospect');
                 }
+
+                if(parseInt(nWeekTotal)==0){
+
+                    $(employee).find(selector).first().removeClass('overload full less-external prospect');
+               }
                
             };
       });
