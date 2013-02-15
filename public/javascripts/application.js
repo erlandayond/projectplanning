@@ -20,6 +20,7 @@ $(document).ready(function () {
 
 	
     
+
     $('.toggler').live('click',function(){
 
     	var thisRow=$(this).parent().parent();
@@ -36,6 +37,9 @@ $(document).ready(function () {
 
     });    
 
+    showEmployeeInfo();
+
+  
     $("#addEmployee").change(function(){
     	var empId=$("#addEmployee option:selected").val();
     	var empName=$('#addEmployee option:selected').text();
@@ -58,15 +62,15 @@ $(document).ready(function () {
         var empId=$(this).parent().parent().parent().attr('employeeid');
         var newProjUrl="/addProject";
          
+        var empType=$(this).parent().parent().parent().attr('type');
        
         $.post(newProjUrl,{projectId:projId, employeeId:empId},function(data){
            //alert('Project added ! Please Refresh');
-           //$.cookie('projAddedToEmpId',empId);
+           $.cookie('projAddedToEmpId',empId);
+           $.cookie('empType', empType);
            window.location.reload(true);
 
-           //var empIdSelector1="div.employee-info[employeeid="+$.cookie('projAddedToEmpId')+"]";
-           //var empIdSelector2=".table-row.employee#employee-"+$.cookie('projAddedToEmpId');
-           //$(empIdSelector1).show();$(empIdSelector2).find('.toggler').each(function(){$(this).removeClass('toggler').addClass('toggler opened');});
+           
         }) ;
 
     });
@@ -77,6 +81,7 @@ $(document).ready(function () {
         if(parseInt(projId)>0){
 
          if(confirm("Are you sure you want to delete project: "+ projName+" ?")){
+
             $.ajax({
             url:'/deleteProject',
             data:{nProjId:projId},
@@ -582,13 +587,14 @@ $(document).ready(function () {
     $('.remove-project').click(function(){
         var empId=$(this).parent().parent().parent().attr('employeeid');
         var projId=$(this).attr('projid');
-
+        var projInfoRow=$(this).parent().parent();
         if(confirm("Are you sure you want to delete project this employee ?")){
+            projInfoRow.hide();
             $.ajax({
             url:'/deleteProjectForEmployee',
             data:{nEmpId:empId, nProjId:projId},
             success:function(){
-             window.location.reload(true);
+            // window.location.reload(true);
             $(this).parent().parent().parent().parent().show() },
             error:function(){
                 
@@ -605,6 +611,36 @@ $(document).ready(function () {
         $input.autocomplete({source:'http://localhost:9000/autocompleteLabel'});
     });
 });
+
+function showEmployeeInfo(){
+    var eType=$.cookie('empType');
+    if(eType=="contractor"){
+
+         var empIdSelector1="div.employee-info[employeeid="+$.cookie('projAddedToEmpId')+"]";
+        var empIdSelector2=".table-row.contractor#employee-"+$.cookie('projAddedToEmpId');
+        $(empIdSelector1).show();
+        $(empIdSelector2).find('.toggler').each(function(){$(this).removeClass('toggler').addClass('toggler opened');});   
+
+    }else{
+
+        var empIdSelector1="div.employee-info[employeeid="+$.cookie('projAddedToEmpId')+"]";
+        var empIdSelector2=".table-row.employee#employee-"+$.cookie('projAddedToEmpId');
+        $(empIdSelector1).show();
+        $(empIdSelector2).find('.toggler').each(function(){$(this).removeClass('toggler').addClass('toggler opened');});   
+    }
+
+}
+
+function parseBool(strBooleanVal){
+
+
+    if(strBooleanVal=="true"){
+
+        return true;
+    }else if(strBooleanVal=="false"){
+        return false;
+    }
+}
 
 
 
