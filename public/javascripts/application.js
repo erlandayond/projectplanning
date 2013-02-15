@@ -19,7 +19,8 @@ $(document).ready(function () {
      });
 
 	
-    
+     showEmployeeInfo();
+
 
     $('.toggler').live('click',function(){
 
@@ -37,8 +38,7 @@ $(document).ready(function () {
 
     });    
 
-    showEmployeeInfo();
-
+   
   
     $("#addEmployee").change(function(){
     	var empId=$("#addEmployee option:selected").val();
@@ -623,6 +623,7 @@ function showEmployeeInfo(){
          var empIdSelector1="div.employee-info[employeeid="+$.cookie('projAddedToEmpId')+"]";
         var empIdSelector2=".table-row.contractor#employee-"+$.cookie('projAddedToEmpId');
         $(empIdSelector1).show();
+        $(empIdSelector1).find('.week').attr('contenteditable','true');
         $(empIdSelector2).find('.toggler').each(function(){$(this).removeClass('toggler').addClass('toggler opened');});   
 
     }else{
@@ -630,6 +631,7 @@ function showEmployeeInfo(){
         var empIdSelector1="div.employee-info[employeeid="+$.cookie('projAddedToEmpId')+"]";
         var empIdSelector2=".table-row.employee#employee-"+$.cookie('projAddedToEmpId');
         $(empIdSelector1).show();
+        $(empIdSelector1).find('.week').attr('contenteditable','true');
         $(empIdSelector2).find('.toggler').each(function(){$(this).removeClass('toggler').addClass('toggler opened');});   
     }
 
