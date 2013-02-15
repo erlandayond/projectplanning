@@ -123,6 +123,7 @@ $(document).ready(function () {
         if(newProjectName.length>0 && newProjectType.length>0){
 
             $.post(newProjUrl, {projectName:newProjectName, projectType:newProjectType}, function(data){
+                deleteAllCookies();
                  window.location.reload(true);
              });  
 
@@ -167,6 +168,8 @@ $(document).ready(function () {
         if(newStaffName.length>0 && newStaffType.length>0){
             $.post(newStaffUrl, {strStaffName:newStaffName, strStaffType:newStaffType}, function(data){
 
+                //Deleting all cookies
+                deleteAllCookies();
                 window.location.reload(true);
 
             });
@@ -567,11 +570,12 @@ $(document).ready(function () {
         var empId=this.id;
 
         if(confirm("Are you sure you want to delete employee ?")){
+            hideEmployee(empId);
+
             $.ajax({
             url:'/deleteEmployee',
             data:{nEmpId:empId},
-            success:function(){
-            window.location.reload(true); },
+            success:function(){ },
             error:function(){
                 
             }
@@ -641,7 +645,17 @@ function parseBool(strBooleanVal){
         return false;
     }
 }
+function deleteAllCookies(){
+    $.cookie('empType', null);
+    $.cookie('projAddedToEmpId', null);
+}
+function hideEmployee(empId){
 
+    var employeeDiv="div#employee-"+empId;
+    var employeeInfoDiv="div.employee-info[employeeid="+empId+"]";
 
+    $(employeeDiv).hide();
+    $(employeeInfoDiv).hide();
+}
 
 
