@@ -652,3 +652,14 @@ a.ui-dialog-titlebar-close.ui-corner-all:hover{
 	width:50%;
 
 }
+td.colorcode{
+	width:20px;
+	
+}
+tr.row{
+    float:right;
+    padding-left:5px;
+}
+table.tblColorCode{
+	
+}
