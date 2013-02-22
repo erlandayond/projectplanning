@@ -66,8 +66,8 @@ $(document).ready(function () {
        
         $.post(newProjUrl,{projectId:projId, employeeId:empId},function(data){
            //alert('Project added ! Please Refresh');
-           $.cookie('projAddedToEmpId',empId);
-           $.cookie('empType', empType);
+           $.cookie('projAddedToEmpId',empId, {expires:getDateExpires(30)});
+           $.cookie('empType', empType, {expires:getDateExpires(30)});
            window.location.reload(true);
 
            
@@ -660,4 +660,10 @@ function hideEmployee(empId){
     $(employeeInfoDiv).hide();
 }
 
+function getDateExpires(seconds){
+
+    var date=new Date();
+     date.setTime(date.getTime()+(seconds*1000));
+     return date;
+}
 
