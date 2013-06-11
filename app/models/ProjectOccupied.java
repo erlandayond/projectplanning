@@ -19,10 +19,10 @@ import play.db.jpa.JPA;
  */
 public class ProjectOccupied {
 	
-    public int nProjectId;
-	public String strProjectName;
-	public int	  nWeekNumber;
-	public int	  nOccupied;
+    public int 		nProjectId;
+	public String 	strProjectName;
+	public int	  	nWeekNumber;
+	public int	 	 nOccupied;
 	
 	public boolean updateResourcePlan(String sEmpId, String sProjId, String sProjName, int nWeekNumber, String sOccupied){
 	

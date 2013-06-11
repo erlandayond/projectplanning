@@ -12,6 +12,7 @@ import models.EmployeeQuarter;
 import models.ListAPI;
 import models.ProjectAPI;
 import models.ProjectAPI.ProjectType;
+import models.ProjectInfo;
 
 import models.ProjectOccupied;
 import models.Login;
@@ -33,15 +34,12 @@ public class Application extends Controller {
     public static void isUserConnected(){
     	
     	String tempVal=Session.current().get("login");
-    	Logger.info("login value:"+tempVal);
     	
     	if(tempVal!=null && tempVal.length()>0){
     		if(tempVal.equals("ayond")){
-        		Logger.info("user is connected...");
         	}
     	}
     	else{
-    		Logger.info("user is not connected...");
     	}
     }
 	
@@ -55,18 +53,14 @@ public class Application extends Controller {
     public static void login(){
     	String sPassword=params.get("password");
     	String sUsername=params.get("username");
-    	
-    	Logger.info("username:"+sUsername+" Password:"+sPassword);
     
     	Login objLogin=new Login(sPassword,sUsername);
     	boolean flag=objLogin.authenticateUser();
     	if(flag){
-    		Logger.info("login successful");
     		Session.current().put("login", "ayond");
     		redirect("/current");
     		
     	}else{
-    		Logger.info("login not successful");
     		redirect("/");
     		
     	}
@@ -80,9 +74,6 @@ public class Application extends Controller {
        	
        	int nStartWeek=1; //Integer.parseInt(strStartWeek);
        	int nEndWeek=13; //Integer.parseInt(strEndWeek);
-       	
-       	Logger.info("startweek :"+nStartWeek);
-       	Logger.info("EndWeek :"+nEndWeek);
        	
        	ListAPI objListAPI=new ListAPI();
            List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeAPIObject(nStartWeek, nEndWeek);
@@ -114,7 +105,6 @@ public class Application extends Controller {
     	
         if(nProjectId>0 && nEmployeeId>0){
         	ProjectOccupied.addProject(nEmployeeId, nProjectId,ProjectOccupied.getProjectName(nProjectId),nWeekNum);
-        	Logger.info("project name:"+ ProjectOccupied.getProjectName(nProjectId));
         }
         
     }
@@ -136,7 +126,6 @@ public class Application extends Controller {
     		if(!flag){
     			
     			objProjectAPI.addNewProject(projectName, eProjectType.getValue());
-            	Logger.info("New project added :"+projectName);
     		}
     	}
     	
@@ -150,7 +139,6 @@ public class Application extends Controller {
     		
     		if(!bEmpNameExists){
     			objListAPI.addNewEmployee(strStaffName, strStaffType);
-    			Logger.info("New Staff :"+strStaffName +"of Type: "+strStaffType);
     		}
     	}
     }
@@ -179,7 +167,6 @@ public class Application extends Controller {
     }*/
     public static void autocompleteLabel(final String term){
     	
-    	Logger.info("term received for autocomplete:"+term);
     	// get all projects
     	List<Project> listProjects=new ListAPI().getAllProjects();
     	
@@ -203,8 +190,6 @@ public class Application extends Controller {
    	int nStartWeek=14; //Integer.parseInt(strStartWeek);
    	int nEndWeek=26; //Integer.parseInt(strEndWeek);
    	
-   	Logger.info("startweek :"+nStartWeek);
-   	Logger.info("EndWeek :"+nEndWeek);
    	
    	ListAPI objListAPI=new ListAPI();
        List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeAPIObject(nStartWeek, nEndWeek);
@@ -223,9 +208,6 @@ public class Application extends Controller {
    	int nStartWeek=27; //Integer.parseInt(strStartWeek);
    	int nEndWeek=39; //Integer.parseInt(strEndWeek);
    	
-   	Logger.info("startweek :"+nStartWeek);
-   	Logger.info("EndWeek :"+nEndWeek);
-   	
    	ListAPI objListAPI=new ListAPI();
        List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeAPIObject(nStartWeek, nEndWeek);
      
@@ -241,9 +223,6 @@ public class Application extends Controller {
    	
    	int nStartWeek=40; //Integer.parseInt(strStartWeek);
    	int nEndWeek=52; //Integer.parseInt(strEndWeek);
-   	
-   	Logger.info("startweek :"+nStartWeek);
-   	Logger.info("EndWeek :"+nEndWeek);
    	
    	ListAPI objListAPI=new ListAPI();
        List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeAPIObject(nStartWeek, nEndWeek);
@@ -261,9 +240,6 @@ public class Application extends Controller {
 	  
 	   	int nStartWeek=Utility.getCurrentWeek(); // gets current week
 	   	int nEndWeek=nStartWeek+12; 
-	   	
-	   	Logger.info("startweek :"+nStartWeek);
-	   	Logger.info("EndWeek :"+nEndWeek);
 	   	
 	   	ListAPI objListAPI=new ListAPI();
 	       List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeAPIObject(nStartWeek, nEndWeek);
@@ -283,49 +259,48 @@ public class Application extends Controller {
    public static void updateEmpProjOccupied(String sEmpId, String sProjId, String sQuarter, String sWeekNumber, String sOccupied){
 	
 	   String sProjName=ProjectOccupied.getProjectName((Integer.parseInt(sProjId)));
-	   Logger.info("Project Name :"+sProjName);
 	   
 	   int nWeekNum= ProjectOccupied.getWeekNumber(sQuarter, sWeekNumber);
 	   // TODO : remove
 	   nWeekNum=Integer.parseInt(sWeekNumber);
-	   Logger.info("week number:"+nWeekNum);
 	   new ProjectOccupied().updateResourcePlan(sEmpId, sProjId, sProjName, nWeekNum, sOccupied);
    }
    
    public static void deleteEmployee(int nEmpId){
 	   
-	   Logger.info("employee Id to be deleted:"+nEmpId);
 	   ProjectOccupied objProjOccupied=new ProjectOccupied();
 	   objProjOccupied.makeInActive(nEmpId);
 	   
    }
    
    public static void deleteProjectForEmployee(int nEmpId, int nProjId){
-	   Logger.info("deleting a project "+nProjId+"for employee:"+nEmpId);
 	   ProjectOccupied objProjOccupied=new ProjectOccupied();
 	   objProjOccupied.makeInActiveProjectForEmployee(nEmpId, nProjId);
    }
    
    public static void deleteProject(int nProjId){
-	   Logger.info("deleting a project :"+nProjId+" from system");
-	   
 	   ProjectOccupied objProjOccupied=new ProjectOccupied();
 	   objProjOccupied.makeInActiveProject(nProjId);
 	   
    }
    
    public static void pview1(){
-	   int nStartWeek=1; //Integer.parseInt(strStartWeek);
-	   int nEndWeek=13; //Integer.parseInt(strEndWeek);
+	   int nStartWeek=1;
+	   int nEndWeek=13;
+       
+	   ListAPI listAPI = new ListAPI();
+       List<Project> listProjects = listAPI.getAllProjects();
+       List<ProjectInfo> listProjectsInfo = new ArrayList<ProjectInfo>();
+       
+       for(Project p : listProjects){
+    	   ProjectInfo pinfo = listAPI.getProjectInfo(p);
+    	   listProjectsInfo.add(pinfo);
+    	   if(pinfo == null){
+    		   Logger.warn("NULL sucks!");
+    	   }
+       }
 	   
-	   List<EmployeeInfo> listEmployeeInfo=null;
-       
-       
-       List<Project> listProjects=null;
-       
-       //listProjects
-	   
-	   render(listEmployeeInfo, listProjects, nStartWeek, nEndWeek);
+	   render(listProjectsInfo, listProjects, nStartWeek, nEndWeek);
    }
 
 }

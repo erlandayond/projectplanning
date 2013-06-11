@@ -28,7 +28,7 @@
 	<div class="content">
 		<div class="wrapper">
 			<div class="table">
-				<div class="projloyees-regular">
+				<div class="employees-regular">
 					<div class="table-header">
 						<div class="first-column">
 							<span class="title">Projects</span>
@@ -59,7 +59,7 @@
                 
 				%{ for(proj in listProjectsInfo) {
                 %}
-				<div class="table-row projloyee" id="projloyee-${proj.nProjectId}" >
+				<div class="table-row employee" id="project-${proj.nProjectId}" >
 					<div class="column person first-column">
 						<div class="toggler"></div>
 						<span class="name">${proj.strProjectName}</span>
@@ -67,13 +67,17 @@
 					</div>
 					<div class="column second-column">
 						#{list items:nStartWeek..nEndWeek, as:'i'}
-							<div class="week" id="${i}"></div>
+							<div class="week" id="${i}">a</div>
 						#{/list}
 					</div>
                 </div>
-                %{
-				    } 	
-				%}
+                <div class="employee-info" style="display: block;">
+                	%{ for(emp in proj.listWorkingEmployees) { %}
+                		<div class="table-row" employeeId="${emp.nEmpId}">
+							<p>${emp.strEmpName}</p>
+                    	</div>
+                	%{ } %}
+                %{ } %}
 			</div>
 			<div id="bottom-bar">
 				<div class="control-panel">

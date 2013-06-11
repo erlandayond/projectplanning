@@ -34,7 +34,7 @@ $(document).ready(function () {
     		//project info
     		var thisEmployeeInfo=$(thisRow.next());
     		$(thisEmployeeInfo).find('.week').attr('contenteditable','true');
-    }
+    	}
 
     });    
 

@@ -44,9 +44,7 @@ public class ListAPI {
     	
     	List<Object> listObjEmployee =query.getResultList();
     	List<Employee> listtempEmployee=new ArrayList<Employee>();
-    	
-    	Logger.info("number of employees fetched:"+listObjEmployee.size());
-    	
+    	    	
     	if(listObjEmployee.size()>0){
     		
     		for(Object objEmployee : listObjEmployee){
@@ -54,11 +52,6 @@ public class ListAPI {
     		    int nEmpId=(Integer)objResult[0];
     			String strEmpName=(String)objResult[1];
     			String strEmpType=(String)objResult[2];
-    			
-    			//Logging employee info
-    			Logger.info("empId:"+nEmpId);
-    			Logger.info("empName:"+strEmpName);
-    			Logger.info("empType:"+strEmpType);
     			
     			Employee tempEmp=new Employee();
     			tempEmp.setEmpId(nEmpId);
@@ -84,8 +77,6 @@ public class ListAPI {
 				tmpProject.setProjectName((String)objResult[1]);
 				
 				//Logging
-				Logger.info("Project Id:"+tmpProject.getProjectId());
-				Logger.info("Project Name:"+tmpProject.getProjectName());
 				listProjects.add(tmpProject);
 			}
 		}
@@ -161,12 +152,6 @@ public class ListAPI {
 				tmpProjectOccupied.nWeekNumber=(Integer)objResult[2];
 				tmpProjectOccupied.nOccupied=(Integer)objResult[3];
 				
-				//Logging employee-project info
-				Logger.info("emp Id:"+nEmpId);
-				Logger.info("Project Name:"+tmpProjectOccupied.strProjectName);
-				Logger.info("Week number:"+tmpProjectOccupied.nWeekNumber);
-				Logger.info("Occupied:"+tmpProjectOccupied.nOccupied);
-				
 				listProjectOccupied.add(tmpProjectOccupied);
 			}
 		}
@@ -175,9 +160,19 @@ public class ListAPI {
 		
 	}
 	
+	public ProjectInfo getProjectInfo(Project p){
+		List<EmployeeInfo> einfo = getEmployeesForProject(p.getProjectId());
+		ProjectInfo pinfo = new ProjectInfo();
+		pinfo.strProjectName = p.getProjectName();
+		pinfo.listWorkingEmployees = einfo;
+		pinfo.strProjectType = ProjectAPI.getProjectType(p.getProjectId());
+		pinfo.nProjectId = p.getProjectId();
+		return pinfo;
+	}
+	
 	private List<EmployeeInfo> getEmployeesForProject(int nProjectId){
 	    
-		Query query=JPA.em().createQuery("select employee, week, occupied from Resourceplan where projectId=:nProjectId and projActive=1");
+		Query query=JPA.em().createQuery("select week, occupied, employee from Resourceplan where projectId=:id and projActive=1");
 		query.setParameter("id",nProjectId);
 		
 		List<Object> listResult=query.getResultList();
@@ -187,18 +182,12 @@ public class ListAPI {
 			for(Object tempObj: listResult){
 				Object[] objResult=(Object[])tempObj;
 				EmployeeInfo tmpEmployeeInfo=new EmployeeInfo();
-				tmpEmployeeInfo.nEmpId=(Integer)((Employee) objResult[0]).getEmpId();
-				tmpEmployeeInfo.strEmpName=(String)((Employee) objResult[0]).getEmpName();
 				ProjectOccupied tmpProjectOccupied=new ProjectOccupied();
-				tmpProjectOccupied.nWeekNumber=(Integer)objResult[1];
-				tmpProjectOccupied.nOccupied=(Integer)objResult[2];
+				tmpProjectOccupied.nWeekNumber=(Integer)objResult[0];
+				tmpProjectOccupied.nOccupied=(Integer)objResult[1];
 				tmpEmployeeInfo.listProjectWorking.add(tmpProjectOccupied);
-				
-				//Logging employee-project info
-				Logger.info("project Id:"+ nProjectId);
-				Logger.info("Employee Name:"+tmpEmployeeInfo.strEmpName);
-				Logger.info("Week number:"+tmpEmployeeInfo.listProjectWorking.get(0).nWeekNumber);
-				Logger.info("Occupied:"+tmpEmployeeInfo.listProjectWorking.get(0).nOccupied);
+				tmpEmployeeInfo.nEmpId=((Employee) objResult[2]).getEmpId();
+				tmpEmployeeInfo.strEmpName=((Employee) objResult[2]).getEmpName();
 				
 				listEmployeeInfo.add(tmpEmployeeInfo);
 			}
@@ -291,8 +280,6 @@ public class ListAPI {
 							if(week.nWeekNum==objWeekInfo.nWeekNum){
 								
 								week.nOccupied=nOccupied;
-								Logger.info("nWeekNum:"+week.nWeekNum);
-								Logger.info("nOccupied:"+week.nOccupied);
 							}
 							
 						}
