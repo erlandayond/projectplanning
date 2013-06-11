@@ -313,5 +313,17 @@ public class Application extends Controller {
 	   objProjOccupied.makeInActiveProject(nProjId);
 	   
    }
+   
+   public static void pview1(){
+	   int nStartWeek=1; //Integer.parseInt(strStartWeek);
+	   int nEndWeek=13; //Integer.parseInt(strEndWeek);
+	   
+	   List<EmployeeInfo> listEmployeeInfo=null;
+       
+       
+       List<Project> listProjects=null;
+	   
+	   render(listEmployeeInfo, listProjects, nStartWeek, nEndWeek);
+   }
 
 }
