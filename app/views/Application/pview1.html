@@ -28,78 +28,209 @@
 	<div class="content">
 		<div class="wrapper">
 			<div class="table">
-				<div class="employees-regular">
+				
+				<div class="Projects-regular">
 					<div class="table-header">
 						<div class="first-column">
 							<span class="title">Projects</span>
 						</div>
 						<div class="column second-column">
-							<div class="month-names">
-								<span class="c c1">January</span>
-								<span class="c c6">February</span>
-								<span class="c c10">March</span>
-								<span class="c">April</span>
-								<span class="c">May</span>
-								<span class="c">June</span>
-								<span class="c">July</span>
-								<span class="c">August</span>
-								<span class="c">September</span>
-								<span class="c">October</span>
-								<span class="c">November</span>
-								<span class="c">December</span>
-							</div>
-							<div class="weeks">
-								#{list items:nStartWeek..nEndWeek, as:'i'}				
-									<span class="week">v${i}</span>
-								#{/list}
-							</div>
+								<div class="month-names">
+									<span class="c c1">January</span>
+									<span class="c c6">February</span>
+									<span class="c c10">March</span>
+									<span class="c">April</span>
+									<span class="c">May</span>
+									<span class="c">June</span>
+									<span class="c">July</span>
+									<span class="c">August</span>
+									<span class="c">September</span>
+									<span class="c">October</span>
+									<span class="c">November</span>
+									<span class="c">December</span>
+								</div>
+									<div class="weeks">
+										#{list items:nStartWeek..nEndWeek, as:'i'}
+												
+												<span class="week">v${i}</span>
+						
+										#{/list}
+									</div>
 						</div>
+						
+						
 					</div>
 				</div>
                 
-				%{ for(proj in listProjectsInfo) {
-                %}
-				<div class="table-row employee" id="project-${proj.nProjectId}" >
+                 
+                
+				
+				 %{ for(emp in listProjectInfo) {
+                   		if(emp.strProjectType!="regular") {
+
+                        
+                  %}
+				<div class="table-row Project" id="Project-${emp.nProjectId}" >
 					<div class="column person first-column">
 						<div class="toggler"></div>
-						<span class="name">${proj.strProjectName}</span>
-						<div id="${proj.nProjectId}" class="remove">Delete</div>
+						<span class="name">${emp.strProjectName}</span>
+						<div id="${emp.nProjectId}" class="remove" >Delete</div>
 					</div>
 					<div class="column second-column">
 						#{list items:nStartWeek..nEndWeek, as:'i'}
-							<div class="week" id="${i}">a</div>
+						<div class="week" id="${i}"></div>
+						
 						#{/list}
 					</div>
                 </div>
-                <div class="employee-info" style="display: block;">
-                	%{ for(emp in proj.listWorkingEmployees) { %}
-                		<div class="table-row" employeeId="${emp.nEmpId}">
-							<p>${emp.strEmpName}</p>
+                <div class="employee-info" style="display: block;" ProjectId="${emp.nProjectId}" type="Project"> 
+               		%{ for(proj in emp.listEmployeeInfo){ %}
+                		<div class="table-row" empId="${proj.nEmpId}" EmployeeType="${proj.strEmpType}">
+							<div class="column first-column">
+								<span class="Employee-name">${proj.strEmpName}</span>
+							</div>
+							<div class="column second-column">
+								%{ for(week in proj.listWeekInfo){ %}
+									
+									<div class="week" id="${week.nWeekNum}">${week.nOccupied}</div>
+								%{ 
+									}
+								%}
+							</div>
+						</div>
+                	</div>
+            	</div>
+                %{
+				     } 
+				    } 	
+				  %}
+				<div class="Projects-subcontractor">
+					<div class="table-header">
+						<div class="first-column">
+							<span class="title">Subcontractors</span>
+						</div>
+						<div class="column second-column ">
+								<div class="month-names">
+									<!-- <span class="c">January</span>
+									<span class="c">February</span>
+									<span class="c">March</span>
+									<span class="c">April</span>
+									<span class="c">May</span>
+									<span class="c">June</span>
+									<span class="c">July</span>
+									<span class="c">August</span>
+									<span class="c">September</span>
+									<span class="c c2">October</span>
+									<span class="c c9">November</span>
+									<span class="c c13">December</span> -->
+								</div>
+									<div class="weeks">
+										#{list items:nStartWeek..nEndWeek, as:'i'}
+												
+												<span class="week">v${i}</span>
+						
+										#{/list}
+									</div>
+							
+						</div>
+						
+					</div>
+				</div>
+			
+					 %{ for(emp in listProjectInfo) {
+                  
+                       if(emp.strProjectType=="contractor") {
+                  %}
+				<div class="table-row contractor" id="Project-${emp.nProjectId}">
+					<div class="column person first-column">
+						<div class="toggler"></div>
+						<span class="name">${emp.strProjectName}</span>
+					</div>
+					<div class="column second-column">
+						#{list items:nStartWeek..nEndWeek, as:'i'}
+						<div class="week" id="${i}"></div>
+						
+						#{/list}
+					</div>
+                </div>
+                <div class="Project-info" style="display: block;" ProjectId="${emp.nProjectId}" type="contractor"> 
+               		%{ for(proj in emp.listEmployeeInfo){ %}
+                		<div class="table-row"  empId="${proj.nEmpId}" EmployeeType="${proj.strEmpType}">
+							<div class="column first-column">
+								<span class="Employee-name">${proj.strEmpName}</span>
+							</div>
+							<div class="column second-column">
+								%{ for(week in proj.listWeekInfo){ %}
+
+									<div class="week" id="${week.nWeekNum}">${week.nOccupied}</div>
+								%{ 
+									}
+								%}
+							</div>
                     	</div>
                 	%{ } %}
-                %{ } %}
+                	<div class="table-row">
+                		<div class="column first-column">
+                			<div class="add-Employee"></div>
+                			<select id="addEmployee" class="add-Employee">
+                				<option value="0">Add Employee</option>
+                				%{ for(Employee in listEmployees) { %}
+                					<option value="${Employee.empId}">${Employee.empName}</option>
+                		    	%{ 
+                					} 
+                				%}
+                				 
+                			</select>
+                		</div>
+                		<div class="column second-column">
+							<div class="week" id="week1"></div>
+							<div class="week" id="week2"></div>
+							<div class="week" id="week3"></div>
+							<div class="week" id="week4"></div>
+							<div class="week" id="week5"></div>
+							<div class="week" id="week6"></div>
+							<div class="week" id="week7"></div>
+							<div class="week" id="week8"></div>
+							<div class="week" id="week9"></div>
+							<div class="week" id="week10"></div>
+							<div class="week" id="week11"></div>
+							<div class="week" id="week12"></div>
+						</div>
+                	</div>
+            	</div>
+                %{
+				     } 
+				    } 	
+				  %}
 			</div>
 			<div id="bottom-bar">
 				<div class="control-panel">
+
 					<div class="control-panel-row">
-						<div class="control-button" id="btnNewProject"> New Project </div>
+						
+						<div class="control-button" id="btnNewEmployee"> New Employee </div>
 						<div class="control-button" id="btnNewStaff">New Staff</div>
+						<!-- <div class="control-button" id="btnNewContractor">New Contractor</div> -->
 					</div>
 					<div class="control-panel-row">
-						<p>Choose a project to delete: </p>
-						<select id="delProject" class="del-project">
-							<option value="0">Delete project</option>
-                				%{ for(project in listProjects) { %}
-                					<option value="${project.projectId}">${project.projectName}</option>
-                		    	%{ } %}
+						<p>Choose a Employee to delete: </p>
+						<select id="delEmployee" class="del-Employee">
+							<option value="0">Delete Employee</option>
+                				%{ for(Employee in listEmployees) { %}
+                					<option value="${Employee.empId}">${Employee.empName}</option>
+                		    	%{ 
+                					} 
+                				%}
 						</select>
 					</div>
 				</div>
-				<div id="projectPopUp">
+				<div id="EmployeePopUp">
+
+					
 							<div class="form-row">
-								 <span class="form-first-column"> Project Name </span>
-								 <input type="text" name="txtProjectName" id="txtProjectName" class="form-second-column"></input>
-								 <span id="txtProjectNameRequired">*</span>
+								 <span class="form-first-column"> Employee Name </span>
+								 <input type="text" name="txtEmpName" id="txtEmpName" class="form-second-column"></input>
+								 <span id="txtEmpNameRequired">*</span>
 							</div>
 							<div class="form-row">
 								<span class="form-first-column"> Project Type </span>
@@ -112,9 +243,11 @@
 								 </select>
 							</div>
 							<div class="form-button">
-								<input type="button" id="btnAddProject" value="Add Project" /> 
+								<input type="button" id="btnAddEmployee" value="Add Employee" /> 
 							</div>
+				
 				</div>
+
 				<div id="staffPopUp">
 					<div class="form-row">
 						 <span class="form-first-column"> Staff Name </span>
@@ -143,6 +276,24 @@
 						<li class="next"><div></div></li>
 					</ul>	
 				</div>
+				<div class="navigation">
+					<table class="tblColorCode">
+    					<tr class="row">
+        					<td class="colorcode" bgcolor="#ff4747"></td><td>Very Busy</td>
+       					</tr>
+    					<tr class="row">
+        					<td class="colorcode" bgcolor="#aaffa1"></td><td>Busy</td>
+       					</tr>
+    					<tr class="row">
+        					<td class="colorcode" bgcolor="#ADD8E6"></td><td>More Internal</td>
+       					</tr>
+        				<tr class="row">
+           					<td class="colorcode" bgcolor="#FFE13C"></td><td>Prospect</td>
+        				</tr>
+					</table>
+				</div>
+
+				
 			</div>
 		</div>
 	</div>

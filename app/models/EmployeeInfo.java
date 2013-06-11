@@ -12,6 +12,7 @@ public class EmployeeInfo {
 		
 		public List<ProjectInfo> listProjectInfo=new ArrayList<ProjectInfo>();
 		public List<ProjectOccupied> listProjectWorking= new ArrayList<ProjectOccupied>();
+	    public List<WeekInfo> listWeekInfo=new ArrayList<WeekInfo>();
 		
 		public List<Integer> listQuarterOccupied =new ArrayList<Integer>(13);  // 13 is quarter size
 		
