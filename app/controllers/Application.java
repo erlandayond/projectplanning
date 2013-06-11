@@ -4,12 +4,13 @@ import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 
 import models.Employee;
 import models.EmployeeInfo;
 import models.EmployeeQuarter;
-import models.EmployeeListAPI;
+import models.ListAPI;
 import models.ProjectAPI;
 import models.ProjectAPI.ProjectType;
 
@@ -84,19 +85,19 @@ public class Application extends Controller {
        	Logger.info("startweek :"+nStartWeek);
        	Logger.info("EndWeek :"+nEndWeek);
        	
-       	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
-           List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject(nStartWeek, nEndWeek);
+       	ListAPI objListAPI=new ListAPI();
+           List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeAPIObject(nStartWeek, nEndWeek);
          
            
-           List<Project> listProjects=new EmployeeListAPI().getAllProjects();
+           List<Project> listProjects=new ListAPI().getAllProjects();
            // renderJSON(modelSerializer.serialize(listEmployeeInfo));
         
           
           render(listEmployeeInfo, listProjects, nStartWeek, nEndWeek);
        }
     public static void getJSONEmployeeInfo(){
-    	/*EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
-        List<EmployeeInfo> listObjEmployeeInfo= objEmployeeListAPI.MakeAPIObject();
+    	/*ListAPI objListAPI=new ListAPI();
+        List<EmployeeInfo> listObjEmployeeInfo= objListAPI.MakeAPIObject();
        
         
         JSONSerializer modelSerializer = new JSONSerializer().exclude("class").include("listProjectWorking").rootName("employees").exclude("listProjectWorking.class","nEmpId","listProjectWorking.nProjectId", "listProjectWorking.nWeekNumber", "listProjectWorking.nOccupied");
@@ -143,37 +144,37 @@ public class Application extends Controller {
     }
     
     public static void addNewStaff(String strStaffName, String strStaffType){
-    	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
+    	ListAPI objListAPI=new ListAPI();
     	
     	if(!strStaffName.isEmpty() && !strStaffType.isEmpty()){
-    		boolean bEmpNameExists=objEmployeeListAPI.employeeNameExists(strStaffName);
+    		boolean bEmpNameExists=objListAPI.employeeNameExists(strStaffName);
     		
     		if(!bEmpNameExists){
-    			objEmployeeListAPI.addNewEmployee(strStaffName, strStaffType);
+    			objListAPI.addNewEmployee(strStaffName, strStaffType);
     			Logger.info("New Staff :"+strStaffName +"of Type: "+strStaffType);
     		}
     	}
     }
    /* public static void addNewEmployee(String employeeName){
     	
-    	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
+    	ListAPI objListAPI=new ListAPI();
     	String strEmpType="regular";
     	if(employeeName.length()>0){
-    		boolean flag=objEmployeeListAPI.employeeNameExists(employeeName);
+    		boolean flag=objListAPI.employeeNameExists(employeeName);
     		if(!flag){
     		
-    			objEmployeeListAPI.addNewEmployee(employeeName, strEmpType);
+    			objListAPI.addNewEmployee(employeeName, strEmpType);
         		Logger.info("New employee added :"+employeeName);
     		}
     		
     	}
     }
     public static void addNewContractor(String contractorName){
-    	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
+    	ListAPI objListAPI=new ListAPI();
     	String strEmpType="contractor";
     	
     	if(contractorName.length()>0){
-    		objEmployeeListAPI.addNewEmployee(contractorName, strEmpType);
+    		objListAPI.addNewEmployee(contractorName, strEmpType);
     		Logger.info("New contractor added :"+contractorName);
     	}
     }*/
@@ -181,7 +182,7 @@ public class Application extends Controller {
     	
     	Logger.info("term received for autocomplete:"+term);
     	// get all projects
-    	List<Project> listProjects=new EmployeeListAPI().getAllProjects();
+    	List<Project> listProjects=new ListAPI().getAllProjects();
     	
     	final List<String> response=new ArrayList<String>();
     	for(Project proj: listProjects){
@@ -206,11 +207,11 @@ public class Application extends Controller {
    	Logger.info("startweek :"+nStartWeek);
    	Logger.info("EndWeek :"+nEndWeek);
    	
-   	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
-       List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject(nStartWeek, nEndWeek);
+   	ListAPI objListAPI=new ListAPI();
+       List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeAPIObject(nStartWeek, nEndWeek);
      
        
-       List<Project> listProjects=new EmployeeListAPI().getAllProjects();
+       List<Project> listProjects=new ListAPI().getAllProjects();
        // renderJSON(modelSerializer.serialize(listEmployeeInfo));
     
       
@@ -226,11 +227,11 @@ public class Application extends Controller {
    	Logger.info("startweek :"+nStartWeek);
    	Logger.info("EndWeek :"+nEndWeek);
    	
-   	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
-       List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject(nStartWeek, nEndWeek);
+   	ListAPI objListAPI=new ListAPI();
+       List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeAPIObject(nStartWeek, nEndWeek);
      
        
-       List<Project> listProjects=new EmployeeListAPI().getAllProjects();
+       List<Project> listProjects=new ListAPI().getAllProjects();
        // renderJSON(modelSerializer.serialize(listEmployeeInfo));
       
       
@@ -245,10 +246,10 @@ public class Application extends Controller {
    	Logger.info("startweek :"+nStartWeek);
    	Logger.info("EndWeek :"+nEndWeek);
    	
-   	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
-       List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject(nStartWeek, nEndWeek);
+   	ListAPI objListAPI=new ListAPI();
+       List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeAPIObject(nStartWeek, nEndWeek);
        
-       List<Project> listProjects=new EmployeeListAPI().getAllProjects();
+       List<Project> listProjects=new ListAPI().getAllProjects();
        // renderJSON(modelSerializer.serialize(listEmployeeInfo));
        
       render(listEmployeeInfo, listProjects, nStartWeek, nEndWeek);
@@ -265,10 +266,10 @@ public class Application extends Controller {
 	   	Logger.info("startweek :"+nStartWeek);
 	   	Logger.info("EndWeek :"+nEndWeek);
 	   	
-	   	EmployeeListAPI objEmployeeListAPI=new EmployeeListAPI();
-	       List<EmployeeInfo> listEmployeeInfo=objEmployeeListAPI.MakeAPIObject(nStartWeek, nEndWeek);
+	   	ListAPI objListAPI=new ListAPI();
+	       List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeAPIObject(nStartWeek, nEndWeek);
 	       
-	       List<Project> listProjects=new EmployeeListAPI().getAllProjects();
+	       List<Project> listProjects=new ListAPI().getAllProjects();
 	       // renderJSON(modelSerializer.serialize(listEmployeeInfo));
 	       
 	      render(listEmployeeInfo, listProjects, nStartWeek, nEndWeek);

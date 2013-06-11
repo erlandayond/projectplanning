@@ -69,7 +69,7 @@ public class ProjectOccupied {
 		objResourceplan.setProjectId(nProjId);
 		objResourceplan.setProjectName(strProjName);
 		objResourceplan.setWeek(nWeekNum);
-		objResourceplan.setEmployee(EmployeeListAPI.getEmployee(nEmpId));
+		objResourceplan.setEmployee(ListAPI.getEmployee(nEmpId));
 		objResourceplan.setOccupied(nOccupied);
 		objResourceplan.setProjActive(true);
 		objResourceplan.save();
@@ -81,7 +81,7 @@ public class ProjectOccupied {
 		objResourceplan.setProjectId(nProjId);
 		objResourceplan.setProjectName(strProjName);
 		objResourceplan.setWeek(nWeekNum);
-		objResourceplan.setEmployee(EmployeeListAPI.getEmployee(nEmpId));
+		objResourceplan.setEmployee(ListAPI.getEmployee(nEmpId));
 		objResourceplan.setProjActive(true);
 		objResourceplan.save();
 	}

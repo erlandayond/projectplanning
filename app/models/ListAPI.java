@@ -11,7 +11,7 @@ import javax.persistence.TypedQuery;
 import play.Logger;
 import play.db.jpa.JPA;
 
-public class EmployeeListAPI {
+public class ListAPI {
 	
 	public List<EmployeeInfo> MakeAPIObject(int nStartWeek, int nEndWeek){
 		
@@ -41,6 +41,7 @@ public class EmployeeListAPI {
 		
 		//Get all active employees from db
     	Query query=JPA.em().createQuery("select id, empName, empType from Employee where empActive=1");
+    	
     	List<Object> listObjEmployee =query.getResultList();
     	List<Employee> listtempEmployee=new ArrayList<Employee>();
     	
@@ -105,6 +106,17 @@ public class EmployeeListAPI {
 		
 	}
 	
+	public static Project getProject(int nProjectId){
+		TypedQuery<Project> query=JPA.em().createQuery("select p from Project p where p.projectId=:nProjectId",Project.class);
+		query.setParameter("nProjectId", nProjectId);
+		List<Project> listProjects=query.getResultList();
+		if(listProjects.size()==1){
+			return listProjects.get(0);
+		}else{
+			return null;
+		}
+	}
+	
 	
    public void addNewEmployee(String strEmployeeName, String strEmpType){
 	   EntityManager em=JPA.newEntityManager();
@@ -131,6 +143,7 @@ public class EmployeeListAPI {
 		}
 		
 	}
+   
 	private List<ProjectOccupied> getProjectsForEmployee(int nEmpId){
 	    
 		Query query=JPA.em().createQuery("select projectId, projectName, week, occupied from Resourceplan where empId=:id and projActive=1 ");
@@ -161,6 +174,41 @@ public class EmployeeListAPI {
 		return listProjectOccupied;
 		
 	}
+	
+	private List<EmployeeInfo> getEmployeesForProject(int nProjectId){
+	    
+		Query query=JPA.em().createQuery("select employee, week, occupied from Resourceplan where projectId=:nProjectId and projActive=1");
+		query.setParameter("id",nProjectId);
+		
+		List<Object> listResult=query.getResultList();
+		List<EmployeeInfo> listEmployeeInfo=new ArrayList<EmployeeInfo>();
+		
+		if(listResult.size()>0){
+			for(Object tempObj: listResult){
+				Object[] objResult=(Object[])tempObj;
+				EmployeeInfo tmpEmployeeInfo=new EmployeeInfo();
+				tmpEmployeeInfo.nEmpId=(Integer)((Employee) objResult[0]).getEmpId();
+				tmpEmployeeInfo.strEmpName=(String)((Employee) objResult[0]).getEmpName();
+				ProjectOccupied tmpProjectOccupied=new ProjectOccupied();
+				tmpProjectOccupied.nWeekNumber=(Integer)objResult[1];
+				tmpProjectOccupied.nOccupied=(Integer)objResult[2];
+				tmpEmployeeInfo.listProjectWorking.add(tmpProjectOccupied);
+				
+				//Logging employee-project info
+				Logger.info("project Id:"+ nProjectId);
+				Logger.info("Employee Name:"+tmpEmployeeInfo.strEmpName);
+				Logger.info("Week number:"+tmpEmployeeInfo.listProjectWorking.get(0).nWeekNumber);
+				Logger.info("Occupied:"+tmpEmployeeInfo.listProjectWorking.get(0).nOccupied);
+				
+				listEmployeeInfo.add(tmpEmployeeInfo);
+			}
+		}
+		
+		return listEmployeeInfo;
+		
+	}
+	
+	
 	
 	
 	
