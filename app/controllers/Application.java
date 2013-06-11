@@ -267,12 +267,12 @@ public class Application extends Controller {
 	   	Logger.info("EndWeek :"+nEndWeek);
 	   	
 	   	ListAPI objListAPI=new ListAPI();
-	       List<ProjectInfo> listProjectInfo=objListAPI.MakeProjectView(nStartWeek, nEndWeek);
+	       List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeEmployeeView(nStartWeek, nEndWeek);
 	       
-	       List<Employee> listEmployees=new ListAPI().getAllEmployees();
+	       List<Project> listProjects=new ListAPI().getAllProjects();
 	       // renderJSON(modelSerializer.serialize(listEmployeeInfo));
 	       
-	      render(listProjectInfo, listEmployees, nStartWeek, nEndWeek);
+	      render(listEmployeeInfo, listProjects, nStartWeek, nEndWeek);
    }
     /**
      * 
@@ -316,17 +316,19 @@ public class Application extends Controller {
    }
    
    public static void pview1(){
-	   int nStartWeek=1; //Integer.parseInt(strStartWeek);
-	   int nEndWeek=13; //Integer.parseInt(strEndWeek);
-	   
-	   List<EmployeeInfo> listEmployeeInfo=null;
-       
-       
-       List<Project> listProjects=null;
-       
-       //listProjects
-	   
-	   render(listEmployeeInfo, listProjects, nStartWeek, nEndWeek);
+      	int nStartWeek=1; //Integer.parseInt(strStartWeek);
+      	int nEndWeek=13; //Integer.parseInt(strEndWeek);
+	   	
+	   	Logger.info("startweek :"+nStartWeek);
+	   	Logger.info("EndWeek :"+nEndWeek);
+	   	
+	   	ListAPI objListAPI=new ListAPI();
+	       List<ProjectInfo> listProjectInfo=objListAPI.MakeProjectView(nStartWeek, nEndWeek);
+	       
+	       List<Employee> listEmployees=new ListAPI().getAllEmployees();
+	       // renderJSON(modelSerializer.serialize(listEmployeeInfo));
+	       
+	      render(listProjectInfo, listEmployees, nStartWeek, nEndWeek);
    }
 
 }
