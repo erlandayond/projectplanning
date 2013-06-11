@@ -4,7 +4,6 @@ import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 
 import models.Employee;
@@ -323,6 +322,8 @@ public class Application extends Controller {
        
        
        List<Project> listProjects=null;
+       
+       //listProjects
 	   
 	   render(listEmployeeInfo, listProjects, nStartWeek, nEndWeek);
    }

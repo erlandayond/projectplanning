@@ -57,7 +57,7 @@
 					</div>
 				</div>
                 
-				%{ for(emp in listEmployeeInfo) {
+				%{ for(proj in listProjects) {
                 	if(emp.strEmpType=="regular") {
                 %}
 				<div class="table-row employee" id="employee-${emp.nEmpId}" >
@@ -196,7 +196,6 @@
 					<div class="control-panel-row">
 						<div class="control-button" id="btnNewProject"> New Project </div>
 						<div class="control-button" id="btnNewStaff">New Staff</div>
-						<!-- <div class="control-button" id="btnNewContractor">New Contractor</div> -->
 					</div>
 					<div class="control-panel-row">
 						<p>Choose a project to delete: </p>
