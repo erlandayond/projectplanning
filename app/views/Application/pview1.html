@@ -28,7 +28,7 @@
 	<div class="content">
 		<div class="wrapper">
 			<div class="table">
-				<div class="employees-regular">
+				<div class="projloyees-regular">
 					<div class="table-header">
 						<div class="first-column">
 							<span class="title">Projects</span>
@@ -57,14 +57,13 @@
 					</div>
 				</div>
                 
-				%{ for(proj in listProjects) {
-                	if(emp.strEmpType=="regular") {
+				%{ for(proj in listProjectsInfo) {
                 %}
-				<div class="table-row employee" id="employee-${emp.nEmpId}" >
+				<div class="table-row projloyee" id="projloyee-${proj.nProjectId}" >
 					<div class="column person first-column">
 						<div class="toggler"></div>
-						<span class="name">${emp.strEmpName}</span>
-						<div id="${emp.nEmpId}" class="remove">Delete</div>
+						<span class="name">${proj.strProjectName}</span>
+						<div id="${proj.nProjectId}" class="remove">Delete</div>
 					</div>
 					<div class="column second-column">
 						#{list items:nStartWeek..nEndWeek, as:'i'}
@@ -72,122 +71,7 @@
 						#{/list}
 					</div>
                 </div>
-                <div class="employee-info" style="display: block;" employeeId="${emp.nEmpId}" type="employee"> 
-               		%{ for(proj in emp.listProjectInfo){ %}
-                		<div class="table-row" projectId="${proj.nProjectId}" projectType="${proj.strProjectType}">
-							<div class="column first-column">
-								<span class="project-name">${proj.strProjectName}</span>
-								<div class="remove-project" projId="${proj.nProjectId}">Delete</div>
-							</div>
-							<div class="column second-column">
-								%{ for(week in proj.listWeekInfo){ %}
-									<div class="week" id="${week.nWeekNum}">${week.nOccupied}</div>
-								%{ } %}
-							</div>
-                    	</div>
-                	%{ } %}
-                	<div class="table-row">
-                		<div class="column first-column">
-                			<div class="add-project"></div>
-                			<select id="addProject" class="add-project">
-                				<option value="0">Add project</option>
-                				%{ for(project in listProjects) { %}
-                					<option value="${project.projectId}">${project.projectName}</option>
-                		    	%{ } %}
-                			</select>
-                		</div>
-                		<div class="column second-column">
-							<div class="week" id="week1"></div>
-							<div class="week" id="week2"></div>
-							<div class="week" id="week3"></div>
-							<div class="week" id="week4"></div>
-							<div class="week" id="week5"></div>
-							<div class="week" id="week6"></div>
-							<div class="week" id="week7"></div>
-							<div class="week" id="week8"></div>
-							<div class="week" id="week9"></div>
-							<div class="week" id="week10"></div>
-							<div class="week" id="week11"></div>
-							<div class="week" id="week12"></div>
-						</div>
-                	</div>
-            	</div>
                 %{
-				    } 
-				    } 	
-				%}
-				<div class="employees-subcontractor">
-					<div class="table-header">
-						<div class="first-column">
-							<span class="title">Subcontractors</span>
-						</div>
-						<div class="column second-column">
-							<div class="weeks">
-								#{list items:nStartWeek..nEndWeek, as:'i'}
-									<span class="week">v${i}</span>
-								#{/list}
-							</div>
-						</div>
-					</div>
-				</div>
-			
-				%{ for(emp in listEmployeeInfo) {
-                	if(emp.strEmpType=="contractor") {
-                %}
-				<div class="table-row contractor" id="employee-${emp.nEmpId}">
-					<div class="column person first-column">
-						<div class="toggler"></div>
-						<span class="name">${emp.strEmpName}</span>
-						<div id="${emp.nEmpId}" class="remove" >Delete</div>
-					</div>
-					<div class="column second-column">
-						#{list items:nStartWeek..nEndWeek, as:'i'}
-							<div class="week" id="${i}"></div>
-						#{/list}
-					</div>
-                </div>
-                <div class="employee-info" style="display: block;" employeeId="${emp.nEmpId}" type="contractor"> 
-               		%{ for(proj in emp.listProjectInfo){ %}
-                		<div class="table-row"  projectId="${proj.nProjectId}" projectType="${proj.strProjectType}">
-							<div class="column first-column">
-								<span class="project-name">${proj.strProjectName}</span>
-								<div class="remove-project" projId="${proj.nProjectId}">Delete</div>
-							</div>
-							<div class="column second-column">
-								%{ for(week in proj.listWeekInfo){ %}
-									<div class="week" id="${week.nWeekNum}">${week.nOccupied}</div>
-								%{ } %}
-							</div>
-                    	</div>
-                	%{ } %}
-                	<div class="table-row">
-                		<div class="column first-column">
-                			<div class="add-project"></div>
-                			<select id="addProject" class="add-project">
-                				<option value="0">Add project</option>
-                				%{ for(project in listProjects) { %}
-                					<option value="${project.projectId}">${project.projectName}</option>
-                		    	%{ } %}
-                			</select>
-                		</div>
-                		<div class="column second-column">
-							<div class="week" id="week1"></div>
-							<div class="week" id="week2"></div>
-							<div class="week" id="week3"></div>
-							<div class="week" id="week4"></div>
-							<div class="week" id="week5"></div>
-							<div class="week" id="week6"></div>
-							<div class="week" id="week7"></div>
-							<div class="week" id="week8"></div>
-							<div class="week" id="week9"></div>
-							<div class="week" id="week10"></div>
-							<div class="week" id="week11"></div>
-							<div class="week" id="week12"></div>
-						</div>
-                	</div>
-            	</div>
-                %{
-				    } 
 				    } 	
 				%}
 			</div>
