@@ -12,6 +12,7 @@ import models.EmployeeQuarter;
 import models.ListAPI;
 import models.ProjectAPI;
 import models.ProjectAPI.ProjectType;
+import models.ProjectInfo;
 
 import models.ProjectOccupied;
 import models.Login;
@@ -85,7 +86,7 @@ public class Application extends Controller {
        	Logger.info("EndWeek :"+nEndWeek);
        	
        	ListAPI objListAPI=new ListAPI();
-           List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeAPIObject(nStartWeek, nEndWeek);
+           List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeEmployeeView(nStartWeek, nEndWeek);
          
            
            List<Project> listProjects=new ListAPI().getAllProjects();
@@ -96,7 +97,7 @@ public class Application extends Controller {
        }
     public static void getJSONEmployeeInfo(){
     	/*ListAPI objListAPI=new ListAPI();
-        List<EmployeeInfo> listObjEmployeeInfo= objListAPI.MakeAPIObject();
+        List<EmployeeInfo> listObjEmployeeInfo= objListAPI.MakeEmployeeView();
        
         
         JSONSerializer modelSerializer = new JSONSerializer().exclude("class").include("listProjectWorking").rootName("employees").exclude("listProjectWorking.class","nEmpId","listProjectWorking.nProjectId", "listProjectWorking.nWeekNumber", "listProjectWorking.nOccupied");
@@ -207,7 +208,7 @@ public class Application extends Controller {
    	Logger.info("EndWeek :"+nEndWeek);
    	
    	ListAPI objListAPI=new ListAPI();
-       List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeAPIObject(nStartWeek, nEndWeek);
+       List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeEmployeeView(nStartWeek, nEndWeek);
      
        
        List<Project> listProjects=new ListAPI().getAllProjects();
@@ -227,7 +228,7 @@ public class Application extends Controller {
    	Logger.info("EndWeek :"+nEndWeek);
    	
    	ListAPI objListAPI=new ListAPI();
-       List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeAPIObject(nStartWeek, nEndWeek);
+       List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeEmployeeView(nStartWeek, nEndWeek);
      
        
        List<Project> listProjects=new ListAPI().getAllProjects();
@@ -246,7 +247,7 @@ public class Application extends Controller {
    	Logger.info("EndWeek :"+nEndWeek);
    	
    	ListAPI objListAPI=new ListAPI();
-       List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeAPIObject(nStartWeek, nEndWeek);
+       List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeEmployeeView(nStartWeek, nEndWeek);
        
        List<Project> listProjects=new ListAPI().getAllProjects();
        // renderJSON(modelSerializer.serialize(listEmployeeInfo));
@@ -266,12 +267,12 @@ public class Application extends Controller {
 	   	Logger.info("EndWeek :"+nEndWeek);
 	   	
 	   	ListAPI objListAPI=new ListAPI();
-	       List<EmployeeInfo> listEmployeeInfo=objListAPI.MakeAPIObject(nStartWeek, nEndWeek);
+	       List<ProjectInfo> listProjectInfo=objListAPI.MakeProjectView(nStartWeek, nEndWeek);
 	       
-	       List<Project> listProjects=new ListAPI().getAllProjects();
+	       List<Employee> listEmployees=new ListAPI().getAllEmployees();
 	       // renderJSON(modelSerializer.serialize(listEmployeeInfo));
 	       
-	      render(listEmployeeInfo, listProjects, nStartWeek, nEndWeek);
+	      render(listProjectInfo, listEmployees, nStartWeek, nEndWeek);
    }
     /**
      * 

@@ -13,7 +13,7 @@ import play.db.jpa.JPA;
 
 public class ListAPI {
 	
-	public List<EmployeeInfo> MakeAPIObject(int nStartWeek, int nEndWeek){
+	public List<EmployeeInfo> MakeEmployeeView(int nStartWeek, int nEndWeek){
 		
 		List<Employee> listEmployee=getAllEmployees();
 		List<EmployeeInfo> listEmployeeInfo=new ArrayList<EmployeeInfo>();
@@ -35,6 +35,30 @@ public class ListAPI {
 		}
 			Collections.sort(listEmployeeInfo,EmployeeInfo.EmployeeNameComparator);
 		return listEmployeeInfo;
+	}
+	
+	public List<ProjectInfo> MakeProjectView(int nStartWeek, int nEndWeek){
+		
+		List<Project> listProject=getAllProjects();
+		List<ProjectInfo> listProjectInfo=new ArrayList<ProjectInfo>();
+		
+		
+		for(Project proj: listProject){
+			
+			ProjectInfo tempProjectInfo=new ProjectInfo();
+			EmployeeQuarter tempEmployeeQuarter=new EmployeeQuarter();
+			tempProjectInfo.nProjectId=proj.getProjectId();
+			tempProjectInfo.strProjectName=proj.getProjectName();
+			tempProjectInfo.strProjectType="";
+			tempProjectInfo.listEmployeeInfo= getEmployeesForProject(proj.getProjectId());
+			tempProjectInfo.listEmployeeInfo=getProjectEmployeeInfo(proj.getProjectId(), nStartWeek, nEndWeek);
+		
+		
+			listProjectInfo.add(tempProjectInfo);
+			
+		}
+			Collections.sort(listProjectInfo,ProjectInfo.ProjectNameComparator);
+		return listProjectInfo;
 	}
 	
 	public List<Employee> getAllEmployees(){
@@ -171,13 +195,14 @@ public class ListAPI {
 			}
 		}
 		
+		getEmployeesForProject(20);
 		return listProjectOccupied;
 		
 	}
 	
 	private List<EmployeeInfo> getEmployeesForProject(int nProjectId){
 	    
-		Query query=JPA.em().createQuery("select employee, week, occupied from Resourceplan where projectId=:nProjectId and projActive=1");
+		Query query=JPA.em().createQuery("select week, occupied, employee from Resourceplan where projectId=:id and projActive=1");
 		query.setParameter("id",nProjectId);
 		
 		List<Object> listResult=query.getResultList();
@@ -187,12 +212,12 @@ public class ListAPI {
 			for(Object tempObj: listResult){
 				Object[] objResult=(Object[])tempObj;
 				EmployeeInfo tmpEmployeeInfo=new EmployeeInfo();
-				tmpEmployeeInfo.nEmpId=(Integer)((Employee) objResult[0]).getEmpId();
-				tmpEmployeeInfo.strEmpName=(String)((Employee) objResult[0]).getEmpName();
 				ProjectOccupied tmpProjectOccupied=new ProjectOccupied();
-				tmpProjectOccupied.nWeekNumber=(Integer)objResult[1];
-				tmpProjectOccupied.nOccupied=(Integer)objResult[2];
+				tmpProjectOccupied.nWeekNumber=(Integer)objResult[0];
+				tmpProjectOccupied.nOccupied=(Integer)objResult[1];
 				tmpEmployeeInfo.listProjectWorking.add(tmpProjectOccupied);
+				tmpEmployeeInfo.nEmpId=((Employee) objResult[2]).getEmpId();
+				tmpEmployeeInfo.strEmpName=((Employee) objResult[2]).getEmpName();
 				
 				//Logging employee-project info
 				Logger.info("project Id:"+ nProjectId);
@@ -208,12 +233,7 @@ public class ListAPI {
 		
 	}
 	
-	
-	
-	
-	
 	public List<ProjectInfo> getEmployeeProjectInfo(int nEmpId, int startWeek, int endWeek){
-		
 		
 		int nStartWeek=startWeek; 
 		int nLastWeek=endWeek;
@@ -318,5 +338,113 @@ public class ListAPI {
 		}
 		
 		return listProjectInfo;
+	}
+	
+	public List<EmployeeInfo> getProjectEmployeeInfo(int nProjectId, int startWeek, int endWeek){
+		
+		
+		int nStartWeek=startWeek; 
+		int nLastWeek=endWeek;
+		String strEmpName="";
+		int nEmpId=0;
+		final int NOTCHANGED=-1;
+		final int DEFAULT=0;
+		
+		//Get ProjectInfo for the employee
+		Query query=JPA.em().createQuery("select distinct(employee) FROM Resourceplan where projectId=:nPId and empActive=1");
+		query.setParameter("nPId",nProjectId);
+		
+		List<Object> listObjResult=query.getResultList();
+		
+		// Project Count greater than 0 ?
+		// Loop through number of projects times
+		List<EmployeeInfo> listEmployeeInfo=new ArrayList<EmployeeInfo>();
+		if(listObjResult.size()>0){
+		
+			for(Object tempObj: listObjResult){
+				Object objResult=(Object)tempObj;
+				
+				// Create a temp projectInfo object
+				EmployeeInfo objEmployeeInfo=new EmployeeInfo();
+				
+				// Set to local variables
+				nEmpId=((Employee) objResult).getEmpId();
+				strEmpName=((Employee) objResult).getEmpName();
+				
+				//set values to ProjectInfo object
+				objEmployeeInfo.nEmpId=nEmpId;
+				objEmployeeInfo.strEmpName=strEmpName;
+				objEmployeeInfo.strEmpType=getEmployee(nEmpId).getEmpType();
+				
+				//Get week info - week number and occupied for each project
+				Query tempQuery=JPA.em().createQuery("SELECT week, occupied FROM Resourceplan where empId=:nEid and projectId=:nProjId and week>=:nWeek and projActive=1");
+				tempQuery.setParameter("nEid", nEmpId);
+				tempQuery.setParameter("nProjId", nProjectId); 
+				tempQuery.setParameter("nWeek",nStartWeek);
+				
+				List<Object> listWeekObjResult=tempQuery.getResultList();
+				
+				// WeekInfo count greater than 0 ?
+				// Loop through number of number of times - here we are looping 13 weeks ( Quarter)
+				List<WeekInfo> listWeekInfo=new ArrayList<WeekInfo>();
+				
+				//Initialize key with week numbers and values are -1
+				//TODO: remove 12 here
+				int nTempWeek=nStartWeek;
+				for(int i=nStartWeek;i<=nLastWeek;i++){
+					WeekInfo week = new WeekInfo();
+					week.nOccupied=NOTCHANGED;
+					week.nWeekNum=nTempWeek;
+					listWeekInfo.add(week);
+					nTempWeek++;
+				}
+				
+				if(listWeekObjResult.size()>0){
+					
+					for(Object tempWeekObj: listWeekObjResult){
+						Object[] objTempWeekResult=(Object[])tempWeekObj;
+						
+						// Create local week object
+						WeekInfo objWeekInfo=new WeekInfo();
+						
+						// Set to local variables;
+						int nWeek=(Integer)objTempWeekResult[0];
+						int nOccupied=(Integer)objTempWeekResult[1];
+						
+						objWeekInfo.nWeekNum=nWeek;
+						
+						
+						for(WeekInfo week: listWeekInfo){
+							
+							if(week.nWeekNum==objWeekInfo.nWeekNum){
+								
+								week.nOccupied=nOccupied;
+								Logger.info("nWeekNum:"+week.nWeekNum);
+								Logger.info("nOccupied:"+week.nOccupied);
+							}
+							
+						}
+						
+					}
+					
+					
+				}
+				
+				// If week occupied are not found in db, change that values to Zero
+				for(WeekInfo week: listWeekInfo){
+					
+					if(week.nOccupied==NOTCHANGED){
+						week.nOccupied=DEFAULT;
+					}
+					
+					
+				}
+				
+				objEmployeeInfo.listWeekInfo=listWeekInfo;
+				listEmployeeInfo.add(objEmployeeInfo);
+			}
+		}
+		
+		return listEmployeeInfo;
 	}
 }
